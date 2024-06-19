@@ -54,10 +54,17 @@ INSTALLED_APPS = [
     'portal',
     'blog',
     'notification',
-    #'django_filters',
-    #'ckeditor',
+    'django_filters',
+    'ckeditor',
     'crispy_forms',
     'storages',
+     # 'ckeditor_uploader',  #for ckeditor image upload
+    'embed_video',
+    'bootstrap_datepicker_plus',
+    'rest_framework',
+    'mathfilters',
+    'import_export',
+    #'wkhtmltopdf',
 ]
 
 MIDDLEWARE = [
@@ -172,6 +179,8 @@ EMAIL_HOST_PASSWORD = 'oert qkpu unec rpqq'
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 
 
