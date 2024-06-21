@@ -7,7 +7,8 @@ from django.template.defaultfilters import slugify
 import os
 from embed_video.fields import EmbedVideoField
 from django.urls import reverse
-from ckeditor.fields import RichTextField
+#from ckeditor.fields import RichTextField
+from django_ckeditor_5.fields import CKEditor5Field
 from django.utils.html import strip_tags
 
 # Create your models here.
@@ -125,7 +126,8 @@ class Lesson(models.Model):
     # video_url = EmbedVideoField(null=True,blank=True)
     # ppt = models.FileField(upload_to='save_lesson_files', verbose_name="Presentation", blank=True)
     Notes = models.FileField(upload_to='save_lesson_files', verbose_name="Notes", blank=True)
-    comment = RichTextField(blank=True, null=True)
+    #comment = RichTextField(blank=True, null=True)
+    comment = CKEditor5Field('Text', config_name='extends')
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(null=True, blank=True)

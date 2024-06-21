@@ -8,9 +8,9 @@ from django.db.models import F, Sum, Q
 
 
 class BankDetail(models.Model):
-    acc_name = models.CharField(max_length=150, blank=True)
-    acc_number = models.CharField(max_length=20, blank=True)
-    description = models.CharField(max_length=150, blank=True, verbose_name='Account Name')
+    acc_name = models.CharField(max_length=150, blank=False)
+    acc_number = models.CharField(max_length=20, blank=False)
+    description = models.CharField(max_length=150, blank=False, verbose_name='Bank Name')
 
     def __str__(self):
         return f'{self.acc_name}'
@@ -63,19 +63,19 @@ class PaymentDetail(models.Model):
     amount_paid_a = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True)
     bank_name_a = models.ForeignKey(BankDetail, on_delete=models.CASCADE, default=None, null=True, related_name='bank_name_a')   
     payment_date_a = models.DateField()
-    other_details_a = models.CharField(max_length=200, blank=True)
+    other_details_a = models.CharField(max_length=200, blank=True, verbose_name='description(if any)')
 
     amount_paid_b = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True)
     bank_name_b = models.ForeignKey(BankDetail, on_delete=models.CASCADE, default=None, null=True, related_name='bank_name_b')   
     payment_date_b = models.DateField()
-    other_details_b = models.CharField(max_length=200, blank=True)
+    other_details_b = models.CharField(max_length=200, blank=True, verbose_name='description(if any)')
 
     amount_paid_c = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True)
     bank_name_c = models.ForeignKey(BankDetail, on_delete=models.CASCADE, default=None, null=True)   
     payment_date_c = models.DateField()
-    other_details_c = models.CharField(max_length=200, blank=True)
+    other_details_c = models.CharField(max_length=200, blank=True, verbose_name='description(if any)')
 
-    discount = models.DecimalField(help_text='enter in %', max_digits=3, decimal_places=0, blank=True, null=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(100)]) 
+    discount = models.DecimalField(help_text='enter in %', max_digits=3, decimal_places=0, blank=True, null=True, verbose_name='TOTAL DISCOUNT(if any)', default=0, validators=[MinValueValidator(0), MaxValueValidator(100)]) 
     # payment confirmation
     confirmed_a = models.BooleanField(default=False) 
     confirmed_b = models.BooleanField(default=False) 

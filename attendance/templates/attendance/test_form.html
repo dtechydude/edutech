@@ -1,0 +1,29 @@
+
+
+{% for s in my_students %}
+{{ s.student_username }}<br>
+
+{% endfor %}
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                          
+                        <label class="text-label form-label">Student ID</label>
+                        <input type="{{ students.student_id}}" name="student_id" maxlength="100" required id="id_classgroup_id" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-2">
+                    <div class="mb-3">
+                        <label class="text-label form-label">Description*</label>
+                        <input type="text" name="authorized_sign" maxlength="250" required id="id_description" class="form-control" placeholder="Session Description">
+                    </div>
+                </div>
+               
+                        <!-- <input type="text" name="phoneNumber" class="form-control" placeholder="Other Info" required> -->
+                    </div>
+                </div>
+                
+                
+            <div class="col-12">
+                <button type="submit" name="" value="Submit" class="btn btn-primary mb-2">Add New Session</button>
+            </div>
+        </form>

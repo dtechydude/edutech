@@ -1,0 +1,171 @@
+{% extends 'portal/portal-home.html'%}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}<title> Inventory Item List</title>{% endblock title%}
+
+{% block content_body %}
+{% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'admin' or user.profile.user_type == 'teacher' %}
+
+		<div class="content-body">
+			<!-- row -->
+			
+			<div class="container-fluid">
+				<div class="d-flex justify-content-between align-items-center flex-wrap">
+					<div class="card-action coin-tabs mb-2">
+						
+						<ul class="nav nav-tabs" role="tablist">
+						
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'inventory:inventory-csv' %}">Download CSV</a>
+							</li>
+							<li><div>                 
+								{% if messages %}
+								{% for message in messages %}
+								<div class ="alert alert-{{ message.tags }}">{{ message }}</div>
+								{% endfor%}
+								{% endif%}
+							 </div></li>
+		
+						</ul>
+
+						<div>
+							<!-- <div style="float:left; padding:4px; width:30%;"> -->
+								<div>
+									<form action="" method="get">
+								
+									<!-- {{ StudentFilter.form|crispy}} -->
+									{{ inventory_filter.form }}
+									
+									<button class="btn btn-primary" type="submit">Search </button>
+								</form>	</div>
+							</div>
+
+					</div>
+					<div class="d-flex align-items-center mb-2 flex-wrap"> 
+						<div class="guest-calendar">
+							<div id="reportrange" class="pull-right reportrange" style="width: 100%">
+								<span>Inventory List</span><b class="caret"></b>
+							
+							</div>
+						
+						</div>
+						
+					</div>
+				</div>		
+					
+					<div class="col-xl-12">
+						<div class="card">
+							<div class="card-body p-0">
+								<div class="tab-content">	
+									<div class="tab-pane active show" id="AllGuest">
+										<div class="table-responsive">
+											<table class="table card-table display mb-4 shadow-hover default-table table-responsive-lg" id="guestTable-all">
+												<thead>
+													<tr>
+														<th class="bg-none">
+															<div class="form-check style-1">
+															  <input class="form-check-input" type="checkbox" value="" id="checkAll">
+															</div>
+														</th>
+														<th>S/N</th>
+														<th>Item Name</th>
+														<th>Description</th>
+														<th>Location</th>
+														<th>Date Added</th>
+														<th>Staff In Charge</th>
+														
+														
+													</tr>
+												</thead>
+												<tbody>
+													{% for item in inventory_list %}
+													<tr>
+														<td>
+															<div class="form-check style-1">
+															  <input class="form-check-input" type="checkbox" value="">
+															</div>
+														</td>
+														<td>
+																	<h6 class="fs-16 mb-0 text-nowrap"><a class="text-black" href=""></span></a></h6>
+																	<span class="text-primary fs-14">{{ item.id}}</span>
+																</div>
+															</div>
+														</td>
+														<td class="text-nowrap">
+															<span>{{ item.name}}</span>
+														</td>
+														<td>
+															<div>
+																<span class="text-nowrap">{{ item.description }}</span>
+																
+															</div>
+														</td>
+														<td>
+															<div>
+																<span class="text-nowrap">{{ item.location }}</span>
+																
+															</div>
+														</td>
+														<td>
+														<div>
+															<hspan class="text-nowrap">{{ item.date_added }}</span>
+															
+														</div>
+														
+														</td>
+														<td>
+															<div>
+																<span class="text-nowrap">{{ item.staff_in_charge }}</span>
+																
+															</div>
+															
+															</td>
+                                                            {% endfor %}
+															</tr>	
+													
+												</tbody>
+											</table>
+
+											<!-- Page Paginator start -->
+			
+										{% if inventory_list.has_other_pages %}
+										{% if inventory_list.has_previous %}
+										<a class="btn btn-outline-info mb-4" href="?page={{ inventory_list.previous_page_number }}">&laquo;</a>
+										{% else %}
+										<a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+
+										{% endif %}
+										{% for i in inventory_list.paginator.page_range %}
+										{% if inventory_list.number == i %}
+
+										<a class="btn btn-info mb-4" href="">{{ i }}</a>
+										{% else %}
+										<a class="btn btn-outline-info mb-4" href="?page={{ i }}">{{ i }}</a>
+										{% endif %}
+										{% endfor %}
+										{% if inventory_list.has_next %}
+										<a class="btn btn-outline-info mb-4" href="?page={{ inventory_list.next_page_number }}">&raquo;</a>
+										{% else %}
+										
+										<a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+										{% endif %}
+									
+									{% endif %}
+									<!-- Page Paginator end -->
+
+									</div>	
+									</div>	
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+		{% endblock content_body %}
+		<!--**********************************
+			

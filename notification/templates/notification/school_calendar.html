@@ -1,0 +1,275 @@
+{% extends 'portal/portal-home.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}<title>SchoollyEdTech School Calendar</title> {% endblock title%}
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        {% block content_body %}
+        <div class="content-body">
+            <div class="container-fluid">
+				<div class="row page-titles">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item active"><a href="javascript:void(0)">School Calendar</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">School Info</a></li>
+                        <li>{% if messages %}
+                            {% for message in messages %}
+                            <div class ="alert alert-{{ message.tags }}">{{ message }}</div>
+                            {% endfor%}
+                            {% endif%}
+                        </li>
+					</ol>
+                </div>
+               
+                <!-- <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-4 order-lg-2 mb-4">
+                                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="text-muted">My Information</span>
+                                            <span class="badge badge-primary badge-pill">5</span>
+                                        </h4>
+                                        <ul class="list-group mb-3">
+                                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                                <div>
+                                                    <h6 class="my-0">{{ user.first_name }} {{ user.profile.middle_name }} {{ user.last_name }}</h6>
+                                                    <small class="text-muted">Registered Full Name</small>
+                                                </div>
+                                                <span class="text-muted"><></span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                                <div>
+                                                    <h6 class="my-0">{{ user.profile.code }}</h6>
+                                                    <small class="text-muted">My User Unique code</small>
+                                                </div>
+                                                <span class="text-muted"><></span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                                <div>
+                                                    <h6 class="my-0">{{ user.profile.user_type }}</h6>
+                                                    <small class="text-muted">My User Type</small>
+                                                </div>
+                                                <span class="text-muted"><></span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between active">
+                                                <div class="text-white">
+                                                    <h6 class="my-0 text-white">{{ user.studentdetail.student_code }}</h6>
+                                                    <small>My Student Identification Code</small>
+                                                </div>
+                                                <span class="text-white"><></span>
+                                            </li>
+
+                                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                                <div>
+                                                    <h6 class="my-0">{{ user.studentdetail.current_class }}</h6>
+                                                    <small class="text-muted">My Current Class</small>
+                                                </div>
+                                                <span class="text-muted"><></span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                                <div>
+                                                    <h6 class="my-0">{{ user.studentdetail.class_teacher.user }}</h6>
+                                                    <small class="text-muted">My Form Teacher</small>
+                                                </div>
+                                                <span class="text-muted"><></span>
+                                            </li>
+
+                                        </ul>
+
+                                        <form>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="Request">
+												<button type="submit" class="input-group-text">Send</button>
+                                            </div>
+                                        </form>
+                                    </div> -->
+                                    
+                                    <div class="col-lg-8 order-lg-1">
+                                        
+                                        {% for s in events %}
+                                        <div class="card">
+                                        <div class="d-flex align-items-center mb-3">
+                                            
+                                            <div class="ms-4 bed-text">
+                                                                                      
+                                                <h4>{{ s.event_name }}</h4>
+                                                <div class="users d-flex align-items-center">
+                                                    
+                                                    <div>
+                                                        <span class="fs-16 font-w500 me-3"><b>Date: </b>{{ s.event_date }}</span>
+                                                        <span>Duration:{{ s.duration}}-day(s)</span><br>
+                                                        <span><b>Description:</b>{{ s.event_description}}</span>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                        <hr>
+                                        
+                                        
+                                        {% endfor %}
+                                        
+                                        
+                                        <!-- event calendar ends here-->
+                                        
+                                      {% if events.has_other_pages %}
+                                        <nav>
+                                        <ul class="pagination justify-content-center">
+                                            {% if events.has_previous %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ events.previous_page_number }}" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+                                            {% else %}
+                                            <li class="page-item disabled">
+                                                <span class="page-link" aria-hidden="true">&laquo;</span>
+                                            </li>
+                                            {% endif %}
+
+                                            {% for p in events.paginator.page_range %}
+                                            {% if events.number == p %}
+                                                <li class="page-item"><a class="page-link" style="color: red;" href="#">{{ p }}</a></li>
+                                            {% else %}
+                                                <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+                                            {% endif %}
+                                            {% endfor %}
+
+                                            {% if events.has_next %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page={{ events.next_page_number }}" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
+                                            {% else %}
+                                            <li class="page-item disabled">
+                                                <span class="page-link" aria-hidden="true">&raquo;</span>
+                                            </li>
+                                            {% endif %}
+                                        </ul>
+                                        </nav>
+                                    {% endif %}
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="content-body">
+            <div class="container-fluid">
+				
+				<div class="row page-titles">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item active"><a href="javascript:void(0)">App</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">Calendar</a></li>
+					</ol>
+                </div>
+        <div class="row">
+            <div class="col-xl-3 col-xxl-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-intro-title">Calendar</h4>
+
+                        <div class="">
+                            <div id="external-events" class="my-3">
+                                <p>Drag and drop your event or click in the calendar</p>
+                                <div class="external-event btn-primary light" data-class="bg-primary"><i class="fa fa-move"></i><span>New Theme Release</span></div>
+                                <div class="external-event btn-warning light" data-class="bg-warning"><i class="fa fa-move"></i>My Event
+                                </div>
+                                <div class="external-event btn-danger light" data-class="bg-danger"><i class="fa fa-move"></i>Meet manager</div>
+                                <div class="external-event btn-info light" data-class="bg-info"><i class="fa fa-move"></i>Create New theme</div>
+                                <div class="external-event btn-dark light" data-class="bg-dark"><i class="fa fa-move"></i>Project Launch</div>
+                                <div class="external-event btn-secondary light" data-class="bg-secondary"><i class="fa fa-move"></i>Meeting</div>
+                            </div>
+                            <!-- checkbox -->
+                            <div class="checkbox form-check checkbox-event custom-checkbox pt-3 pb-5">
+                                <input type="checkbox" class="form-check-input" id="drop-remove">
+                                <label class="form-check-label" for="drop-remove">Remove After Drop</label>
+                            </div>
+                            <a href="javascript:void()" data-bs-toggle="modal" data-bs-target="#add-category" class="btn btn-primary btn-event w-100">
+                                <span class="align-middle"><i class="ti-plus"></i></span> Create New
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-9 col-xxl-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="calendar" class="app-fullcalendar"></div>
+                      <p style="font-size:20px;">sdsdsdsdsdsdsdssdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdd
+                      sdsdsdsdsdsdsdssdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsddsdsdsd
+                      sdsdsdsdsdsdsdssdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsddsdsdsdsd
+                      sdsdsds<br>
+                      sdsdsds
+                      <form action="#" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy}}
+                        <!-- <h5 class="mb-4"><i class="fa fa-paperclip"></i> Attachment</h5>
+                        <input name="file" type="file" multiple /> -->
+                        <div class="text-start mt-4 mb-3">
+                            <button class="btn btn-primary btn-sl-sm me-2" type="submit "><span class="me-2"><i class="fa fa-paper-plane"></i></span>Send</button>
+                        </form></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+        {% endblock content_body %}
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+{% block scripts %}
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="{% static 'portal/vendor/global/global.min.js' %}"></script>
+	<script src="{% static 'portalvendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'portal/js/custom.min.js' %}"></script>
+	<script src="{% static 'portal/js/dlabnav-init.js' %}"></script>
+	<script src="{% static 'portal/js/demo.js' %}"></script>
+    <script src="{% static 'portal/js/styleSwitcher.js' %}"></script>
+
+
+    <script src="{% static 'portal/vendor/moment/moment.min.js' %}"></script>
+
+    <script src="{% static 'portal/vendor/fullcalendar/js/main.min.js' %}"></script>
+	<script src="{% static 'portal/js/plugins-init/fullcalendar-init.js' %}"></script>
+
+
+
+    <script src="{% static 'portal/vendor/fullcalendar/js/main.min.js"></script>
+	<script src="{% static 'portal/js/plugins-init/fullcalendar-init.js"></script>
+
+	
+  
+
+
+
+
+
+
+{% endblock scripts %}

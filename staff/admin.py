@@ -1,8 +1,5 @@
 from import_export.admin import ImportExportModelAdmin
 from django.contrib import admin
-
-
-
 from staff.models import Department, StaffCategory, StaffProfile
 
 # Register your models here.

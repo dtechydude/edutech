@@ -1,0 +1,183 @@
+{% extends 'portal/portal-home.html'%}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content_body %}
+{% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'admin' or user.profile.user_type == 'teacher' %}
+
+		<div class="content-body">
+			<!-- row -->
+			
+			<div class="container-fluid">
+				<div class="d-flex justify-content-between align-items-center flex-wrap">
+					<div class="card-action coin-tabs mb-2">
+						
+						<ul class="nav nav-tabs" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link active"  href="{% url 'attendance:attendance-pdf' %}">Download PDF</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'attendance:attendance-csv' %}">Download CSV</a>
+							</li>
+		
+						</ul>
+
+						<div>
+							<!-- <div style="float:left; padding:4px; width:30%;"> -->
+								<div>
+									<form action="" method="get">
+								
+									<!-- {{ StudentFilter.form|crispy}} -->
+									{{ attendance_filter.form }}
+									
+									<button class="btn btn-primary" type="submit">Search </button>
+								</form>	</div>
+							</div>
+
+					</div>
+					<div class="d-flex align-items-center mb-2 flex-wrap"> 
+						<div class="guest-calendar">
+							<div id="reportrange" class="pull-right reportrange" style="width: 100%">
+								<span>STUDENT ATTENDANCE VIEW</span><b class="caret"></b>
+								<i class="fas fa-user ms-3"></i>
+							</div>
+						
+						</div>
+						
+					</div>
+				</div>
+				
+					
+
+					<div class="col-xl-12">
+						<div class="card">
+							<div class="card-body p-0">
+								<div class="tab-content">	
+									<div class="tab-pane active show" id="AllGuest">
+										<div class="table-responsive">
+											<table class="table card-table display mb-4 shadow-hover default-table table-responsive-lg" id="guestTable-all">
+												<thead style="font-size:10px;">
+													<tr>
+														<th class="bg-none">
+															<div class="form-check style-1">
+															  <input class="form-check-input" type="checkbox" value="" id="checkAll">
+															</div>
+														</th>
+														<th>Student ID</th>
+														<th>Class</th>
+														<th>Att. Date</th>
+														<th>Morning</th>
+														<th>Afternoon</th>
+                                                        <th>Authorized Sign</th>
+																												
+													</tr>
+												</thead>
+												<tbody>
+													{% for att in attendance %}
+													<tr>
+														<td>
+															<div class="form-check style-1">
+															  <input class="form-check-input" type="checkbox" value="">
+															</div>
+														</td>
+														<td>
+															<div class="concierge-bx d-flex align-items-center">
+																<img class="me-3 rounded" src="{{att.student_id.user.profile.image.url}}" alt="">
+																<div>
+																	<h6 class="fs-16 mb-0 text-nowrap"><a class="text-black" href="">{{ att.student_id.user.username}}</a></h6>
+																	<span class="text-primary fs-14">{{ att.student_id.first_name}} {{ att.student_id.last_name}}</span>
+																</div>
+															</div>
+														</td>
+														<td class="text-nowrap">
+															<h6 class="fs-16 mb-0 text-nowrap">{{ att.standard}}</h6>
+														</td>
+														<td>
+															<div>
+																<h6 class="text-nowrap">{{ att.date_taken}}</h6>
+																
+															</div>
+														</td>
+														<td>
+															<div>
+																{% if att.morning_status == True %}
+																<!-- <i class="fas fa-check-square ms-3" style="color:green; font-size:25px;"></i> -->
+																<i class="far fa-check-circle text-success" style="font-size:20px;"></i>
+																<span></span>
+																{% else %}
+																<!-- <i class="fas fa-times ms-3" style="color:red; font-size:25px;"></i> -->
+																<i class="far fa-times-circle text-danger" style="font-size:20px;"></i>
+																{% endif %}
+															</div>
+														</td>
+														<td>
+														<div>
+															{% if att.afternoon_status == True %}
+															<!-- <i class="fas fa-check-square ms-3" style="color:green; font-size:25px;"></i> -->
+															<i class="far fa-check-circle text-success" style="font-size:20px;"></i>
+															<span></span>
+															{% else %}
+														
+															<!-- <i class="fa fa-times" style="color:red; font-size:25px;"></i> -->
+															<i class="far fa-times-circle text-danger" style="font-size:20px;"></i>
+															{% endif %}
+														</div>
+														
+														</td>
+														<td>
+															<div>
+																<h6 class="text-nowrap">{{ att.authorized_sign }}</h6>
+																<span></span>
+															</div>
+															
+															</td>
+														
+														{% endfor %}
+													</tr>	
+													
+												</tbody>
+											</table>
+
+											<!-- Page Paginator start -->
+			
+										{% if attendance.has_other_pages %}
+										{% if attendance.has_previous %}
+										<a class="btn btn-outline-info mb-4" href="?page={{ attendance.previous_page_number }}">&laquo;</a>
+										{% else %}
+										<a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+
+										{% endif %}
+										{% for i in attendance.paginator.page_range %}
+										{% if attendance.number == i %}
+
+										<a class="btn btn-info mb-4" href="">{{ i }}</a>
+										{% else %}
+										<a class="btn btn-outline-info mb-4" href="?page={{ i }}">{{ i }}</a>
+										{% endif %}
+										{% endfor %}
+										{% if attendance.has_next %}
+										<a class="btn btn-outline-info mb-4" href="?page={{ attendance.next_page_number }}">&raquo;</a>
+										{% else %}
+										
+										<a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+										{% endif %}
+									
+									{% endif %}
+									<!-- Page Paginator end -->
+
+									</div>	
+									</div>	
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+		{% endblock content_body %}
+		<!--**********************************
+			
