@@ -1,0 +1,1674 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+	<meta name="robots" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Schoolly : School Management System" />
+	<meta property="og:title" content="Schoolly : School Management System" />
+	<meta property="og:description" content="Schoolly :School Management System" />
+	<meta property="og:image" content="#" />
+	<meta name="format-detection" content="telephone=no">
+	
+	<!-- PAGE TITLE HERE -->
+	{% block title %}<title>Schoolly Admin </title>{% endblock title %}
+	
+	<!-- FAVICONS ICON -->
+	{% block favicon %}<link rel="shortcut icon" type="image/png" href="{% static 'portal/images/logo.png' %}" />{% endblock favicon %}
+	<link href="{% static 'portal/vendor/jquery-nice-select/css/nice-select.css' %}" rel="stylesheet">
+	<link href="{% static 'portal/vendor/owl-carousel/owl.carousel.css' %}" rel="stylesheet">
+	<link href="{% static 'portal/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet">
+	
+	<!-- Style css -->
+	<link href="{% static 'portal/css/style.css' %}" rel="stylesheet">
+	
+</head>
+<body>
+
+	<!--*******************
+		Preloader start
+	********************-->
+	<div id="preloader">
+		<div class="lds-ripple">
+			<div></div>
+			<div></div>
+		</div>
+	</div>
+	<!--*******************
+		Preloader end
+	********************-->
+
+	<!--**********************************
+		Main wrapper start
+	***********************************-->
+	<div id="main-wrapper">
+
+		<!--**********************************
+			Nav header start
+		***********************************-->
+		<div class="nav-header">
+			
+				<div>
+					<img src="{% static 'portal/images/logo2.png' %}">
+				</div>
+			<div class="nav-control">
+				<div class="hamburger">
+					<span class="line"></span><span class="line"></span><span class="line"></span>
+				</div>
+			</div>
+		</div>
+		<!--**********************************
+			Nav header end
+		***********************************-->
+		
+		<!--**********************************
+			Chat box start
+		<!-- ***********************************-->
+		
+									
+		
+		<!--**********************************
+			Chat box End
+		***********************************-->
+		
+		<!--**********************************
+			Header start
+		***********************************-->
+		<div class="header">
+			<div class="header-content">
+				<nav class="navbar navbar-expand">
+					<div class="collapse navbar-collapse justify-content-between">
+						<div class="header-left">
+							<div class="dashboard_bar">
+								{% if user.is_authenticated and user.profile.user_type == 'teacher' %}
+								Teacher/Staff Dashboard
+								{% elif user.is_authenticated and user.profile.user_type == 'student' %}
+								Student Dashboard
+								{% elif user.is_authenticated and user.profile.user_type == 'parent' %}
+								Parent Dashboard
+								{% elif user.is_authenticated and user.is_superuser %}
+								Admin Dashboard
+								{% elif user.is_authenticated and user.profile.user_type == 'admin' %}
+								Admin Dashboard
+								{% else %}
+								User Type is "Inactive"
+								{% endif%}
+							</div>
+						</div>
+						<div class="nav-item d-flex align-items-center">
+							<div class="input-group search-area">
+								<input type="text" class="form-control" placeholder="">
+								<span class="input-group-text"><a href="javascript:void(0)"><i class="flaticon-381-search-2"></i></a></span>
+							</div>
+						</div>
+						<ul class="navbar-nav header-right">
+							<li class="nav-item dropdown notification_dropdown">
+								<a class="nav-link" href="javascript:void(0);">
+								<svg xmlns="http://www.w3.org/2000/svg" width="26.309" height="23.678" viewBox="0 0 26.309 23.678">
+								  <path id="Path_1955" data-name="Path 1955" d="M163.217,78.043a7.409,7.409,0,0,1,10.5-10.454l.506.506.507-.506a7.409,7.409,0,0,1,10.5,10.454L175.181,88.686a1.316,1.316,0,0,1-1.912,0Zm11.008,7.823,9.1-9.632.027-.027a4.779,4.779,0,1,0-6.759-6.757l-1.435,1.437a1.317,1.317,0,0,1-1.861,0l-1.437-1.437a4.778,4.778,0,0,0-6.758,6.757l.026.027Z" transform="translate(-161.07 -65.42)" fill="#135846" fill-rule="evenodd"/>
+								</svg>
+								</a>
+							</li>	
+							<li class="nav-item dropdown notification_dropdown">
+								<a class="nav-link bell-link " href="javascript:void(0);">
+								<svg xmlns="http://www.w3.org/2000/svg" width="26.667" height="24" viewBox="0 0 26.667 24">
+								  <g id="_014-mail" data-name="014-mail" transform="translate(0 -21.833)">
+									<path id="Path_1962" data-name="Path 1962" d="M26.373,26.526A6.667,6.667,0,0,0,20,21.833H6.667A6.667,6.667,0,0,0,.293,26.526,6.931,6.931,0,0,0,0,28.5V39.166a6.669,6.669,0,0,0,6.667,6.667H20a6.669,6.669,0,0,0,6.667-6.667V28.5A6.928,6.928,0,0,0,26.373,26.526ZM6.667,24.5H20a4.011,4.011,0,0,1,3.947,3.36L13.333,33.646,2.72,27.86A4.011,4.011,0,0,1,6.667,24.5ZM24,39.166a4.012,4.012,0,0,1-4,4H6.667a4.012,4.012,0,0,1-4-4V30.873L12.693,36.34a1.357,1.357,0,0,0,1.28,0L24,30.873Z" transform="translate(0 0)" fill="#135846"/>
+								  </g>
+								</svg>
+									<span class="badge light text-white bg-primary rounded-circle">2</span>
+								</a>
+							</li>	
+							<li class="nav-item dropdown notification_dropdown">
+								<a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
+									<svg xmlns="http://www.w3.org/2000/svg" width="19.375" height="24" viewBox="0 0 19.375 24">
+									  <g id="_006-notification" data-name="006-notification" transform="translate(-341.252 -61.547)">
+										<path id="Path_1954" data-name="Path 1954" d="M349.741,65.233V62.747a1.2,1.2,0,1,1,2.4,0v2.486a8.4,8.4,0,0,1,7.2,8.314v4.517l.971,1.942a3,3,0,0,1-2.683,4.342h-5.488a1.2,1.2,0,1,1-2.4,0h-5.488a3,3,0,0,1-2.683-4.342l.971-1.942V73.547a8.4,8.4,0,0,1,7.2-8.314Zm1.2,2.314a6,6,0,0,0-6,6v4.8a1.208,1.208,0,0,1-.127.536l-1.1,2.195a.6.6,0,0,0,.538.869h13.375a.6.6,0,0,0,.536-.869l-1.1-2.195a1.206,1.206,0,0,1-.126-.536v-4.8a6,6,0,0,0-6-6Z" transform="translate(0 0)" fill="#135846" fill-rule="evenodd"/>
+									  </g>
+									</svg>
+
+									<span class="badge light text-white bg-primary rounded-circle">1</span>
+								</a>
+							
+							<li class="nav-item dropdown notification_dropdown">
+								<a class="nav-link " href="javascript:void(0);" data-bs-toggle="dropdown">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="21.6" viewBox="0 0 24 21.6">
+									  <g id="_008-chat" data-name="008-chat" transform="translate(-250.397 -62.547)">
+										<path id="Path_1956" data-name="Path 1956" d="M274.4,67.347a4.8,4.8,0,0,0-4.8-4.8H255.2a4.8,4.8,0,0,0-4.8,4.8v15.6a1.2,1.2,0,0,0,2.048.848l3.746-3.745a2.4,2.4,0,0,1,1.7-.7H269.6a4.8,4.8,0,0,0,4.8-4.8Zm-2.4,0a2.4,2.4,0,0,0-2.4-2.4H255.2a2.4,2.4,0,0,0-2.4,2.4v12.7l1.7-1.7a4.8,4.8,0,0,1,3.395-1.406H269.6a2.4,2.4,0,0,0,2.4-2.4Zm-15.6,7.2H266a1.2,1.2,0,1,0,0-2.4h-9.6a1.2,1.2,0,0,0,0,2.4Zm0-4.8h12a1.2,1.2,0,1,0,0-2.4h-12a1.2,1.2,0,0,0,0,2.4Z" fill="#135846" fill-rule="evenodd"/>
+									  </g>
+									</svg>
+									<span class="badge light text-white bg-primary rounded-circle">2</span>
+								</a>
+							</li>
+							<li class="nav-item dropdown header-profile">
+								<a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
+									<img src="{{user.profile.image.url}}" width="20" alt=""/>
+								</a>
+								<div class="dropdown-menu dropdown-menu-end">
+									<a href="{% url 'profile' %}" class="dropdown-item ai-icon">
+										<svg id="icon-user2" xmlns="http://www.w3.org/2000/svg" class="text-primary" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+										<span class="ms-2">Profile </span>
+									</a>
+									<a href="{% url 'notification:mail-self' %}" class="dropdown-item ai-icon">
+										<svg id="icon-inbox1" xmlns="http://www.w3.org/2000/svg" class="text-success" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+										<span class="ms-2">Inbox </span>
+									</a>
+									<a href="{% url 'user_logout' %}" class="dropdown-item ai-icon">
+										<svg  xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+										<span class="ms-2">Logout </span>
+									</a>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+		</div>
+		<!--**********************************
+			Header end ti-comment-alt
+		***********************************-->
+
+		<!--**********************************
+			Sidebar start
+		***********************************-->
+		<div class="dlabnav">
+			<div class="dlabnav-scroll">
+				<ul class="metismenu" id="menu">
+					<li><a href="{% url 'portal:portal-home' %}" aria-expanded="false">
+							<i class="flaticon-025-dashboard"></i>
+							<span class="nav-text">DASHBOARD HOME</span>
+						</a>
+						<li>
+							{% if user.is_authenticated and user.is_superuser or user.is_staff %}
+							<a href="/admin"><span style="font-size:14px; color:green;"><b>GO TO ADMIN PANEL</b></span></a>
+						{% endif %}
+						</li>
+
+						{% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'admin' %}
+						<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+							<i class="flaticon-025-dashboard"></i>
+							<span class="nav-text">Setup School Info</span>
+						</a> {% endif %}
+						<ul aria-expanded="false">
+							{% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'admin' %}
+										
+							<li><a href="{% url 'portal:register-session' %}">Add New Session </a></li>
+							<li><a href="{% url 'portal:session_list' %}">Session List </a></li>
+							<li><a href="{% url 'portal:register-class' %}">Add New class</a></li>
+							<li><a href="{% url 'curriculum:standard_list' %}">Class List </a></li>
+							<li><a href="{% url 'portal:register-classgroup' %}">Add ClassArm </a></li>
+							<li><a href="{% url 'portal:classgroup_list' %}">ClassArm List </a></li>
+							<li><a href="{% url 'portal:register-subject' %}">Add Exam Subjects</a></li>
+							<li><a href="{% url 'portal:subject_list' %}">Subjects List </a></li>
+							<li><a href="{% url 'portal:register-exam' %}">Add Exams </a></li>
+							<li><a href="{% url 'portal:exam_list' %}">Exam List </a></li>
+							<li><a href="{% url 'portal:register-category' %}">Add Staff Category </a></li>
+							<li><a href="{% url 'portal:category_list' %}">Staff Category List </a></li>
+							<li><a href="{% url 'portal:register-department' %}">Add Department </a></li>
+							<li><a href="{% url 'portal:department_list' %}">Department List </a></li>
+							<!-- <li><a href="{% url 'results:my-reportsheet' %}">View Marksheet</a></li> -->
+							{% endif %}
+						</ul>
+
+					</li>
+
+						
+						<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+							<i class="flaticon-025-dashboard"></i>
+							<span class="nav-text">Students Tools</span>
+						</a>
+						<ul aria-expanded="false">
+							{% if user.is_authenticated and user.profile.user_type == 'student' %}
+							{% for idcard in my_idcard%}
+							<a href="{% url 'portal:my_idcard' pk=idcard.pk  %}">My ID CARD</a>
+							{% endfor %}
+							<li><a href="{% url 'payment:bank-list' %}">School Account Detail</a></li>
+							<li><a href="{% url 'payment:payment-create' %}">Make Payment</a></li>
+							<li><a href="{% url 'payment:my_payments' %}">Payment History</a></li>
+							<li><a href="{% url 'payment:payment_chart' %}">Payment Chart</a></li>
+							<!-- <li><a href="{% url 'results:my-reportsheet' %}">Result History</a></li> -->
+							<li><a href="{% url 'results:my-result' %}">Result History</a></li>
+							<!-- <li><a href="{% url 'results:my-reportsheet' %}">View Marksheet</a></li> -->
+							{% endif %}
+
+							{% if user.is_authenticated and user.profile.user_type == 'inactive' %}
+							<li>Noting to show</li>
+							{% endif %}
+							
+							{% if user.is_authenticated and user.profile.user_type == 'teacher'%}
+							{% if user.is_authenticated and user.staffprofile.staff_role == 'form_teacher' %}
+							<li><a href="#">You are a Form Teacher</a></li>
+							{% endif %}
+							<li><a href="{% url 'staff:my-students' %}">My Student List</a></li>
+							<!-- <li><a href="{% url 'attendance:attendance_form' %}">Take Attendance</a></li> -->
+							<li><a href="/admin">Take Attendance</a></li>			
+							<!-- <li><a href="{% url 'attendance:attendance_view' %}">View Admin Att.</a></li>	 -->
+							<li><a href="{% url 'staff:my-students-attendance' %}">Attendance Report</a></li>
+							{% endif %}
+															
+							{% if user.is_authenticated and user.profile.user_type == 'admin' %}
+							<li><a href="{% url 'students:student_search_list' %}">SEARCH STUDENTS</a></li>
+							<li><a href="{% url 'students:student-list' %}">Student List</a></li>
+							<li><a href="{% url 'students:student-registration' %}">Add New Student</a></li>
+							
+							<li><a href="{% url 'results:print-result' %}">View Students Result</a></li>
+							<!-- <li><a href="{% url 'results:print-resultform' %}">Upload Students Result</a></li> -->
+							<li><a href="{% url 'results:result-create' %}">Load Report Sheet</a></li>	
+							<li><a href="/admin">Take Attendance</a></li>
+							<li><a href="{% url 'attendance:attendance_view' %}">View Attendance</a></li>
+								
+							{% endif %}
+						</ul>
+
+					</li>
+					{% if user.is_authenticated and user.profile.user_type == 'admin'%}
+					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+						<i class="flaticon-050-info"></i>
+							<span class="nav-text">Staff Info</span>{% endif %}
+						</a>
+						<ul aria-expanded="false">
+							{% if user.is_authenticated and user.profile.user_type == 'admin'%}
+							<li><a href="{% url 'staff:staff_list' %}">Staff List</a></li>
+						
+							<li><a href="{% url 'staff:staff_create' %}">Add New Staff</a></li>
+							
+							{% endif %}
+						
+						
+						</ul>
+						
+					</li>
+					{% if user.is_authenticated and user.profile.user_type == 'admin' %}
+					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+						<i class="flaticon-025-dashboard"></i>
+						<span class="nav-text">Payments</span>
+					</a>
+					<ul aria-expanded="false">
+						<li><a href="#">Online Payment (not implemented)</a></li>
+						<li><a href="{% url 'payment:bank-create' %}">Add Bank Account</a></li>
+						<li><a href="{% url 'payment:bank-list' %}">Account Detail</a></li>
+						<li><a href="{% url 'payment:payment_form' %}">Make Payment</a></li>
+						<li><a href="{% url 'payment:payment_record' %}">All Payments</a></li>
+						<li><a href="{% url 'payment:payment_cat_form' %}">Add New Category</a></li>
+						<li><a href="{% url 'payment:payment-category' %}">Payment Category List</a></li>
+						<li><a href="{% url 'payment:payment_chart_form' %}">Add New Payment Chart</a></li>
+						<li><a href="{% url 'payment:payment_chart' %}">Payment Chart</a></li>
+						<li><a href="{% url 'payment:payment_report' %}">Payment Report</a></li>
+						<li><a href="{% url 'payment:summary_payment_report' %}">Summary Report</a></li>
+												
+					</ul>
+
+				</li>
+				{% endif %}
+
+				{% if user.is_authenticated and user.profile.user_type == 'admin' %}
+					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+						<i class="flaticon-025-dashboard"></i>
+						<span class="nav-text">Inventory</span>
+					</a>
+					<ul aria-expanded="false">
+						<li><a href="{% url 'inventory:inventory_form' %}">Add Inventory Items</a></li>
+						<li><a href="{% url 'inventory:inventory_items' %}">Inventory Report</a></li>				
+					</ul>
+				</li>
+				{% endif %}
+				
+					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+							<i class="flaticon-041-graph"></i>
+							<span class="nav-text">E-Learning</span>
+						</a>
+						
+						<ul aria-expanded="false">
+							{% if user.is_authenticated and user.profile.user_type == 'inactive' %}
+							<li>Noting to show</li>
+							{% elif user.is_authenticated and user.profile.user_type == 'student' %}
+							<li><a href="{% url 'curriculum:my-standard' %}">Learning Center</a></li>
+							{% elif user.is_authenticated and user.profile.user_type == 'teacher' or user.profile.user_type == 'admin' %}
+							<li><a href="{% url 'curriculum:standard_list' %}">Class List</a></li>
+							
+							{% if user.is_authenticated and user.is_superuser or user.profile.user_type == "admin" %}
+							<li><a href="/admin">Add Subjects & Lessons From Admin Panel (Curriculum) </a></li>
+							
+							{% else %}
+							<li><a href="">Nothing to show</a></li>
+							{% endif %}
+												
+							{% endif %}
+						</ul>
+					
+					</li>
+												
+				<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+						<i class="flaticon-045-heart"></i>
+						<span class="nav-text">Exams / CBT</span>
+					</a>
+					
+						<ul aria-expanded="false">
+						{% if user.is_authenticated and user.profile.user_type == 'inactive' %}
+						<li>Noting to show</li>
+						{% else %}
+						<li><a href="{% url 'quizes:main-view' %}">Take Exam/Test</a></li>
+						{% if user.is_authenticated and user.profile.user_type == 'admin' %}
+						<li><a href="{% url 'quiz_results:quiz-result-list' %}">Quiz RESULTS</a></li>
+					
+						{% endif%}
+											
+						{% endif %}
+					
+					</ul>
+					
+				</li>
+				<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+					<i class="flaticon-072-printer"></i>
+					<span class="nav-text">News/Mails</span>
+				</a>
+				
+				<ul aria-expanded="false">
+					<li><a href="{% url 'notification:calendar' %}">School Calendar</a></li>
+					{% if user.is_authenticated and user.is_superuser or user.profile.user_type == "admin" %}
+					<li><a href="{% url 'notification:calendar-form' %}">Add Events</a></li>
+					<li><a href="{% url 'notification:new-mail' %}">Send Message</a></li>
+					{% endif %}
+					{% if user.is_authenticated and user.is_superuser%}
+					<li><a href="{% url 'notification:admin-mail' %}">Message Inbox</a></li>
+					{% else %}
+					<li><a href="{% url 'notification:mail-self' %}">Message Inbox</a></li>
+					{% endif%}
+				
+				</ul>
+			</li>
+
+					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+							<i class="flaticon-086-star"></i>
+							<span class="nav-text">My Account</span>
+						</a>
+						<ul aria-expanded="false">
+							<li><a href="{% url 'profile' %}">Update Profile</a></li>
+							<li><a href="{% url 'password_reset' %}">Reset Password</a></li>
+							<li><a href="{% url 'user_logout' %}">Logout</a></li>					
+
+						</ul>
+					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+							<i class="flaticon-022-copy"></i>
+							<span class="nav-text">Other Links</span>
+						</a>
+						<ul aria-expanded="false">
+							<li><a href="{% url 'portal:portal-home' %}">Portal Home</a></li>
+							<li><a href="#">School Website</a></li>
+							
+							
+						</ul>
+					</li>
+				</ul>
+				<div class="dropdown header-profile2 ">
+					<div class="header-info2 text-center">
+						<img src="{{user.profile.image.url}}" alt=""/>
+						<div class="sidebar-info">
+							<div>
+								<h5 class="font-w500 mb-0">{{ user.username }}</h5>
+								<span class="fs-12">UserName</span>
+							</div>	
+						</div>
+						<div>
+							<a href="{% url 'user_logout' %}" class="btn btn-md text-secondary">Logout</a>
+						</div>
+					</div>
+				</div>
+				<div class="copyright">
+					<p class="text-center"><strong>Schoolly User Dashboard</strong> © 2022 All Rights Reserved</p>
+					<p class="fs-12 text-center">Powered by <span class="heart"></span><a href="https://fizcos.com">Fizcos Infotech</a> </p>
+				</div>
+			</div>
+		</div>
+		<!--**********************************
+			Sidebar end
+		***********************************-->
+		
+		<!--**********************************
+			Content body start
+		***********************************-->
+		{% block content_body %}
+		
+		<div class="content-body">
+			<!-- row -->
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="row">
+							<div class="col-xl-12">
+								<div class="row">
+									<div class="col-xl-3 col-sm-6">
+										<div class="card booking">
+											<div class="card-body">
+												<div class="booking-status d-flex align-items-center">
+													<span>
+														<svg xmlns="http://www.w3.org/2000/svg" width="28" height="20" viewBox="0 0 28 20">
+														  <path  d="M27,14V7a1,1,0,0,0-1-1H6A1,1,0,0,0,5,7v7a3,3,0,0,0-3,3v8a1,1,0,0,0,2,0V24H28v1a1,1,0,0,0,2,0V17A3,3,0,0,0,27,14ZM7,8H25v6H24V12a2,2,0,0,0-2-2H19a2,2,0,0,0-2,2v2H15V12a2,2,0,0,0-2-2H10a2,2,0,0,0-2,2v2H7Zm12,6V12h3v2Zm-9,0V12h3v2ZM4,17a1,1,0,0,1,1-1H27a1,1,0,0,1,1,1v5H4Z" transform="translate(-2 -6)" fill="var(--primary)"/>
+														</svg>
+													</span>
+													<div class="ms-4">
+														<h4 class="mb-0 font-w600">{{ user.username }}</h4>
+														<p class="mb-0 text-nowrap">My Username</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-xl-3 col-sm-6">
+										<div class="card booking">
+											<div class="card-body">
+												<div class="booking-status d-flex align-items-center">
+													<span>
+														<svg xmlns="http://www.w3.org/2000/svg" width="28" height="20" viewBox="0 0 28 20">
+														  <path  d="M27,14V7a1,1,0,0,0-1-1H6A1,1,0,0,0,5,7v7a3,3,0,0,0-3,3v8a1,1,0,0,0,2,0V24H28v1a1,1,0,0,0,2,0V17A3,3,0,0,0,27,14ZM7,8H25v6H24V12a2,2,0,0,0-2-2H19a2,2,0,0,0-2,2v2H15V12a2,2,0,0,0-2-2H10a2,2,0,0,0-2,2v2H7Zm12,6V12h3v2Zm-9,0V12h3v2ZM4,17a1,1,0,0,1,1-1H27a1,1,0,0,1,1,1v5H4Z" transform="translate(-2 -6)" fill="var(--primary)"/>
+														</svg>
+													</span>
+													<div class="ms-4">
+														<h4 class="mb-0 font-w600">{{ user.profile.code }}</h4>
+														<p class="mb-0 text-nowrap ">My Profile Code</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-xl-3 col-sm-6">
+										<div class="card booking">
+											<div class="card-body">
+												<div class="booking-status d-flex align-items-center">
+													<span>
+														<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+														  <path  data-name="Path 1957" d="M129.035,178.842v2.8a5.6,5.6,0,0,0,5.6,5.6h14a5.6,5.6,0,0,0,5.6-5.6v-16.8a5.6,5.6,0,0,0-5.6-5.6h-14a5.6,5.6,0,0,0-5.6,5.6v2.8a1.4,1.4,0,0,0,2.8,0v-2.8a2.8,2.8,0,0,1,2.8-2.8h14a2.8,2.8,0,0,1,2.8,2.8v16.8a2.8,2.8,0,0,1-2.8,2.8h-14a2.8,2.8,0,0,1-2.8-2.8v-2.8a1.4,1.4,0,0,0-2.8,0Zm10.62-7-1.81-1.809a1.4,1.4,0,1,1,1.98-1.981l4.2,4.2a1.4,1.4,0,0,1,0,1.981l-4.2,4.2a1.4,1.4,0,1,1-1.98-1.981l1.81-1.81h-12.02a1.4,1.4,0,1,1,0-2.8Z" transform="translate(-126.235 -159.242)" fill="var(--primary)" fill-rule="evenodd"/>
+														</svg>
+													</span>
+													<div class="ms-4">
+														{% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'admin' %}
+														<h4 class="mb-0 font-w600">{{ student_num }}</h4>
+														<p class="mb-0">Total Students</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-xl-3 col-sm-6">
+										<div class="card booking">
+											<div class="card-body">
+												<div class="booking-status d-flex align-items-center">
+													<span>
+														<svg id="_009-log-out" data-name="009-log-out" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+														  <path  data-name="Path 1957" d="M151.435,178.842v2.8a5.6,5.6,0,0,1-5.6,5.6h-14a5.6,5.6,0,0,1-5.6-5.6v-16.8a5.6,5.6,0,0,1,5.6-5.6h14a5.6,5.6,0,0,1,5.6,5.6v2.8a1.4,1.4,0,0,1-2.8,0v-2.8a2.8,2.8,0,0,0-2.8-2.8h-14a2.8,2.8,0,0,0-2.8,2.8v16.8a2.8,2.8,0,0,0,2.8,2.8h14a2.8,2.8,0,0,0,2.8-2.8v-2.8a1.4,1.4,0,0,1,2.8,0Zm-10.62-7,1.81-1.809a1.4,1.4,0,1,0-1.98-1.981l-4.2,4.2a1.4,1.4,0,0,0,0,1.981l4.2,4.2a1.4,1.4,0,1,0,1.98-1.981l-1.81-1.81h12.02a1.4,1.4,0,1,0,0-2.8Z" transform="translate(-126.235 -159.242)" fill="var(--primary)" fill-rule="evenodd"/>
+														</svg>
+
+													</span>
+													<div class="ms-4">
+														<h4 class="mb-0 font-w600">{{ staff_num }}</h4>
+														<p class="mb-0">Total Staff</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+							{% elif user.is_authenticated and user.profile.user_type == 'teacher' %}
+											<p class="mb-0 font-w600">{{ user.staffprofile.class_in_charge }} - {{ user.staffprofile.class_group }} </p>
+											<p class="mb-0">Class-In-Charge</p>
+										</div>
+									</div>
+								</div>
+										</div>
+									</div>
+									<div class="col-xl-3 col-sm-6">
+										<div class="card booking">
+											<div class="card-body">
+												<div class="booking-status d-flex align-items-center">
+													<span>
+														<svg id="_009-log-out" data-name="009-log-out" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+														  <path  data-name="Path 1957" d="M151.435,178.842v2.8a5.6,5.6,0,0,1-5.6,5.6h-14a5.6,5.6,0,0,1-5.6-5.6v-16.8a5.6,5.6,0,0,1,5.6-5.6h14a5.6,5.6,0,0,1,5.6,5.6v2.8a1.4,1.4,0,0,1-2.8,0v-2.8a2.8,2.8,0,0,0-2.8-2.8h-14a2.8,2.8,0,0,0-2.8,2.8v16.8a2.8,2.8,0,0,0,2.8,2.8h14a2.8,2.8,0,0,0,2.8-2.8v-2.8a1.4,1.4,0,0,1,2.8,0Zm-10.62-7,1.81-1.809a1.4,1.4,0,1,0-1.98-1.981l-4.2,4.2a1.4,1.4,0,0,0,0,1.981l4.2,4.2a1.4,1.4,0,1,0,1.98-1.981l-1.81-1.81h12.02a1.4,1.4,0,1,0,0-2.8Z" transform="translate(-126.235 -159.242)" fill="var(--primary)" fill-rule="evenodd"/>
+														</svg>
+
+													</span>
+													<div class="ms-4">
+														<h6 class="mb-0 font-w600">{{my_students.count}}</h6>
+														<p class="mb-0">Number in Class</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+							{% else %}
+							<h6 class="mb-0 font-w600">{{ user.studentdetail.current_class }}</h6>
+												<p class="mb-0">Current Class</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+									<div class="col-xl-3 col-sm-6">
+										<div class="card booking">
+											<div class="card-body">
+												<div class="booking-status d-flex align-items-center">
+													<span>
+														<svg id="_009-log-out" data-name="009-log-out" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+														  <path  data-name="Path 1957" d="M151.435,178.842v2.8a5.6,5.6,0,0,1-5.6,5.6h-14a5.6,5.6,0,0,1-5.6-5.6v-16.8a5.6,5.6,0,0,1,5.6-5.6h14a5.6,5.6,0,0,1,5.6,5.6v2.8a1.4,1.4,0,0,1-2.8,0v-2.8a2.8,2.8,0,0,0-2.8-2.8h-14a2.8,2.8,0,0,0-2.8,2.8v16.8a2.8,2.8,0,0,0,2.8,2.8h14a2.8,2.8,0,0,0,2.8-2.8v-2.8a1.4,1.4,0,0,1,2.8,0Zm-10.62-7,1.81-1.809a1.4,1.4,0,1,0-1.98-1.981l-4.2,4.2a1.4,1.4,0,0,0,0,1.981l4.2,4.2a1.4,1.4,0,1,0,1.98-1.981l-1.81-1.81h12.02a1.4,1.4,0,1,0,0-2.8Z" transform="translate(-126.235 -159.242)" fill="var(--primary)" fill-rule="evenodd"/>
+														</svg>
+
+													</span>
+													<div class="ms-4">
+														<h6 class="mb-0 font-w600">{{ user.studentdetail.class_teacher.user }}</h6>
+														<p class="mb-0">Form Teacher</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+							{% endif %}
+
+							<!-- STUDENT DASHBOARD START -->
+							{% if user.is_authenticated and user.profile.user_type == 'student' %}
+
+							  <!-- row -->
+							  <div class="row">
+								<div class="col-lg-12">
+									<div class="profile card card-body px-3 pt-3 pb-0">
+										<div class="profile-head">
+											<div class="photo-content">
+												<div class="cover-photo rounded"></div>
+											</div>
+											<div class="profile-info">
+												<div class="profile-photo">
+													<img src="{{user.profile.image.url}}" class="img-fluid rounded-circle" alt="">
+												</div>
+												<div class="profile-details">
+													<div class="profile-name px-3 pt-2">
+														<h4 class="text-primary mb-0">{{ user.studentdetail.first_name}}-{{ user.studentdetail.middle_name}}-{{user.studentdetail.last_name}}</h4>
+														<p>Full Name</p>
+													</div>
+													<div class="profile-email px-2 pt-2">
+														<h4 class="text-muted mb-0">{{ user.studentdetail.student_username}}</h4>
+														<p>My unique Code</p>
+													</div>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xl-4">
+									<div class="row">
+										<div class="col-xl-12">
+											<div class="card">
+												<div class="card-body">
+													<div class="profile-statistics">
+														<div class="text-center">
+															<div class="row">
+																<div class="col">
+																	<h6 class="m-b-0">{{ user.studentdetail.date_admitted }}</h6><span>Adm.Date</span>
+																</div>
+																<div class="col">
+																	<h4 class="m-b-0">{{ user.studentdetail.current_class}}</h4><span>Current Class</span>
+																</div>
+																<div class="col">
+																	<h4 class="m-b-0">{{num_inclass}}</h4><span>No. in class</span> 
+																				
+																</div>
+															</div>
+															<div class="mt-4">
+																<a href="{% url 'profile' %}" class="btn btn-primary mb-1 me-1">Edit My Profile</a> 
+																<a href="javascript:void(0);" class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#sendMessageModal">School Calendar</a>
+															</div>
+														</div>
+														<!-- Modal -->
+														<div class="modal fade" id="sendMessageModal">
+															<div class="modal-dialog modal-dialog-centered" role="document">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<h5 class="modal-title">School Calendar</h5>
+																		<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+																	</div>
+																	
+																	<!--Modal body -->
+																	<div class="modal-body">
+																		
+														{% for s in events %}
+													<div class="d-flex align-items-center mb-3">
+														
+														<div class="ms-4 bed-text">
+													
+															<h4>{{ s.event_name }}</h4>
+															<div class="users d-flex align-items-center">
+																
+																<div>
+																	<span class="fs-16 font-w500 me-3"><b>Date: </b>{{ s.event_date }}</span>
+																	<span>Duration:{{ s.duration}}-day(s)</span><br>
+																	<span><b>Description:</b>{{ s.event_description}}</span>
+																	
+																</div>
+															</div>
+														</div>
+													</div>											
+																									
+													{% endfor %}
+													
+													<!-- event calendar ends here-->
+													
+												  {% if events.has_other_pages %}
+													<nav>
+													<ul class="pagination justify-content-center">
+														{% if events.has_previous %}
+														<li class="page-item">
+															<a class="page-link" href="?page={{ events.previous_page_number }}" aria-label="Previous">
+															<span aria-hidden="true">&laquo;</span>
+															</a>
+														</li>
+														{% else %}
+														<li class="page-item disabled">
+															<span class="page-link" aria-hidden="true">&laquo;</span>
+														</li>
+														{% endif %}
+
+														{% for p in events.paginator.page_range %}
+														{% if events.number == p %}
+															<li class="page-item"><a class="page-link" style="color: red;" href="#">{{ p }}</a></li>
+														{% else %}
+															<li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+														{% endif %}
+														{% endfor %}
+
+														{% if events.has_next %}
+														<li class="page-item">
+															<a class="page-link" href="?page={{ events.next_page_number }}" aria-label="Next">
+															<span aria-hidden="true">&raquo;</span>
+															</a>
+														</li>
+														{% else %}
+														<li class="page-item disabled">
+															<span class="page-link" aria-hidden="true">&raquo;</span>
+														</li>
+														{% endif %}
+													</ul>
+													</nav>
+
+												{% endif %}
+
+
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-xl-12">
+											<div class="card">
+												<div class="card-body">
+													<div class="profile-blog">
+														<h5 class="text-primary d-inline">General Information</h5>
+														<img src="{% static 'portal/images/profile/1.jpg' %}" alt="" class="img-fluid mt-4 mb-4 w-100">
+														<h4 class="text-black">Using the School Portal</h4>
+														<p class="mb-0">Welcome to the schoool portal, you can explore the navigation menu to familiarize with the features. 
+															Please contact the support team for any query.</p>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-xl-12">
+											
+										</div>
+										<div class="col-xl-12">
+											<div class="card">
+												<div class="card-body">
+													<div class="profile-news">
+														<h5 class="text-primary d-inline">School Calendar</h5>
+														<div class="media pt-3 pb-3">
+															<img src="{% static 'portal/images/profile/5.jpg' %}" alt="image" class="me-3 rounded" width="75">
+															<div class="media-body">
+																<h5 class="m-b-5">Explore Calendar Page</h5>
+																<p class="mb-0">All School events are listed in the calendar.</p>
+															</div>
+														</div>
+												
+														
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-8">
+									<div class="card">
+										<div class="card-body">
+											<div class="profile-tab">
+												<!-- <div class="custom-tab-1"> -->
+													<ul class="nav nav-tabs">
+														<!-- <li class="nav-item"><a href="#my-posts" data-bs-toggle="tab" class="nav-link active show">Posts</a>
+														</li> -->
+														<li class="nav-item"><a href="#about-me" data-bs-toggle="tab" class="nav-link active show">About Me</a>
+														</li>
+														
+													</ul>
+													<div class="tab-content">
+														
+																<div class="profile-personal-info">
+																<h4 class="text-primary mb-4">Personal Information</h4>
+																<div class="row mb-2">
+																	<div class="col-sm-3 col-5">
+																		<h5 class="f-w-500">Full Name <span class="pull-end">:</span>
+																		</h5>
+																	</div>
+																	<div class="col-sm-9 col-7"><span>{{ user.studentdetail.first_name}} {{ user.studentdetail.middle_name}} {{ user.studentdetail.last_name}} </span>
+																	</div>
+																</div>
+																<div class="row mb-2">
+																	<div class="col-sm-3 col-5">
+																		<h5 class="f-w-500">Gender <span class="pull-end">:</span>
+																		</h5>
+																	</div>
+																	<div class="col-sm-9 col-7"><span>{{ user.studentdetail.gender}}</span>
+																	</div>
+																</div>
+																<div class="row mb-2">
+																	<div class="col-sm-3 col-5">
+																		<h5 class="f-w-500">Email <span class="pull-end">:</span>
+																		</h5>
+																	</div>
+																	<div class="col-sm-9 col-7"><span>{{ user.email }}</span>
+																	</div>
+																</div>
+																<div class="row mb-2">
+																	<div class="col-sm-3 col-5">
+																		<h5 class="f-w-500">Phone Number <span class="pull-end">:</span></h5>
+																	</div>
+																	<div class="col-sm-9 col-7"><span>{{user.studentdetail.phone }}</span>
+																	</div>
+																</div>
+																<div class="row mb-2">
+																	<div class="col-sm-3 col-5">
+																		<h5 class="f-w-500">Date of Birth <span class="pull-end">:</span>
+																		</h5>
+																	</div>
+																	<div class="col-sm-9 col-7"><span>{{ user.studentdetail.dob }}</span>
+																	</div>
+																</div>
+																<div class="text-muted"><h5 style="color:red">Academic Information:</h5></div>
+																<div class="row mb-2">
+																	<div class="col-sm-3 col-5">
+																		<h5 class="f-w-500">Admission Date <span class="pull-end">:</span></h5>
+																	</div>
+																	<div class="col-sm-9 col-7"><span>{{user.studentdetail.date_admitted }}</span>
+																	</div>
+																</div>
+																<div class="row mb-2">
+																<div class="col-sm-3 col-5">
+																	<h5 class="f-w-500">Current Class <span class="pull-end">:</span>
+																	</h5>
+																</div>
+																<div class="col-sm-9 col-7"><span>{{ user.studentdetail.current_class }}</span>
+																</div>
+															</div>
+															<div class="row mb-2">
+																<div class="col-sm-3 col-5">
+																	<h5 class="f-w-500">Form Teacher <span class="pull-end">:</span>
+																	</h5>
+																</div>
+																<div class="col-sm-9 col-7"><span>{{ user.studentdetail.class_teacher }}</span>
+																</div>
+															</div>
+															<div class="row mb-2">
+																<div class="text-muted"><h5 style="color:red">Guardian's Information:</h5></div>
+																<div class="col-sm-3 col-5">
+																	<h5 class="f-w-500">Guardian's Name <span class="pull-end">:</span>
+																	</h5>
+																</div>
+																<div class="col-sm-9 col-7"><span>{{ user.studentdetail.guardian_name }}</span>
+																</div>
+															</div>
+															<div class="row mb-2">
+															<div class="col-sm-3 col-5">
+																<h5 class="f-w-500">Relationship <span class="pull-end">: </span></h5>
+																
+															</div>
+															<div class="col-sm-9 col-7"><span>{{ user.studentdetail.relationship }}</span>
+															</div>
+														</div>
+																<div class="row mb-2">
+																	<div class="col-sm-3 col-5">
+																		<h5 class="f-w-500">Guardian's' Add. <span class="pull-end">:</span></h5>
+																	</div>
+																	<div class="col-sm-9 col-7"><span>{{ user.studentdetail.guardian_address}}</span>
+																	</div>
+																</div>
+																<div class="row mb-2">
+																	<div class="col-sm-3 col-5">
+																		<h5 class="f-w-500">Guardian's Email <span class="pull-end">:</span></h5>
+																	</div>
+																	<div class="col-sm-9 col-7"><span>{{ user.studentdetail.guardian_email}}</span>
+																	</div>
+																</div>
+																<div class="row mb-2">
+																	<div class="col-sm-3 col-5">
+																		<h5 class="f-w-500">Phone No. <span class="pull-end">:</span></h5>
+																	</div>
+																	<div class="col-sm-9 col-7"><span>{{ user.studentdetail.guardian_phone}}</span>
+																	</div>
+																</div>
+																
+																<div class="row mb-2">
+																	<div class="col-sm-3 col-5">
+																		<h5 class="f-w-500" style="color:red;">Special Case <span class="pull-end">:</span></h5>
+																	</div>
+																	<div class="col-sm-9 col-7"><span>None</span>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<!-- <div id="profile-settings" class="tab-pane fade"> -->									
+														<div align="center"><button class="btn btn-danger"  ><a href="{% url 'profile' %}"><span style="color:white;">Update My Profile</span></a></button>
+														
+														{% for idcard in my_idcard%}
+
+														<span align="left"><button class="btn btn-success"  ><a href="{% url 'portal:my_idcard' pk=idcard.pk  %}"><span style="color:white;">Print My ID CARD</span></a></button></span></div>
+														
+														{% endfor %}
+																					
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- Modal -->					
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+					</div>
+					<!-- STUDENT DASHBOAR ENDS HERE -->
+
+					<!-- INACTIVE USER DASHBOARD START -->
+					{% elif user.is_authenticated and user.profile.user_type == 'inactive'%}
+					<h1>Your account is not profiled yet!</h1>
+					<div>Contact admin to profile your account</div>
+					<!-- INACTIVE USER DASHBOARD ENDS -->
+
+					<!-- TEACHERS DASBOARD STARTS -->
+					{% elif user.is_authenticated and user.profile.user_type == 'teacher' %}
+
+					<!-- row -->
+					<div class="row">
+					  <div class="col-lg-12">
+						  <div class="profile card card-body px-3 pt-3 pb-0">
+							  <div class="profile-head">
+								  <div class="photo-content">
+									  <div class="cover-photo rounded"></div>
+								  </div>
+								  <div class="profile-info">
+									  <div class="profile-photo">
+										  <img src="{{user.profile.image.url}}" class="img-fluid rounded-circle" alt="">
+									  </div>
+									  <div class="profile-details">
+										  <div class="profile-name px-3 pt-2">
+											  <h4 class="text-primary mb-0">{{ user.staffprofile.first_name}}-{{ user.staffprofile.middle_name}}-{{user.staffprofile.last_name}}</h4>
+											  <p>My Full Name</p>
+										  </div>
+										  <div class="profile-email px-2 pt-2">
+											  <h4 class="text-muted mb-0">{{ user.staffprofile.staff_username}}</h4>
+											  <p>My Unique ID</p>
+										  </div>
+										  
+									  </div>
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+				  </div>
+				  <div class="row">
+					  <div class="col-xl-4">
+						  <div class="row">
+							  <div class="col-xl-12">
+								  <div class="card">
+									  <div class="card-body">
+										  <div class="profile-statistics">
+											  <div class="text-center">
+												  <div class="row">
+													  <div class="col">
+														  <h6 class="m-b-0">{{ user.staffprofile.date_employed }}</h6><span>Empl. Date</span>
+													  </div>
+													  <div class="col">
+														  <h4 class="m-b-0">{{ user.staffprofile.class_in_charge}}</h4><span>Class</span>
+													  </div>
+													  <div class="col">
+														  <h4 class="m-b-0">898</h4><span>Roll No.</span>
+													  </div>
+												  </div>
+												  <div class="mt-4">
+													  <a href="{% url 'profile' %}" class="btn btn-primary mb-1 me-1">Edit My Profile</a> 
+													  <a href="javascript:void(0);" class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#sendMessageModal">School Calendar</a>
+												  </div>
+											  </div>
+											  <!-- Modal -->
+											  <div class="modal fade" id="sendMessageModal">
+												  <div class="modal-dialog modal-dialog-centered" role="document">
+													  <div class="modal-content">
+														  <div class="modal-header">
+															  <h5 class="modal-title">School Calendar</h5>
+															  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+														  </div>
+														  
+														  <!--Modal body -->
+														  <div class="modal-body">
+															  
+											  {% for s in events %}
+										  <div class="d-flex align-items-center mb-3">
+											  
+											  <div class="ms-4 bed-text">
+										  
+												  <h4>{{ s.event_name }}</h4>
+												  <div class="users d-flex align-items-center">
+													  
+													  <div>
+														  <span class="fs-16 font-w500 me-3"><b>Date: </b>{{ s.event_date }}</span>
+														  <span>Duration:{{ s.duration}}-day(s)</span><br>
+														  <span><b>Description:</b>{{ s.event_description}}</span>
+														  
+													  </div>
+												  </div>
+											  </div>
+										  </div>											
+																						  
+										  {% endfor %}
+										  
+										  <!-- event calendar ends here-->
+										  
+										{% if events.has_other_pages %}
+										  <nav>
+										  <ul class="pagination justify-content-center">
+											  {% if events.has_previous %}
+											  <li class="page-item">
+												  <a class="page-link" href="?page={{ events.previous_page_number }}" aria-label="Previous">
+												  <span aria-hidden="true">&laquo;</span>
+												  </a>
+											  </li>
+											  {% else %}
+											  <li class="page-item disabled">
+												  <span class="page-link" aria-hidden="true">&laquo;</span>
+											  </li>
+											  {% endif %}
+
+											  {% for p in events.paginator.page_range %}
+											  {% if events.number == p %}
+												  <li class="page-item"><a class="page-link" style="color: red;" href="#">{{ p }}</a></li>
+											  {% else %}
+												  <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+											  {% endif %}
+											  {% endfor %}
+
+											  {% if events.has_next %}
+											  <li class="page-item">
+												  <a class="page-link" href="?page={{ events.next_page_number }}" aria-label="Next">
+												  <span aria-hidden="true">&raquo;</span>
+												  </a>
+											  </li>
+											  {% else %}
+											  <li class="page-item disabled">
+												  <span class="page-link" aria-hidden="true">&raquo;</span>
+											  </li>
+											  {% endif %}
+										  </ul>
+										  </nav>
+
+									  {% endif %}
+
+
+														  </div>
+													  </div>
+												  </div>
+											  </div>
+										  </div>
+									  </div>
+								  </div>
+							  </div>
+							  <div class="col-xl-12">
+								  <div class="card">
+									  <div class="card-body">
+										  <div class="profile-blog">
+											  <h5 class="text-primary d-inline">General Information</h5>
+											  <img src="{% static 'portal/images/profile/1.jpg' %}" alt="" class="img-fluid mt-4 mb-4 w-100">
+											  <h4 class="text-black">Using the School Portal</h4>
+											  <p class="mb-0">Welcome to the schoool portal, you can explore the navigation menu to familiarize with the features. 
+												  Please contact the support team for any query.</p>
+										  </div>
+									  </div>
+								  </div>
+							  </div>
+							  <div class="col-xl-12">
+								  
+							  </div>
+							  <div class="col-xl-12">
+								  <div class="card">
+									  <div class="card-body">
+										  <div class="profile-news">
+											  <h5 class="text-primary d-inline">School Calendar</h5>
+											  <div class="media pt-3 pb-3">
+												  <img src="{% static 'portal/images/profile/5.jpg' %}" alt="image" class="me-3 rounded" width="75">
+												  <div class="media-body">
+													  <h5 class="m-b-5">Explore Calendar Page</h5>
+													  <p class="mb-0">All School events are listed in the calendar.</p>
+												  </div>
+											  </div>
+									  
+											  
+										  </div>
+									  </div>
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+					  <div class="col-xl-8">
+						  <div class="card">
+							  <div class="card-body">
+								  <div class="profile-tab">
+									  <!-- <div class="custom-tab-1"> -->
+										  <ul class="nav nav-tabs">
+											  <!-- <li class="nav-item"><a href="#my-posts" data-bs-toggle="tab" class="nav-link active show">Posts</a>
+											  </li> -->
+											  <li class="nav-item"><a href="#about-me" data-bs-toggle="tab" class="nav-link active show">About Me</a>
+											  </li>
+											  
+										  </ul>
+										  <div class="tab-content">
+											  
+													  <div class="profile-personal-info">
+													  <h4 class="text-primary mb-4">Personal Information</h4>
+													  <div class="row mb-2">
+														  <div class="col-sm-3 col-5">
+															  <h5 class="f-w-500">Full Name <span class="pull-end">:</span>
+															  </h5>
+														  </div>
+														  <div class="col-sm-9 col-7"><span>{{ user.staffprofile.first_name}} {{ user.staffprofile.middle_name}} {{ user.staffprofile.last_name}} </span>
+														  </div>
+													  </div>
+													  <div class="row mb-2">
+														  <div class="col-sm-3 col-5">
+															  <h5 class="f-w-500">Gender <span class="pull-end">:</span>
+															  </h5>
+														  </div>
+														  <div class="col-sm-9 col-7"><span>{{ user.staffprofile.gender}}</span>
+														  </div>
+													  </div>
+													  <div class="row mb-2">
+														<div class="col-sm-3 col-5">
+															<h5 class="f-w-500">Marital Status <span class="pull-end">:</span></h5>
+														</div>
+														<div class="col-sm-9 col-7"><span>{{ user.staffprofile.marital_status }}</span>
+														</div>
+													</div>
+													  <div class="row mb-2">
+														  <div class="col-sm-3 col-5">
+															  <h5 class="f-w-500">Email <span class="pull-end">:</span>
+															  </h5>
+														  </div>
+														  <div class="col-sm-9 col-7"><span>{{ user.email }}</span>
+														  </div>
+													  </div>
+													  <div class="row mb-2">
+														  <div class="col-sm-3 col-5">
+															  <h5 class="f-w-500">Phone Number <span class="pull-end">:</span></h5>
+														  </div>
+														  <div class="col-sm-9 col-7"><span>{{user.staffprofile.phone }}</span>
+														  </div>
+													  </div>
+													  <div class="row mb-2">
+														  <div class="col-sm-3 col-5">
+															  <h5 class="f-w-500">Date of Birth <span class="pull-end">:</span>
+															  </h5>
+														  </div>
+														  <div class="col-sm-9 col-7"><span>{{ user.staffprofile.dob }}</span>
+														  </div>
+													  </div>
+													  <div class="text-muted"><h5 style="color:red">Employement Information:</h5></div>
+													  <div class="row mb-2">
+														  <div class="col-sm-3 col-5">
+															  <h5 class="f-w-500">Employ. Date <span class="pull-end">:</span></h5>
+														  </div>
+														  <div class="col-sm-9 col-7"><span>{{user.staffprofile.date_employed }}</span>
+														  </div>
+													  </div>
+													  <div class="row mb-2">
+														<div class="col-sm-3 col-5">
+															<h5 class="f-w-500">Qualification <span class="pull-end">:</span></h5>
+														</div>
+														<div class="col-sm-9 col-7"><span>{{user.staffprofile.qualification }}</span>
+														</div>
+													</div>
+													  <div class="row mb-2">
+													  <div class="col-sm-3 col-5">
+														  <h5 class="f-w-500">Department <span class="pull-end">:</span>
+														  </h5>
+													  </div>
+													  <div class="col-sm-9 col-7"><span>{{ user.staffprofile.department }}</span>
+													  </div>
+												  </div>
+												  <div class="row mb-2">
+													  <div class="col-sm-3 col-5">
+														  <h5 class="f-w-500">Form Teacher <span class="pull-end">:</span>
+														  </h5>
+													  </div>
+													  <div class="col-sm-9 col-7"><span>{{ user.staffprofile.class_in_charge }}</span>
+													  </div>
+												  </div>
+												  <div class="row mb-2">
+													  <div class="text-muted"><h5 style="color:red">Guarantor's Information:</h5></div>
+													  <div class="col-sm-3 col-5">
+														  <h5 class="f-w-500">Name <span class="pull-end">:</span>
+														  </h5>
+													  </div>
+													  <div class="col-sm-9 col-7"><span>{{ user.staffprofile.guarantor_name }}</span>
+													  </div>
+												  </div>
+												  <div class="row mb-2">
+												 
+											  </div>
+													  <div class="row mb-2">
+														  <div class="col-sm-3 col-5">
+															  <h5 class="f-w-500">Address. <span class="pull-end">:</span></h5>
+														  </div>
+														  <div class="col-sm-9 col-7"><span>{{ user.staffprofile.guarantor_address}}</span>
+														  </div>
+													  </div>
+													  <div class="row mb-2">
+														  <div class="col-sm-3 col-5">
+															  <h5 class="f-w-500">Email <span class="pull-end">:</span></h5>
+														  </div>
+														  <div class="col-sm-9 col-7"><span>{{ user.staffprofile.guarantor_email}}</span>
+														  </div>
+													  </div>
+													  <div class="row mb-2">
+														  <div class="col-sm-3 col-5">
+															  <h5 class="f-w-500">Phone No. <span class="pull-end">:</span></h5>
+														  </div>
+														  <div class="col-sm-9 col-7"><span>{{ user.staffprofile.guarantor_phone}}</span>
+														  </div>
+													  </div>
+													  <div class="row mb-2">
+														<div class="text-muted"><h5 style="color:red">Next of kin Information:</h5></div>
+														<div class="col-sm-3 col-5">
+															<h5 class="f-w-500">Name <span class="pull-end">:</span>
+															</h5>
+														</div>
+														<div class="col-sm-9 col-7"><span>{{ user.staffprofile.next_of_kin_name }}</span>
+														</div>
+													</div>
+													
+														<div class="row mb-2">
+															<div class="col-sm-3 col-5">
+																<h5 class="f-w-500"> Address. <span class="pull-end">:</span></h5>
+															</div>
+															<div class="col-sm-9 col-7"><span>{{ user.staffprofile.next_of_kin_address}}</span>
+															</div>
+														</div>
+														
+														<div class="row mb-2">
+															<div class="col-sm-3 col-5">
+																<h5 class="f-w-500">Phone No. <span class="pull-end">:</span></h5>
+															</div>
+															<div class="col-sm-9 col-7"><span>{{ user.staffprofile.next_of_kin_phone}}</span>
+															</div>
+														</div>
+													  
+													  </div>
+												  </div>
+											  </div>
+											  <!-- <div id="profile-settings" class="tab-pane fade"> -->									
+											  <div align="center"><button class="btn btn-danger"  ><a href="{% url 'profile' %}"><span style="color:white;">Update My Profile</span></a></button></div>
+																		  
+												  </form>
+											  </div>
+										  </div>
+									  </div>
+								  </div>
+							  </div>
+							  <!-- Modal -->					
+					  </div>
+				  </div>
+			  </div>
+		  </div>
+	  </div>
+		  </div>
+		  <!-- TEACHERS DASBOARD ENDS -->
+												
+						<!-- Only Admin sees this -->
+
+							{% else %}
+							<div class="col-xl-12">
+								<div class="row">
+									<div class="col-xl-6">
+										<div class="card">
+											<div class="card-header border-0 pb-0">
+												<h4 class="fs-20">School Calendar</h4>
+												
+											</div>
+											<div class="card-body pb-2 loadmore-content" id="BookingContent">
+												<div class="text-center event-calender border-bottom booking-calender">
+													<input type='text' class="form-control d-none " id='datetimepicker1' />
+												</div>	
+												<div class="rooms mt-3 d-flex align-items-center justify-content-between flex-wrap">
+										
+													<div class="profile-personal-info">
+														<h4 class="text-primary mb-4">Students in Class Summary</h4>
+														
+														<div>														
+															{% for n in students%}
+															<div class="list-group-item bg-transparent d-flex justify-content-between px-0 py-1">
+																<span class="mb-0"><i class="far fa-check-circle text-success"></i></span>
+																<h6 class="mb-0">{{ n.current_class__name}}</h6>
+																<h6 class="mb-0">{{n.count}}</h6>
+																</div>
+															{% endfor %}
+																													
+														<p> Population of students in each class with the information here<br>
+															Please contact schoolly admin for any query.
+														</p>
+															</div>
+															
+															<!-- SCHOOL EVENT CALENDAR ON HOME PAGE -->
+															<!-- {% for s in events %}
+															<div class="d-flex align-items-center mb-3">
+																
+																<div class="ms-4 bed-text">
+															
+																	<h4>{{ s.event_name }}</h4>
+																	<div class="users d-flex align-items-center">
+																		
+																		<div>
+																	<span class="fs-16 font-w500 me-3"><b>Date: </b>{{ s.event_date }}</span>
+																	<span>Duration: {{ s.duration}}-day(s)</span><br>
+																	<span><b>Description:</b> {{ s.event_description}}</span>
+																
+																</div>
+															</div>
+														</div>
+													</div>
+													</div>
+													</div>
+													{% endfor %}
+													
+													<!-- event calendar ends here-->
+													
+												  <!-- {% if events.has_other_pages %}
+													<nav>
+													<ul class="pagination justify-content-center">
+														{% if events.has_previous %}
+														<li class="page-item">
+															<a class="page-link" href="?page={{ events.previous_page_number }}" aria-label="Previous">
+															<span aria-hidden="true">&laquo;</span>
+															</a>
+														</li>
+														{% else %}
+														<li class="page-item disabled">
+															<span class="page-link" aria-hidden="true">&laquo;</span>
+														</li>
+														{% endif %}
+
+														{% for p in events.paginator.page_range %}
+														{% if events.number == p %}
+															<li class="page-item"><a class="page-link" style="color: red;" href="#">{{ p }}</a></li>
+														{% else %}
+															<li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+														{% endif %}
+														{% endfor %}
+
+														{% if events.has_next %}
+														<li class="page-item">
+															<a class="page-link" href="?page={{ events.next_page_number }}" aria-label="Next">
+															<span aria-hidden="true">&raquo;</span>
+															</a>
+														</li>
+														{% else %}
+														<li class="page-item disabled">
+															<span class="page-link" aria-hidden="true">&raquo;</span>
+														</li>
+														{% endif %}
+														{% endif %} -->
+													<!-- </ul>
+													</nav> -->
+													 <!-- --> 
+									
+												
+													</div>			
+
+											</div>
+										</div>
+										</div>
+									</div>
+									
+									<div class="col-xl-6">
+										<div class="row">
+											<div class="col-xl-12">
+												<div class="card">
+													<div class="card-header border-0 flex-wrap">
+														<h4 class="fs-20">School Stats.</h4>
+														<div class="card-action coin-tabs">
+															<ul class="nav nav-tabs" role="tablist">
+																<li class="nav-item">
+																	<a class="nav-link " data-bs-toggle="tab" href="#Daily1" role="tab">Daily</a>
+																</li>
+																<li class="nav-item">
+																	<a class="nav-link " data-bs-toggle="tab" href="#weekly1" role="tab" >Weekly</a>
+																</li>
+																<li class="nav-item">
+																	<a class="nav-link active" data-bs-toggle="tab" href="#monthly1" role="tab" >Monthly</a>
+																</li>
+															</ul>
+														</div>
+													</div>
+													<div class="card-body pb-0">
+														<div class="d-flex flex-wrap">
+															<span class="me-sm-5 me-0 font-w500">
+																<svg class="me-1" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13">
+																  <rect  width="13" height="13" fill="#135846"/>
+																</svg>
+
+																Total Income
+															</span>
+															<span class="fs-16 font-w600 me-4">23,451 <small class="text-success fs-12 font-w400">+40%</small></span>
+															<span class="me-sm-5 ms-0 font-w500">
+																<svg class="me-1" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13">
+																  <rect  width="13" height="13" fill="#E23428"/>
+																</svg>
+																Total Expenses
+															</span>
+															<span class="fs-16 font-w600">20,441</span>
+														</div>	
+														<div class="tab-content">
+															<div class="tab-pane fade show active" id="Daily1">
+																<div id="chartBar" class="chartBar"></div>
+															</div>
+															<div class="tab-pane fade " id="weekly1">
+																<div id="chartBar1" class="chartBar"></div>
+															</div>
+															<div class="tab-pane fade " id="monthly1">
+																<div id="chartBar2" class="chartBar"></div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-xl-6 col-sm-6">
+												<div class="card bg-secondary">
+													<div class="card-body">
+														<div class="d-flex align-items-end pb-4 justify-content-between">
+															<span class="fs-14 font-w500 text-white">Graduated Students</span>
+															<span class="fs-20 font-w600 text-white"><span class="pe-2"></span>{{ graduated }}</span>
+														</div>
+														<div class="progress default-progress h-auto">
+															<div class="progress-bar bg-white progress-animated" style="width: 60%; height:13px;" role="progressbar">
+																<span class="sr-only">24.5H20a4 Complete</span>
+															</div>
+														</div>
+														
+													</div>
+												</div>
+											</div>
+											<div class="col-xl-6 col-sm-6">
+												<div class="card bg-secondary">
+													<div class="card-body">
+														<div class="d-flex align-items-end pb-4 justify-content-between">
+															<span class="fs-14 font-w500 text-white">Total Admission</span>
+															<span class="fs-20 font-w600 text-white"><span class="pe-2"></span>{{ student_num }}</span>
+														</div>
+														<div class="progress default-progress h-auto">
+															<div class="progress-bar bg-white progress-animated" style="width: 30%; height:13px;" role="progressbar">
+																<span class="sr-only">70% Complete</span>
+															</div>
+														</div>
+														
+													</div>
+												</div>
+											</div>
+											<div class="col-xl-12">
+												<div class="card">
+													<div class="card-body">
+														<div class="row">
+															<div class="col-xl-3 col-sm-3 col-6 mb-4 col-xxl-6">
+																<div class="text-center">
+																	<h3 class="fs-28 font-w600">{{ dropped }}</h3>
+																	<span class="fs-16">Dropped Student</span>
+																</div>
+															</div>
+															<div class="col-xl-3 col-sm-3 col-6 mb-4 col-xxl-6">
+																<div class="text-center">
+																	<h3 class="fs-28 font-w600">{{ suspended }}</h3>
+																	<span class="fs-16">Suspended Student</span>
+																</div>
+															</div>
+															<div class="col-xl-3 col-sm-3 col-6 mb-4 col-xxl-6">
+																<div class="text-center">
+																	<h3 class="fs-28 font-w600">{{ expelled }}</h3>
+																	<span class="fs-16">Expelled Student</span>
+																</div>
+															</div>
+															<div class="col-xl-3 col-sm-3 col-6 mb-4 col-xxl-6">
+																<div class="text-center">
+																	<h3 class="fs-28 font-w600">{{ staff_num }}</h3>
+																	<span class="fs-16 wspace-no">Active Staff</span>
+																</div>
+															</div>
+															<div class="mb-5 mt-4 d-flex align-items-center">
+																<div>
+																	<h4><a href="javascript:void(0);" class="text-secondary">Using The Schoolly</a></h4>
+																	<span class="fs-12">Schoolly Management System offers you the tools to manage all aspects of the school
+																		activities. This Dashboard allows you to do a quick entry and view of data. You will need to
+																		user the "Admin" Login priviledge to perform more advanced task. <span><a href=""><b>Download user's guide</b></a></span>
+																	</span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-xl-12">
+								<div class="card">
+									<div class="card-header border-0 pb-0">
+										<h4 class="fs-20">Schoolly Info Corner</h4>
+									</div>
+									<div class="card-body pt-0">
+										<div class="front-view-slider owl-carousel owl-carousel owl-loaded owl-drag owl-dot">
+											<div class="items">
+												<div class="customers border">
+													<p class="fs-16"><b>Results Tracking, Fees Payment, Attendance...</b><br />
+														Both parents and teachers enjoy the flexibilities of the interface to performance tasks with easily accessible buttons. download features and perform query</p>
+													<div class="d-flex justify-content-between align-items-center mt-4">
+														<div class="customer-profile d-flex ">
+														<img src="{% static 'portal/images/users/user.jpg' %}" alt="">
+														<div class="ms-3">
+															<h5 class="mb-0"><a href="javascript:void(0);">Schoolly EdTech</a></h5>
+															<span>45m ago</span>
+														</div>
+														</div>
+														<div class="customer-button text-nowrap">
+															<a href="javascript:void(0);"><i class="far fa-check-circle text-success"></i></a>
+															<a href="javascript:void(0);"><i class="far fa-times-circle text-danger"></i></a>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="items">
+												<div class="customers border">
+													<p class="fs-16"><b>Real Time School Management</b><br />
+														Features to manage and track the progress of your school from anywhere accross different device. View and download progress reports with nice reporting features.</p>
+													<div class="d-flex justify-content-between align-items-center mt-4">
+														<div class="customer-profile d-flex ">
+														<img src="{% static 'portal/images/users/user.jpg' %}" alt="">
+														<div class="ms-3">
+															<h5 class="mb-0"><a href="javascript:void(0);">Schoolly EdTech</a></h5>
+															<span>3days ago</span>
+														</div>
+														</div>
+														<div class="customer-button text-nowrap">
+															<a href="javascript:void(0);"><i class="far fa-check-circle text-success"></i></a>
+															<a href="javascript:void(0);"><i class="far fa-times-circle text-danger"></i></a>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+														{% endif %}
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		{% endblock content_body %}
+		<!--**********************************
+			Content body end
+		***********************************-->
+		
+		
+		
+		<!--**********************************
+			Footer start
+		***********************************-->
+		<div class="footer">
+			<div class="copyright">
+				<p>Copyright © Developed by <a href="https://fizcos.com/" target="_blank">Fizcos Infotech</a> 2023</p>
+			</div>
+		</div>
+		
+		<!--**********************************
+			Footer end
+		***********************************-->
+
+		<!--**********************************
+		   Support ticket button start
+		***********************************-->
+		
+		<!--**********************************
+		   Support ticket button end
+		***********************************-->
+
+
+	</div>
+	<!--**********************************
+		Main wrapper end
+	***********************************-->
+
+	<!--**********************************
+		Scripts
+	***********************************-->
+	<!-- Required vendors -->
+	{% block scripts %}
+	<script src="{% static 'portal/vendor/global/global.min.js' %}"></script>
+
+	<script src="{% static 'portal/vendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>
+	
+	<!-- Apex Chart -->
+	
+	<script src="{% static 'portal/vendor/apexchart/apexchart.js' %}"></script>
+	
+	
+	<!-- Chart piety plugin files -->
+	
+	
+	<!-- Dashboard 1 -->
+	<script src="{% static 'portal/js/dashboard/dashboard-1.js' %}"></script>
+	
+	<script src="{% static 'portal/vendor/owl-carousel/owl.carousel.js' %}"></script>
+	<script src="{% static 'portal/vendor/bootstrap-datetimepicker/js/moment.js' %}"></script>
+	<script src="{% static 'portal/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js' %}"></script>
+	
+	<script src="{% static 'portal/js/custom.min.js' %}"></script>
+	<script src="{% static 'portal/js/dlabnav-init.js' %}"></script>
+	<script src="{% static 'portal/js/demo.js' %}"></script>
+	<script src="{% static 'portal/js/styleSwitcher.js' %}"></script>
+	<script>
+		function TravlCarousel()
+			{
+
+				/*  testimonial one function by = owl.carousel.js */
+				jQuery('.front-view-slider').owlCarousel({
+					loop:false,
+					margin:15,
+					nav:true,
+					autoplaySpeed: 3000,
+					navSpeed: 3000,
+					paginationSpeed: 3000,
+					slideSpeed: 3000,
+					smartSpeed: 3000,
+					autoplay: false,
+					animateOut: 'fadeOut',
+					dots:true,
+					navText: ['<i class="fas fa-arrow-left"></i>', '<i class="fas fa-arrow-right"></i>'],
+					responsive:{
+						0:{
+							items:1
+						},
+						
+						768:{
+							items:2
+						},			
+						
+						1400:{
+							items:2
+						},
+						1600:{
+							items:3
+						},
+						1750:{
+							items:3
+						}
+					}
+				})
+			}
+
+			jQuery(window).on('load',function(){
+				setTimeout(function(){
+					TravlCarousel();
+				}, 1000); 
+			});
+	</script>
+	<script>
+		$(function () {
+			$('#datetimepicker').datetimepicker({
+				inline: true,
+			});
+		});
+		
+		$(document).ready(function(){
+			$(".booking-calender .fa.fa-clock-o").removeClass(this);
+			$(".booking-calender .fa.fa-clock-o").addClass('fa-clock');
+		});
+	</script>
+	{% endblock scripts %}
+
+</body>
+</html>

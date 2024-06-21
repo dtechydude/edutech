@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Student Attendance</title>
+  </head>
+  <body>
+    {% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'teacher' or user.profile.user_type == 'admin'%}
+    <div class="container">
+        <div class="col-sm-12" style="padding-top:20px; text-align:center">
+            <h2 style="color:red;">Portal: Attendance Report</h2>
+             <a href="{% url 'portal:portal-home' %}" class="btn btn-default ml15"><i class="fa fa-print mr5"></i> >> Portal Home</a>
+          </div>
+
+        <div  style="padding-top:20px;"></div>
+        <div class=" col-sm-8" style="float:right;">
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <tr>
+                    <th scope="col" colspan="4" style="text-align:left; color:green;">STUDENT CURRENTLY IN MY CLASS</th>   
+                  </tr>
+                  <tr>
+                    <th scope="col">Student ID</th>
+                    <th scope="col">Attendance Date</th>
+                    <th scope="col">Morning</th>
+                    <th scope="col">Afternoon</th>
+                           
+                  </tr>
+              
+              </thead>
+              <tbody>
+                {% for att in my_students_attendance %}
+                    <tr>
+                    
+                    <td scope="row">{{ att.student_id }}</td>
+                    <td scope="row">{{ att.date_taken }}</td>
+                    
+                    <td scope="row">{% if att.morning_status %}<em>Present</em>{% else %}<span style="color:red;"><em>Absent</em></span>{% endif %}</td>
+                    <td scope="row">{% if att.afternoon_status %}<em>Present</em>{% else %}<span style="color:red;"><em>Absent</em></span>{% endif %}</td>
+                    
+                           
+                  </tr>
+                  {% endfor %}
+              </tbody>
+            </table>
+            <!-- Page Paginator start -->
+			
+										{% if my_students_attendance.has_other_pages %}
+										{% if my_students_attendance.has_previous %}
+										<a class="btn btn-outline-info mb-4" href="?page={{ my_students_attendance.previous_page_number }}">&laquo;</a>
+										{% else %}
+										<a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+
+										{% endif %}
+										{% for i in my_students_attendance.paginator.page_range %}
+										{% if my_students_attendance.number == i %}
+
+										<a class="btn btn-info mb-4" href="">{{ i }}</a>
+										{% else %}
+										<a class="btn btn-outline-info mb-4" href="?page={{ i }}">{{ i }}</a>
+										{% endif %}
+										{% endfor %}
+										{% if my_students_attendance.has_next %}
+										<a class="btn btn-outline-info mb-4" href="?page={{ my_students_attendance.next_page_number }}">&raquo;</a>
+										{% else %}
+										
+										<a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+										{% endif %}
+									
+									{% endif %}
+									<!-- Page Paginator end -->
+
+
+
+          </div>
+        <div class=" col-sm-4" style="float:right;">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th scope="col" colspan="2" style="color:green;">Total Attendance This Term</th>
+                <tr>
+                    <th scope="col">Student ID</th>
+                    <th scope="col">Days Present</th>
+                                           
+                  </tr>
+          
+            </thead>
+            <tbody>
+              
+                {% for n in my_student_att %}
+                <tr>
+                    
+                    <td scope="row">{{ n.student_id__last_name }}<br></td>
+                    <td scope="row">{{ n.count }}</td>
+                   
+              <tr>
+                {% endfor %}
+        
+            </tbody>
+          </table>
+          </div>
+          
+        </div>
+</form>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+{% endif %}
+</html>

@@ -1,0 +1,57 @@
+{% extends 'portal/portal-home.html'%}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}<title>Bank Detail List </title>{% endblock title %}
+
+{% block content_body %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active"><a href=""><span style="font-size: 35px;"><h3> Bank Detail List</h3></span></a></li>
+                
+                
+            </ol>
+        </div>
+        <!-- row -->
+        <div class="row">
+            <div class="col-xl-10 col-xxl-10 col-lg-10">
+                <div class="card">
+                 
+                    <div class="card-body">
+                        <div id="DZ_W_TimeLine" class="widget-timeline dlab-scroll height770">
+                            {% if user.is_authenticated %}
+                        
+                            {% for bk in banklist %}    
+                                                                            
+                              <p> <span style="font-size:16px;"><strong>{{ bk.name}}</strong> - <span style="color:red;"> {{ bk.name}}<strong>{{ bk.acc_number}}</strong></span> <span style="font-size:14px; color:rgba(0, 0, 255, 0.541);">  -   {{ bk.description}}</span></span></p>
+                                <hr>
+                                                             
+                                {% endfor %}                                                   
+                          
+                       {% else %}
+                        <div>
+                            <h1>Permission Denied!</h1>
+                        </div>
+                      
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </div>
+            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content_body %}
+
+
+
+
+

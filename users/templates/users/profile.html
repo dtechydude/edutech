@@ -1,0 +1,130 @@
+{% extends 'portal/portal-home.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}<title>Schoolly Profile Page</title> {% endblock title%}
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        {% block content_body %}
+        <div class="content-body">
+            <div class="container-fluid">
+				<div class="row page-titles">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item active"><a href="javascript:void(0)">User Account</a></li>
+						<li class="breadcrumb-item"><a href="javascript:void(0)">Management</a></li>
+					</ol>
+                </div>
+                <div>
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class ="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor%}
+                    {% endif%}
+                </div>
+				
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-4 order-lg-2 mb-4">
+                                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="text-muted">My Information</span>
+                                            <span class="badge badge-primary badge-pill">6</span>
+                                        </h4>
+                                        <ul class="list-group mb-3">
+                                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                                <div>
+                                                    <h6 class="my-0">{{ user.studentdetail.first_name }} {{ user.studentdetail.middle_name }} {{ user.studentdetail.last_name }}</h6>
+                                                    <small class="text-muted">Registered Full Name</small>
+                                                </div>
+                                                <span class="text-muted"><></span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                                <div>
+                                                    <h6 class="my-0">{{ user.profile.code }}</h6>
+                                                    <small class="text-muted">My Profile code</small>
+                                                </div>
+                                                <span class="text-muted"><></span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                                <div>
+                                                    <h6 class="my-0">{{ user.profile.user_type }}</h6>
+                                                    <small class="text-muted">My User Type</small>
+                                                </div>
+                                                <span class="text-muted"><></span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between lh-condensed ">
+                                                <div class="text-white">
+                                                    <h6 class="my-0">{{ user.studentdetail.student_username }}</h6>
+                                                    <small class= "text-muted">My Admission Code</small>
+                                                </div>
+                                                <span class="text-white"><></span>
+                                            </li>
+
+                                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                                <div>
+                                                    <h6 class="my-0">{{ user.studentdetail.current_class }}</h6>
+                                                    <small class="text-muted">My Current Class</small>
+                                                </div>
+                                                <span class="text-muted"><></span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                                <div>
+                                                    <h6 class="my-0">{{ user.studentdetail.class_teacher.user }}</h6>
+                                                    <small class="text-muted">My Form Teacher</small>
+                                                </div>
+                                                <span class="text-muted"><></span>
+                                            </li>
+
+                                        </ul>
+
+                                        <form>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="Request">
+												<button type="submit" class="input-group-text">Send</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    
+                                    <div class="col-lg-8 order-lg-1">
+                                        <h4 class="mb-3">Update My Profile</h4>
+                                        <span>(You can update any of the information in thisform)</span>
+                                        
+                                            <form method="POST" enctype="multipart/form-data" class="needs-validation">
+                                                {% csrf_token %}
+                                            <div class="row">
+                                                {{ u_form|crispy }}
+                                                {{ p_form|crispy }}
+                                                <div class="text-center mt-4">
+                                                    <button type="submit" value="submit" class="btn btn-primary btn-block">Update Profile</button>
+                                                </div>
+                                        
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock content_body %}
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+{% block scripts %}
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="{% static 'portal/vendor/global/global.min.js' %}"></script>
+	<script src="{% static 'portalvendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'portal/js/custom.min.js' %}"></script>
+	<script src="{% static 'portal/js/dlabnav-init.js' %}"></script>
+	<script src="{% static 'portal/js/demo.js' %}"></script>
+    <script src="{% static 'portal/js/styleSwitcher.js' %}"></script>
+{% endblock scripts %}

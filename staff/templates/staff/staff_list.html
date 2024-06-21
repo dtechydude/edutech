@@ -1,0 +1,178 @@
+{% extends 'portal/portal-home.html'%}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}<title> Staff List</title>{% endblock title%}
+
+
+{% block content_body %}
+
+		<div class="content-body">
+			<!-- row -->
+			
+			<div class="container-fluid">
+				<div class="d-flex justify-content-between align-items-center flex-wrap">
+					<div class="card-action coin-tabs mb-2">
+						
+						<ul class="nav nav-tabs" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link active"  href="{% url 'staff:staff-pdf' %}">Download PDF</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'staff:staff-csv' %}">Download CSV</a>
+							</li>
+							<li><div>                 
+								{% if messages %}
+								{% for message in messages %}
+								<div class ="alert alert-{{ message.tags }}">{{ message }}</div>
+								{% endfor%}
+								{% endif%}
+							 </div></li>
+		
+						</ul>
+
+						<div>
+							<!-- <div style="float:left; padding:4px; width:30%;"> -->
+								<div>
+									<form action="" method="get">
+								
+									<!-- {{ StudentFilter.form|crispy}} -->
+									{{ staffprofile_filter.form }}
+									
+									<button class="btn btn-primary" type="submit">Search </button>
+								</form>	</div>
+							</div>
+
+					</div>
+					<div class="d-flex align-items-center mb-2 flex-wrap"> 
+						<div class="guest-calendar">
+							<div id="reportrange" class="pull-right reportrange" style="width: 100%">
+								<span>Staff List</span><b class="caret"></b>
+								<i class="fas fa-user ms-3"></i>
+							</div>
+						
+						</div>
+						
+					</div>
+				</div>
+				
+					
+
+					<div class="col-xl-12">
+						<div class="card">
+							<div class="card-body p-0">
+								<div class="tab-content">	
+									<div class="tab-pane active show" id="AllGuest">
+										<div class="table-responsive">
+											<table class="table card-table display mb-4 shadow-hover default-table table-responsive-lg" id="guestTable-all">
+												<thead>
+													<tr>
+														<th class="bg-none">
+															<div class="form-check style-1">
+															  <input class="form-check-input" type="checkbox" value="" id="checkAll">
+															</div>
+														</th>
+														<th>Staff Identity</th>
+														<th>Category</th>
+														<th>Department</th>
+														<th>Phone No.</th>
+														<th>Class-in-charge</th>
+														<th>Status</th>
+														
+													</tr>
+												</thead>
+												<tbody>
+													{% for staff in stafflist %}
+													<tr>
+														<td>
+															<div class="form-check style-1">
+															  <input class="form-check-input" type="checkbox" value="">
+															</div>
+														</td>
+														<td>
+															<div class="concierge-bx d-flex align-items-center">
+																<img class="me-3 rounded" src="{{user.profile.image.url}}" alt="">
+																<div>
+																	<h6 class="fs-16 mb-0 text-nowrap"><a class="text-black" href="{% url 'staff:staff_detail' staff.id %}">{{ staff.user.username}}- <span style="font-size:9px;, color:grey;">{{staff.staff_username}}</span></h6>
+																	<span class="text-primary fs-14">{{ staff.first_name}} {{ staff.last_name}}</span></a>
+																</div>
+															</div>
+														</td>
+														<td class="text-nowrap">
+															<span>{{ staff.user.staffprofile.cat_name}}</span>
+														</td>
+														<td class="text-nowrap">
+															
+																<span>{{ staff.user.staffprofile.department}}</span>
+																<span></span>
+														</td>
+														<td class="text-nowrap">
+															
+																<span>{{ staff.user.staffprofile.phone }}</span>
+																<span></span>
+														
+														</td>
+														<td class="text-nowrap">
+															<span>{{ staff.user.staffprofile.class_in_charge }}</span>
+															<span></span>
+														</div>
+														
+														</td>
+														<td>
+															<div class="center">
+																{% if staff.user.profile.user_type == 'inactive' %}
+																<span style="color:red;"><b>Inactive</b></span>
+																{% else %}
+																<span style="color:green"><b>Active</b></span>
+																																																																	
+															</div>
+															{% endif %}
+														</td>
+														
+														{% endfor %}
+													</tr>	
+													
+												</tbody>
+											</table>
+
+											<!-- Page Paginator start -->
+			
+										{% if stafflist.has_other_pages %}
+										{% if stafflist.has_previous %}
+										<a class="btn btn-outline-info mb-4" href="?page={{ stafflist.previous_page_number }}">&laquo;</a>
+										{% else %}
+										<a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+
+										{% endif %}
+										{% for i in stafflist.paginator.page_range %}
+										{% if stafflist.number == i %}
+
+										<a class="btn btn-info mb-4" href="">{{ i }}</a>
+										{% else %}
+										<a class="btn btn-outline-info mb-4" href="?page={{ i }}">{{ i }}</a>
+										{% endif %}
+										{% endfor %}
+										{% if stafflist.has_next %}
+										<a class="btn btn-outline-info mb-4" href="?page={{ stafflist.next_page_number }}">&raquo;</a>
+										{% else %}
+										
+										<a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+										{% endif %}
+									
+									{% endif %}
+									<!-- Page Paginator end -->
+
+									</div>	
+									</div>	
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+		{% endblock content_body %}
+		<!--**********************************
+			

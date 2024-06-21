@@ -1,0 +1,312 @@
+{% extends 'portal/portal-home.html'%}
+{% load static %}
+
+{% block title %}<title>Student Detail </title>{% endblock title%}
+
+{% block content_body %}
+<div class="content-body">
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="profile card card-body px-3 pt-3 pb-0">
+            <div class="profile-head">
+                <div class="photo-content">
+                    <div class="cover-photo rounded"></div>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-photo">
+                        <img src="{{studentdetail.user.profile.image.url}}" class="img-fluid rounded-circle" alt="">
+                    </div>
+                    <div class="profile-details">
+                        <div class="profile-name px-3 pt-2">
+                            <h4 class="text-primary mb-0">{{ studentdetail.first_name}}-{{studentdetail.middle_name}}-{{studentdetail.last_name}}</h4>
+                            <p>Full Name <span>({{studentdetail.user.username}})</span></p>
+                        </div>
+                        <div class="profile-email px-2 pt-2">
+                            <h4 class="text-muted mb-0">{{ studentdetail.phone }}</h4>
+                            <p>Phone</p>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-4">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="profile-statistics">
+                            <div class="text-center">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="m-b-0">{{studentdetail.current_class}}</h5><span>Current Class</span>
+                                    </div>
+                                    <div class="col">
+                                        {% if studentdetail.is_prefect %}
+                                        <h5 class="m-b-0">{{ studentdetail.badge }}</h5>
+                                        {% else %}
+                                        <h5 class="m-b-0">No</h5>
+                                        {% endif %}
+                                        <span>Student Is Prefect?</span>
+                                    </div>
+                                    <div class="col">
+                                        <h5 class="m-b-0">{{studentdetail.student_status}}</h5><span>Student Status</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4">
+                                    {% if user.is_superuser %}
+                                    <a href="{% url  'students:students-update' studentdetail.id %}" class="btn btn-primary mb-1 me-1">Update Student</a> 
+                                    <a href="{% url  'students:students-delete' studentdetail.id %}" class="btn btn-primary mb-1">Delete Student</a>
+
+                                                                        
+                              {% else %}
+                                <a href="javascript:void(0);" class="btn btn-primary mb-1 me-1">E-learning Center</a> 
+                                <a href="javascript:void(0);" class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#sendMessageModal">Send Message</a>
+                                {% endif %}    
+                            </div>
+                               
+                              
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="sendMessageModal">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Send Message</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="comment-form">
+                                                <div class="row"> 
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label class="text-black font-w600 form-label">Name <span class="required">*</span></label>
+                                                            <input type="text" class="form-control" value="Author" name="Author" placeholder="Author">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label class="text-black font-w600 form-label">Email <span class="required">*</span></label>
+                                                            <input type="text" class="form-control" value="Email" placeholder="Email" name="Email">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="text-black font-w600 form-label">Comment</label>
+                                                            <textarea rows="8" class="form-control" name="comment" placeholder="Comment"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3 mb-0">
+                                                            <input type="submit" value="Post Comment" class="submit btn btn-primary" name="submit">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="profile-blog">
+                            <h5 class="text-primary d-inline">Student Bio Information</h5>
+                            <h4><a href="post-details.html" class="text-black">Brief Bio Info</a></h4>
+                            <p class="mb-0">{{ studentdetail.user.profile.bio}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12">
+                
+            </div>
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="profile-news">
+                            <h5 class="text-primary d-inline">Student Achievements</h5>
+                            <div class="media pt-3 pb-3">
+                                <img src="{{studentdetail.user.profile.image.url}}" alt="image" class="me-3 rounded" width="75">
+                                <div class="media-body">
+                                    <h5 class="m-b-5"><a href="post-details.html" class="text-black">Collection of academic achievements</a></h5>
+                                    <p class="mb-0">I shared this on my fb wall a few months back, and I thought.</p>
+                                </div>
+                            </div>
+               
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="profile-tab">
+                    <!-- <div class="custom-tab-1"> -->
+                        <ul class="nav nav-tabs">
+                            <!-- <li class="nav-item"><a href="#my-posts" data-bs-toggle="tab" class="nav-link active show">Posts</a>
+                            </li> -->
+                            <li class="nav-item"><a href="#about-me" data-bs-toggle="tab" class="nav-link active show">About Me</a>
+                            </li>
+                            
+                        </ul>
+                        <div class="tab-content">
+                            
+                            
+                                    <div class="profile-personal-info">
+                                    <h4 class="text-primary mb-4">Personal Information</h4>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Full Name <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ studentdetail.first_name}} {{ studentdetail.middle_name}} {{ studentdetail.last_name}} </span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Gender <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ studentdetail.gender}} </span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Student Code <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ studentdetail.student_username }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Date of Birth <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ studentdetail.dob }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Student Type <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ studentdetail.student_type }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Email <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ studentdetail.user.email }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">STUDENT STATUS <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span style="font-weight:900;">{{ studentdetail.student_status }}</span>
+                                        </div>
+                                    </div>
+                                    <hr class="text-primary mb-4">
+                                    <h4 class="text-primary mb-4">Academic Information</h4>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Admission Date <span class="pull-end">:</span></h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{studentdetail.date_admitted }}</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Current Class <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ studentdetail.current_class }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Form Teacher <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ studentdetail.class_teacher }}</span>
+                                        </div>
+                                    </div>
+                                    <hr class="text-primary mb-4">
+                                    <h4 class="text-primary mb-4">Guardian's Information</h4>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Guardian's Name <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ studentdetail.guardian_name }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Guardian's Address <span class="pull-end">:</span></h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ studentdetail.guardian_address}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Guardian's Phone <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ studentdetail.guardian_phone}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Guardian's Email <span class="pull-end">:</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>{{ studentdetail.guardian_email }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-2">
+                                        <div class="col-sm-3 col-5">
+                                            <h5 class="f-w-500">Special Case <span class="pull-end">:</span></h5>
+                                        </div>
+                                        <div class="col-sm-9 col-7"><span>None</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div id="profile-settings" class="tab-pane fade"> -->
+                                <div class="pt-3">
+                                    <div class="settings-form">
+                                        <h4 class="text-primary"><a href="{% url 'students:students-update' studentdetail.pk %}">Account Setting </a></h4>
+
+                                   
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                    
+                    <!-- Modal -->
+                </div>
+            </div>
+            </div>
+                    
+
+{% endblock content_body %}

@@ -1,0 +1,64 @@
+{% extends 'portal/portal-home.html'%} 
+{% block title %}<time>Student Results</time>{% endblock title%}
+
+{% block content_body %}
+
+<div class="content-body">
+    <div class="container-fluid">
+        
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active"><a href="#">RESULTS</a></li>
+                <li class="breadcrumb-item"><a href="#">Marksheet</a></li>
+            </ol>
+        </div>
+        <!-- row -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">S/N</th>
+                                    <th scope="col">Session</th>
+                                    <th scope="col">Exam</th>
+                                    <th scope="col">Term</th>
+                                    <th scope="col">Standard</th>
+                                    <th scope="col">Subject</th>
+                                    <th scope="col">Score</th>
+                                    <th scope="col">Exam Date</th>
+                                    <th scope="col">Remarks</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    {% for report in myreportsheet %}
+                                  <tr>
+                                    <th>{{ report.id }}</td>
+                                    <th>{{ report.session }}</td>
+                                    <td>{{ report.exam }}</td>
+                                    <td>{{ report.term }}</td>
+                                    <td>{{ report.standard }}</td>
+                                    <td>{{ report.subject_name}}</td>
+                                    <td>{{ report.cand_score }}</td>
+                                    <td>{{ report.exam_date }}</td>
+                                    <td>{{ report.remark }}</td>
+                                    
+                                  </tr>
+                                  {% endfor %}
+                                  
+                                </tbody>
+                              </table>
+                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endblock content_body %}

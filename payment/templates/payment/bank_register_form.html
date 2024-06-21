@@ -1,0 +1,62 @@
+{% extends 'portal/portal-home.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}<title>Bank Register Form </title>{% endblock title %}
+
+{% block content_body %}
+{% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'admin' %}
+
+<div class="content-body">
+   <div class="container-fluid">
+       <div class="row page-titles">
+           <ol class="breadcrumb">
+               <li class="breadcrumb-item active"><a href="javascript:void(0)">Register Bank Detail</a></li>
+               <li class="breadcrumb-item"><a href="#">Add School Bank Details</a></li>
+           </ol>
+       </div>
+       <div class="row">
+                    
+           </div>
+           <div class="col-xl-8">
+               <div class="card">
+                   <div class="card-header">
+                       <h6 class="card-title">Add Bank Detail</h6><br>
+                          
+                   </div>
+            
+                   <div class="card-body">
+                       <p class="card-text">
+                           <form method="POST" enctype="multipart/form-data" >
+                               {% csrf_token %}
+      
+                           {{ form|crispy}}
+                   </div>
+                   <div class="card-footer d-sm-flex justify-content-between align-items-center">
+
+                       <button type="submit" value="submit" class="btn btn-primary">Add Bank Detail</button>
+                   
+                   </div>
+               </form>
+               </div>
+           </div>
+      
+         
+           </div>
+           </div>
+
+
+       </div>
+   </div>
+</div>
+{% endif %}
+{% endblock content_body %}
+
+{% block scripts %}
+<script src="{% static 'portal/vendor/global/global.min.js' %}"></script>
+<script src="{% static 'portal/vendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>
+<script src="{% static 'portal/js/custom.min.js' %}"></script>
+<script src="{% static 'portal/js/dlabnav-init.js' %}"></script>
+<script src="{% static 'portal/js/demo.js' %}"></script>
+<script src="{% static 'portal/js/styleSwitcher.js' %}"></script>
+{% endblock scripts %}

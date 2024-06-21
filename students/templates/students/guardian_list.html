@@ -1,0 +1,4 @@
+<h1>hello</h1>
+{% for g in guardian %}
+{{ g.student_username}} {{g.first_name}}- {{g.last_name}} -{{g.current_class}}  - {{g.guardian_phone}} - {{ g.guardian_email }} {{g.guardian_address}} - {{g.relationship}} {{g.student_status}}<br />
+{% endfor%}

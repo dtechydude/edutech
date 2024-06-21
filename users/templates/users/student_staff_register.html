@@ -1,0 +1,81 @@
+{% extends 'portal/portal-home.html' %}
+{% load static %}
+
+{% block title %}<title> Schoolly - Register Staff Students </title>{% endblock title %}
+
+{% block content_body %}
+{% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'admin' or user.profile.user_type == 'teacher' %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Update To Students or Staff</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">You must have registered the user first</a></li>
+            </ol>
+        </div>
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Register user as Student</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Click the button to Update registered user to student category <br> (ensure you have registered the user first.)
+                        </p>
+                    </div>
+                    <div class="card-footer d-sm-flex justify-content-between align-items-center">
+                        <div class="card-footer-link mb-4 mb-sm-0">
+                            <p class="card-text text-dark d-inline">Last updated 3 mins ago</p>
+                        </div>
+
+                        <a href="{% url 'students:students-create' %}" class="btn btn-primary">Update User to Student</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Register User as Staff</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Click the button to Update registered user to staff category <br> (ensure you have registered the user first.)</p>
+                    </div>
+                    <div class="card-footer d-sm-flex justify-content-between align-items-center">
+                        <div class="card-footer-link mb-4 mb-sm-0">
+                            <p class="card-text text-dark d-inline">Last updated 3 mins ago</p>
+                        </div>
+
+                        <a href="{% url 'staff:staff_form' %}" class="btn btn-primary">Update User To Staff</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4">
+                <div class="card">      
+                    <div class="card-body">
+                        <p class="card-text">You can go back to register a new user form</p>
+                    </div>             
+
+                    <a href="{% url 'register' %}" class="btn btn-primary">Register Another User</a>
+                </div>
+                    </div>
+           
+            </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock content_body %}
+
+
+{% block scripts %}
+<script src="{% static 'portal/vendor/global/global.min.js' %}"></script>
+<script src="{% static 'portal/vendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>
+<script src="{% static 'portal/js/custom.min.js' %}"></script>
+<script src="{% static 'portal/js/dlabnav-init.js' %}"></script>
+<script src="{% static 'portal/js/demo.js' %}"></script>
+<script src="{% static 'portal/js/styleSwitcher.js' %}"></script>
+{% endblock scripts %}

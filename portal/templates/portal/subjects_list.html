@@ -1,0 +1,96 @@
+{% extends 'portal/portal-home.html'%}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}<title>Subjects List </title>{% endblock title %}
+
+{% block content_body %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active"><a href=""><span style="font-size: 35px;"><h3> Exam Subjects List</h3></span></a></li>
+                
+                
+            </ol>
+        </div>
+        <!-- row -->
+        <div class="row">
+            <div class="col-xl-8 col-xxl-8 col-lg-8">
+                <div class="card">
+                 
+                    <div class="card-body">
+                        <div id="DZ_W_TimeLine" class="widget-timeline dlab-scroll height770">
+                            {% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'admin' %}
+                            <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-body p-0">
+                                        <div class="tab-content">	
+                                            <div class="tab-pane active show" id="AllGuest">
+                                                <div class="table-responsive">
+                                                    <table class="table card-table display mb-4 shadow-hover default-table table-responsive-lg" id="guestTable-all">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Suject ID</th>
+                                                                <th>Name</th>
+                                                                <th>Description</th>                                                               
+                                                                
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for s in subjectlist %}
+                                                            <tr>
+                                                               <td>                                                                   
+                                                                       
+                                                                    <div>
+                                                                        <h6 class="fs-16 mb-0 text-nowrap"></span></h6>
+                                                                        <span class="text-primary fs-14">{{ s.subject_id}}</span></a>
+                                                                
+                                                                </div>
+                                                            </td>
+                                                                <td>                                                                   
+                                                                       
+                                                                        <div>
+                                                                            <h6 class="fs-16 mb-0 text-nowrap"></span></h6>
+                                                                            <span class="text-primary fs-14">{{ s.name}}</span></a>
+                                                                    
+                                                                    </div>
+                                                                </td>
+                                                                <td class="text-nowrap">
+                                                                    <span class="text-primary fs-14">{{ s.description}}</span>
+                                                                </td>
+                                                               
+                                                               
+                                                                {% endfor %}
+                                                            </tr>	
+                                                            
+                                                        </tbody>
+                                                    </table>
+                            
+                           
+                          
+                       {% else %}
+                        <div>
+                            <h1>Permission Denied!</h1>
+                        </div>
+                      
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </div>
+            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content_body %}
+
+
+
+
+
