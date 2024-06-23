@@ -60,7 +60,7 @@ class Profile(models.Model):
 
 #this function returns the profile name in the admin panel profile table
     def __str__ (self):
-        return f'{self.user.username}-{self.code}'
+        return f'username:- {self.user.username} - {self.user.email}'
 
     
     def save(self, *args, **kwargs):

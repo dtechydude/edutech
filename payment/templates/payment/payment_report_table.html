@@ -79,7 +79,7 @@
 														<th>FEE DUE</th>
 														<th>FEE PAID</th>
 														<th>DEBT.</th>                                                        
-														<th>INST. </th>
+														<!-- <th>INST. </th> -->
                                                         <th>METHOD</th>
 														
 													</tr>
@@ -101,8 +101,8 @@
 													
 															<span class="fs-16 mb-0 text-nowrap"><a class="text-black" href="">
 																<!-- if it is a student that paid -->
-																<span>{{ balance.payee.studentdetail.first_name }} {{ balance.payee.studentdetail.last_name}}</span><br>
-																{{balance.payee }} </a></span>
+																<span>{{ balance.student_detail.first_name }} {{ balance.student_detail.last_name}}</span><br>
+																{{balance.student_detail.user }} </a></span>
 																
 											
 																</div>
@@ -117,45 +117,43 @@
 															<!-- if students paid by themselves -->
 															{% if balance.discount > 0 %}
                                                         <td class="text-nowrap">                                                
-                                                            <span class="text-nowrap">Discount {{balance.discount}}%<br>N {{ balance.discounted_amount_due }}</span>
+                                                            <span class="text-nowrap">Discount: {{balance.discount}}%<br>N {{ balance.discounted_amount_due }}</span>
                                                             </td>
 															{% else %}
 															<td class="text-nowrap">                                                
-																<span class="text-nowrap">N {{ balance.payment_name.amount_due }}</span>
+																<span class="text-nowrap" style="font-size: 17px;">N {{ balance.payment_name.amount_due }}</span>
 																</td>
 															{% endif %}
 
                                                         <td class="text-nowrap">
-															<span class="text-nowrap">N {{ balance.amount_paid }}</span><br>
-                                                            <span>{{ balance.payment_date }}</span>
+															<span class="text-nowrap">N{{ balance.amount_paid_a }} - {{ balance.payment_date_a }} <br>
+																 N{{ balance.amount_paid_b }} - {{ balance.payment_date_b }} <br>
+																N{{ balance.amount_paid_c }} - {{ balance.payment_date_c }} </span>
+                                                            <!-- <span>{{ balance.payment_date_a }}, {{ balance.payment_date_b }}, {{ balance.payment_date_c }}</span> -->
 														
 														</td>
-														{% if balance.discount > 0 %}
+														
 														<td class="text-nowrap">
+															{% if balance.discount > 0 %}
 															
 															<span class="text-nowrap">Discounted: <br>N {{ balance.discounted_balance_pay}}</span>
-															
-														
+															{% else %}
+															<span class="text-nowrap" style="font-size: 17px;">N {{ balance.balance_pay}}</span>
+															{% endif %}
 														</td>
-														{% else %}
-														<td class="text-nowrap">
-															
-															<span class="text-nowrap">N {{ balance.balance_pay}}</span>
-															
+
 														
-														</td>
-														{% endif %}
-														<td class="text-nowrap">
+														<!-- <td class="text-nowrap">
 															
 																<span class="text-nowrap">{{ balance.installment_level }}</span>
 																<span></span>
 														
-														</td>
+														</td> -->
 														
 														<td class="text-nowrap">
 															
-																<span class="text-nowrap" style="color:red;">{{ balance.payment_method }}</span><br>
-																<span><strong>By:</strong> {{ balance.depositor }}</span>
+																<span class="text-nowrap" style="color:red;">{{ balance.bank_name_a }}, <br>{{ balance.bank_name_b }}, <br>{{ balance.bank_name_c }}</span>
+																
 																<span></span>
 															
 														</td>

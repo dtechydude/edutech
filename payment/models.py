@@ -66,13 +66,13 @@ class PaymentDetail(models.Model):
     other_details_a = models.CharField(max_length=200, blank=True, verbose_name='description(if any)')
 
     amount_paid_b = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True)
-    bank_name_b = models.ForeignKey(BankDetail, on_delete=models.CASCADE, default=None, null=True, related_name='bank_name_b')   
-    payment_date_b = models.DateField()
+    bank_name_b = models.ForeignKey(BankDetail, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='bank_name_b')   
+    payment_date_b = models.DateField(blank=True, null=True)
     other_details_b = models.CharField(max_length=200, blank=True, verbose_name='description(if any)')
 
     amount_paid_c = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True)
-    bank_name_c = models.ForeignKey(BankDetail, on_delete=models.CASCADE, default=None, null=True)   
-    payment_date_c = models.DateField()
+    bank_name_c = models.ForeignKey(BankDetail, on_delete=models.CASCADE, default=None, null=True, blank=True)   
+    payment_date_c = models.DateField(blank=True, null=True)
     other_details_c = models.CharField(max_length=200, blank=True, verbose_name='description(if any)')
 
     discount = models.DecimalField(help_text='enter in %', max_digits=3, decimal_places=0, blank=True, null=True, verbose_name='TOTAL DISCOUNT(if any)', default=0, validators=[MinValueValidator(0), MaxValueValidator(100)]) 
@@ -86,8 +86,12 @@ class PaymentDetail(models.Model):
     class Meta:
         ordering = ['-student_detail' ]
 
-    #def __str__ (self):
-    #    return f'{self.payee}'
+        unique_together = ['student_detail', 'payment_name',]
+
+        
+
+    def __str__ (self):
+       return f'{self.student_detail}'
 
     def get_absolute_url(self):
         return reverse('payment:payment_detail', kwargs={'id':self.id})
@@ -95,15 +99,24 @@ class PaymentDetail(models.Model):
     @property
     def balance_pay(self):
        return self.payment_name.amount_due - (self.amount_paid_a + self.amount_paid_b + self.amount_paid_c)
+    
+    @property
+    def total_amount_paid(self):
+       return (self.amount_paid_a + self.amount_paid_b + self.amount_paid_c)
 
     @property
     def discounted_amount_due(self):
        return self.payment_name.amount_due - (self.discount/100 * self.payment_name.amount_due)
+    
 
     @property
     def discounted_balance_pay(self):
         #return self.discounted_amount_due - self.amount_paid
-        return self.discounted_amount_due - self.balance_pay
+        return self.discounted_amount_due - self.total_amount_paid
+    
+    @property
+    def discounted_amount(self):
+        return self.payment_name.amount_due - self.discounted_balance_pay
 
 
     # for getting total number of payments a student made

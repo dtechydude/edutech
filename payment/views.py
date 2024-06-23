@@ -56,7 +56,7 @@ class PaymentCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         print('form_valid called')
         object = form.save(commit=False)
-        object.payee = self.request.user
+        object.student_detail = self.request.user
         object.save()
         return super(PaymentCreateView, self).form_valid(form)
 
@@ -106,7 +106,8 @@ def payment_chart_form(request):
 def paymentlist(request):
     paymentlist = PaymentDetail.objects.all()
     paymentlist_filter = PaymentFilter(request.GET, queryset=paymentlist)
-    balance_pay = PaymentDetail.objects.annotate(balance_pay= F('amount_paid') - F('payment_name__amount_due'))
+    #balance_pay = PaymentDetail.objects.annotate(balance_pay= F('amount_paid') - F('payment_name__amount_due'))
+    balance_pay = PaymentDetail.objects.annotate(balance_pay= F('amount_paid_a') - F('payment_name__amount_due'))
   
 
     paymentlist = paymentlist_filter.qs
@@ -126,7 +127,7 @@ def paymentlist(request):
         'paymentlist_filter': paymentlist_filter,
         'paymentlist' : paymentlist,
         'balance_pay': balance_pay,
-        'balance_pay' : PaymentDetail.objects.annotate(balance_pay= F('amount_paid') - F('payment_name__amount_due'))
+        'balance_pay' : PaymentDetail.objects.annotate(balance_pay= F('amount_paid_a') - F('payment_name__amount_due'))
          
 
     }
@@ -230,10 +231,10 @@ def allpayment_pdf(request):
 
     for payments in payment:
         lines.append(""),
-        lines.append("Username: " + payments.payee.username),
-        lines.append("Amount: " + str(payments.amount_paid)),
-        lines.append("Date: " + str(payments.payment_date)),
-        lines.append("Method:" + payments.payment_method),
+        lines.append("Username: " + payments.user.username),
+        lines.append("Amount: " + str(payments.amount_paid_a)),
+        lines.append("Date: " + str(payments.payment_date_a)),
+        lines.append("Method:" + payments.other_details_a),
 
         lines.append("------->----------->----------->"),
 
@@ -261,13 +262,13 @@ def allpayment_csv(request):
     payment = PaymentDetail.objects.all()
 
     # Add column headings to the csv files
-    writer.writerow(['STUDENT ID', 'SURNAME ', 'FIRSTNAME', 'CURRENT CLASS', 'FEE DUE', 'AMOUNT PAID', 'BALANCE', 'PURPOSE', 'PAYMENT DATE', 'METHOD', 'DEPOSITOR', 'BANK', 'DESCRIPTION', 'IS_CONFIRMED', 'SESSION', 'TERM'])
+    writer.writerow(['STD.ID', 'SURNAME ', 'FIRSTNAME', 'CLASS',  'SESSION', 'TERM', 'FEE DUE',  'PURPOSE', 'PAID_1', 'DATE_1', 'METHOD_1', 'CHECKED_1', 'PAID_2', 'DATE_2', 'METHOD_2', 'CHECKED_2', 'PAID_3', 'DATE_3', 'METHOD_3', 'CHECKED_3', 'TOTAL PAID', 'TOTAL DEBT'])
 
 
     # Loop thru and output
     for payments in payment:
-        writer.writerow([payments.payee.username, payments.student_detail.last_name, payments.student_detail.first_name, payments.student_detail.current_class, payments.payment_name.amount_due, payments.amount_paid, payments.payment_name.amount_due - payments.amount_paid, 
-        payments.payment_name, payments.payment_date, payments.payment_method, payments.depositor, payments.bank_name, payments.description, payments.confirmed, payments.payment_name.session, payments.payment_name.term])
+        writer.writerow([payments.student_detail.user.username, payments.student_detail.last_name, payments.student_detail.first_name, payments.student_detail.current_class, payments.payment_name.session, payments.payment_name.term, payments.payment_name.amount_due, payments.payment_name, payments.amount_paid_a, payments.payment_date_a, payments.bank_name_a, payments.confirmed_a,
+         payments.amount_paid_b, payments.payment_date_b, payments.bank_name_b, payments.confirmed_b, payments.amount_paid_c, payments.payment_date_c, payments.bank_name_c, payments.confirmed_c, payments.amount_paid_a + payments.amount_paid_b + payments.amount_paid_c, payments.payment_name.amount_due - (payments.amount_paid_a + payments.amount_paid_b + payments.amount_paid_c) ])
 
     return response
 
@@ -354,9 +355,9 @@ class PaymentDetailView(LoginRequiredMixin, DetailView):
 @login_required
 def payment_report(request):
     paymentlist = PaymentDetail.objects.all()
-    total_pay = PaymentDetail.objects.values('student_detail__student_username', 'student_detail__first_name', 'payment_name__amount_due', 'payment_name__name').annotate(total_payment=Sum('amount_paid')).order_by('student_detail')
+    total_pay = PaymentDetail.objects.values('student_detail__student_username', 'student_detail__first_name', 'payment_name__amount_due', 'payment_name__name').annotate(total_payment=Sum('amount_paid_a')).order_by('student_detail')
     paymentreport_filter = PaymentReportFilter(request.GET, queryset=paymentlist)
-    balance_pay = PaymentDetail.objects.annotate(balance_pay= F('amount_paid') - F('payment_name__amount_due'))
+    balance_pay = PaymentDetail.objects.annotate(balance_pay= F('amount_paid_a') + ('amount_paid_b') + ('amount_paid_c')- F('payment_name__amount_due'))
 
   
 
@@ -378,7 +379,7 @@ def payment_report(request):
         'paymentlist' : paymentlist,
         'balance_pay': balance_pay,
         'total_pay': total_pay,
-        'balance_pay' : PaymentDetail.objects.annotate(balance_pay= F('amount_paid') - F('payment_name__amount_due')),
+        'balance_pay' : PaymentDetail.objects.annotate(balance_pay= F('amount_paid_a') +('amount_paid_b') + ('amount_paid_c') - F('payment_name__amount_due')),
    
     }
    
@@ -390,7 +391,7 @@ def summary_payment_report(request):
     allpayments = PaymentDetail.objects.all()
     total_pay = PaymentDetail.objects.values('student_detail__student_username', 'student_detail__first_name', 'student_detail__last_name',
                                             'payment_name__amount_due', 'payment_name__name', 'payment_name__session__name', 'student_detail__current_class__name',
-                                            'payment_name__term', 'discount').annotate(total_payment=Sum('amount_paid')).order_by('student_detail')
+                                            'payment_name__term', 'discount').annotate(total_payment=Sum('amount_paid_a')).order_by('student_detail')
     
     allpayments_filter = PaymentSummaryFilter(request.GET, queryset=total_pay)
     

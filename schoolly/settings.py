@@ -69,6 +69,8 @@ INSTALLED_APPS = [
     'djrichtextfield',
     "crispy_forms",
     "crispy_bootstrap4",
+
+
 ]
 
 MIDDLEWARE = [
@@ -284,3 +286,4 @@ CKEDITOR_5_CONFIGS = {
         }
     }
 }
+

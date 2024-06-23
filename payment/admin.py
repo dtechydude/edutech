@@ -17,11 +17,13 @@ class PaymentDetailAdmin(admin.ModelAdmin):
     list_filter  = ['student_detail__current_class']
     search_fields = ('student_detail__user__username', 'student_detail__last_name', 'student_detail__first_name')
     raw_id_fields = ['student_detail', 'payment_name']
+    readonly_fields = ('no_of_payments',)
 
 
 class BankDetailAdmin(admin.ModelAdmin):
 
     list_display=('acc_name', 'acc_number', 'description',)
+
 
 
 

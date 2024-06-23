@@ -100,8 +100,8 @@
 														<td>
 														<span class="fs-16 mb-0 text-nowrap"><a class="text-black" href="">
 															<!-- if it is a student that paid -->
-															<span>{{ payment.payee.studentdetail.first_name}} {{ payment.payee.studentdetail.last_name}}</span><br>
-															{{payment.payee }} <span style="color:red;">{{ payment.payee.studentdetail.current_class}}</span> </a></span>
+															<span>{{ payment.user.studentdetail.first_name}} {{ payment.user.studentdetail.last_name}}</span><br>
+															{{payment.user }} <span style="color:red;">{{ payment.user.studentdetail.current_class}}</span> </a></span>
 															<!-- if it is admin or staff that paid -->
 															<!-- <span>{{ payment.payee.staffprofile.first_name}} {{ payment.payee.staffprofile.last_name}}</span><br>
 															<span>{{ payment.payee.first_name}} {{ payment.payee.last_name}}</span><br> -->
@@ -147,7 +147,7 @@
 													{% endif %}
 														<td class="text-nowrap">
 															
-																<span class="text-nowrap">{{ payment.amount_paid }}
+																<span class="text-nowrap">{{ payment.amount_paid_a }}
 																</span>
 																<span></span>
 															
@@ -155,14 +155,14 @@
 												
 														<td class="text-nowrap">
 														
-															<span class="text-nowrap">{{ payment.payment_date }}</span>
+															<span class="text-nowrap">{{ payment.payment_date_a }}</span>
 															<span></span>
 																											
 														</td>
 														
 														<td class="text-nowrap">
 															<div>
-																{% if payment.confirmed == True %}
+																{% if payment.confirmed_a == True %}
 																<span><i class="far fa-check-circle text-success" style="font-size:20px;"></i></span>		
 																{% else %}
 																<span><i class="far fa-times-circle text-danger" style="font-size:20px;"></i></span>	

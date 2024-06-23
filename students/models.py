@@ -125,3 +125,6 @@ class StudentDetail(models.Model):
     ]
 
     student_status = models.CharField(max_length=15, choices=student_status, default=active)
+
+    def __str__(self):
+        return f'{self.last_name } - {self.first_name} ({self.user.username})'
