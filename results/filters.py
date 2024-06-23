@@ -17,7 +17,7 @@ class MyResultSheetFilter(django_filters.FilterSet):
         model = ResultSheet
         # # fields = '__all__'
         # fields = {'current_class': ['exact']}
-        fields = {'exam', 'session',}
+        fields = {'exam__name', 'exam__session',}
         
 
 class ResultSheetFilter(django_filters.FilterSet):
@@ -26,5 +26,5 @@ class ResultSheetFilter(django_filters.FilterSet):
         model = ResultSheet
         # # fields = '__all__'
         # fields = {'current_class': ['exact']}
-        fields = {'exam', 'session', 'term'}
+        fields = {'exam__name', 'exam__session', 'exam__term'}
         

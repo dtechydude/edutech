@@ -61,12 +61,12 @@
 														</th>
 														
 														<th style="color:green;">Standard</th>
-														<th style="color:green;">Term</th>
-														<th style="color:green;">Exam</th>
-														<th style="color:green;">Session</th>
+														<!-- <th style="color:green;">Term</th> -->
+														<th style="color:green;">Exam Name</th>
+														<th style="color:green;">Session/Term</th>
 														<th style="color:green;">Date</th>
-														<th style="color:green;">Result</th>
-														<th style="color:green;">C.A</th>
+														<th style="color:green;">Results</th>
+														<th style="color:green;">C.As</th>
 																											
 													</tr>
 												</thead>
@@ -84,25 +84,25 @@
 															<div class="concierge-bx d-flex align-items-center">
 																	<div>
 																	<h5 class="fs-16 mb-0 text-nowrap">
-																	<a class="text-black" href="#">{{ r.standard}} <span style="font-size:9px;, color:grey;"></span></h5>
+																	<a class="text-black" href="#">{{ r.exam.standard}} <span style="font-size:9px;, color:grey;"></span></h5>
 																	<span class="text-primary fs-14"> </span></a>
 																</div>
 															</div>
 														</td>
-														<td class="text-nowrap">
-															<span>{{ r.term}}</span>
-														</td>
+														<!-- <td class="text-nowrap">
+															<span>{{ r.exam.term}}</span>
+														</td> -->
 														<td class="text-nowrap">
 															
-																<span>{{ r.exam}}</span>	
+																<span>{{ r.exam.name}}</span>	
 																<span></span>										
 														</td>
 														<td class="text-nowrap">
-															<span>{{ r.session }}</span>
+															<span>{{ r.exam.session }}</span>
 																<span></span>
 														</td>
 														<td class="text-nowrap">
-														<span>{{ r.exam_date }}</span>
+														<span>{{ r.exam.exam_date }}</span>
 															<span></span>
 														</div>
 														

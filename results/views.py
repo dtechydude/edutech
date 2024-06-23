@@ -292,7 +292,7 @@ def view_self_result(request):
         myresultsheet = paginator.page(paginator.num_pages)
     context = {
         # 'mypayment' : PaymentDetail.objects.filter(student=StudentDetail.objects.get(user=request.user)).order_by("-payment_date"),
-        'myresultsheet' : ResultSheet.objects.filter(student_id=User.objects.get(username=request.user)).order_by("exam_date"),
+        'myresultsheet' : ResultSheet.objects.filter(student_id=User.objects.get(username=request.user)).order_by("exam__exam_date"),
         'myresultsheet':myresultsheet,
         'myresultsheet_filter' : myresultsheet_filter,
     }

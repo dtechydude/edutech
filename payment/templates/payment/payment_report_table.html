@@ -12,16 +12,17 @@
 				<div class="d-flex justify-content-between align-items-center flex-wrap">
 					<div class="card-action coin-tabs mb-2">
 						
-						<ul class="nav nav-tabs" role="tablist">
+						<!-- <ul class="nav nav-tabs" role="tablist"> -->
 							<!-- <li class="nav-item">
 								<a class="nav-link"href="{% url 'payment:payment-pdf' %}">View PDF</a>
 							</li> -->
-							<li class="nav-item">
-								<a class="nav-link" href="{% url 'payment:payment-csv' %}">Download CSV</a>
-							</li>
-						</ul>
+							<!-- <li class="nav-item">
+								<a class="nav-link" href="{% url 'payment:payment-csv' %}">Download CSV</a> -->
+							<!-- </li>
+						</ul> -->
 					</div>
 					<div class="d-flex align-items-center mb-2 flex-wrap"> 
+						<span><a class="nav-link" href="{% url 'payment:payment-csv' %}"><strong>>> Download CSV</strong></a></span>
 						<div class="guest-calendar">
 							<div id="reportrange" class="pull-right reportrange" style="width: 100%">
 								<span>Payment Report</span><b class="caret"></b>
@@ -37,7 +38,7 @@
 
                 <!-- USING FILTER TO GET INFORMATION -->
                     <div class="row">
-                        <div ">	
+                        <div>	
                             <div>
                                 <!-- <div style="float:left; padding:4px; width:30%;"> -->
                                     <div>
@@ -46,7 +47,8 @@
                                         <!-- {{ StudentFilter.form|crispy}} -->
                                         {{ paymentreport_filter.form }}
                                        
-                                        <button class="btn btn-primary" type="submit">Search </button>
+                                        <!-- <button class="btn btn-primary" type="submit">Search </button> -->
+										<button class="btn btn-primary" type="submit">filter selection </button>
                                     </form>	</div>
                                 </div>
                             
@@ -77,10 +79,10 @@
 														<th>STUDENT</th>
                                                         <th>DESCRIPTION</th>                                                        
 														<th>FEE DUE</th>
-														<th>FEE PAID</th>
+														<th>AMOUNT PAID</th>
 														<th>DEBT.</th>                                                        
 														<!-- <th>INST. </th> -->
-                                                        <th>METHOD</th>
+                                                        <th>PAYMENT METHOD</th>
 														
 													</tr>
 												</thead>

@@ -13,11 +13,26 @@ from django.urls import reverse, reverse_lazy
 
 class Examination(models.Model):
     name = models.CharField(max_length=150, blank=True)
-    description = models.CharField(max_length=150, blank=True)
-    standard_name = models.ForeignKey(Standard, on_delete=models.CASCADE, help_text='Select Anonymous', blank=True, null=True)
-  
+    standard = models.ForeignKey(Standard, on_delete=models.CASCADE, blank=True, null=True)
+    session = models.ForeignKey(Session, on_delete=models.CASCADE) 
+    first_term = 'First Term'
+    second_term = 'Second Term'
+    third_term = 'Third Term'
+    others = 'others'
+
+    term = [
+        (first_term, 'First Term'),
+        (second_term, 'Second Term'),
+        (third_term, 'Third Term'),
+        (others, 'others'),
+
+    ]
+
+    term = models.CharField(max_length=15, choices=term, default=others)
+    exam_date = models.DateField(null=True) 
+    description = models.CharField(max_length=150, blank=True)  
     def __str__ (self):
-        return f'{self.name}'
+        return f'{self.name} - {self.session}'
     
 
 
@@ -65,9 +80,9 @@ class UploadCertificate(models.Model):
 class ExamSubject(models.Model):
     subject_id = models.CharField(max_length=100, unique=True)
     name = models.CharField(max_length=100)
-    slug = models.SlugField(null=True, blank=True)
     # image = models.ImageField(upload_to=save_subject_image, blank=True, verbose_name='Subject Image')
     description = models.TextField(max_length=500, blank=True)
+    slug = models.SlugField(null=True, blank=True)
     
     class Meta:
         ordering = ['name']
@@ -84,24 +99,7 @@ class ResultSheet(models.Model):
     student_detail = models.ForeignKey(StudentDetail, on_delete=models.CASCADE, blank=True, null=True, default=None)
     student_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None, null=True, blank=True,  help_text='confirm student username')
     exam = models.ForeignKey(Examination, on_delete=models.CASCADE)
-    session = models.ForeignKey(Session, on_delete=models.CASCADE) 
-    first_term = 'First Term'
-    second_term = 'Second Term'
-    third_term = 'Third Term'
-    others = 'others'
 
-    term = [
-        (first_term, 'First Term'),
-        (second_term, 'Second Term'),
-        (third_term, 'Third Term'),
-        (others, 'others'),
-
-    ]
-
-    term = models.CharField(max_length=15, choices=term, default=others)
-    standard = models.ForeignKey(Standard, on_delete=models.CASCADE)
-    exam_date = models.DateField(null=True) 
-    
     subject_1 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_1', null=True, blank=True,)
     score_1ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_1exam = models.IntegerField(help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 

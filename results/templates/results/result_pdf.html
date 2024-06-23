@@ -61,7 +61,7 @@
             <thead>
               <tr>
                 <th scope="col" colspan="2" style="text-align:center;  color:white; background-color:grey; font-size:14px; vertical-align:middle;" >STUDENT REPORT SHEET | 
-                  {{my_resultsheet.session}} </strong>
+                  {{my_resultsheet.exam.session}} </strong>
                 </th>
                          
               </tr>
@@ -79,7 +79,7 @@
                 <tbody>
                   <tr>
                       <td colspan ='2' style="width:auto; font-size:12px; text-align:center;"> <strong>{{my_resultsheet.student_detail.first_name}}  {{my_resultsheet.student_detail.middle_name}}  {{my_resultsheet.student_detail.last_name}}</strong></td>
-                      <td style="width:auto; text-align:center;">ID : <strong>{{my_resultsheet.student_id.username}}</strong> </td>
+                      <td style="width:auto; text-align:center;">ID : <strong>{{my_resultsheet.student_detail.student_username}}</strong> </td>
                       <td style="width:auto; text-align:center;">CLASS : <strong>{{my_resultsheet.student_detail.current_class}} - {{my_resultsheet.student_detail.class_group}}</strong></td>
                       <td style="width:auto; text-align:center;">NO IN CLASS : <strong>{{my_resultsheet.no_in_class}}</strong></td>
                       <td rowspan="2" style="text-align:center; width:auto;">
@@ -479,7 +479,7 @@
   </table>
     <div style="text-align:center;">
             
-    <img src="https://schoolly.com.ng/portal/static/pages/signed.jpg" width="200"  height="50">
+    <!-- <img src="https://schoolly.com.ng/portal/static/pages/signed.jpg" width="200"  height="50"> -->
     {% for m in my_resultsheet.resultimages.all %}
     <img src="{{ m.f_3.path}}" width="200"  height="50">
 

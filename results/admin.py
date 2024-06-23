@@ -15,6 +15,7 @@ class UploadCertificateAdmin(admin.ModelAdmin):
 class ExamSubjectAdmin(admin.ModelAdmin):
        
     list_display=('subject_id', 'name',)
+    exclude =['slug']
 
 class MotorAbilityInline(admin.TabularInline):
     model = MotorAbility
@@ -34,14 +35,14 @@ class ResultImageInline(admin.TabularInline):
 class ResultSheetAdmin(admin.ModelAdmin):
     inlines = [MotorAbilityInline, ResultImageInline] 
     exclude =['remark', 'student_id']
-    list_display=('student_detail', 'session', 'exam',)
+    list_display=('student_detail', 'exam',)
     list_filter  = ['student_detail__current_class']
     search_fields = ('student_detail__student_username', 'student_detail__last_name', 'student_detail__first_name')
     raw_id_fields = ['student_id', 'student_detail']
 
 class ExaminationAdmin(admin.ModelAdmin):
        
-    list_display=('name', 'standard_name',)
+    list_display=('name',)
 
 class MarkedSheetAdmin(admin.ModelAdmin):
        

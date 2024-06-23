@@ -47,4 +47,4 @@ class ExamRegisterForm(forms.ModelForm):
 
     class Meta:
         model = Examination
-        fields = ('name', 'description', 'standard_name',)
+        fields = ('name', 'description', 'standard',)
