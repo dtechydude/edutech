@@ -126,5 +126,11 @@ class StudentDetail(models.Model):
 
     student_status = models.CharField(max_length=15, choices=student_status, default=active)
 
+    class Meta:
+        ordering = ['user']
+
     def __str__(self):
-        return f'{self.last_name } - {self.first_name} ({self.user.username})'
+        return f'{self.last_name } - {self.first_name} ({self.student_username})'
+    
+    def get_absolute_url(self):
+        return reverse('students:students-detail', kwargs={'id':self.id})

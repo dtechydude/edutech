@@ -115,6 +115,7 @@
 															<!-- if admin or other person paid for students -->
 															<span class="text-nowrap">{{ balance.payment_name.name }}</span><br>
                                                             <span><strong>{{ balance.payment_name.term}} - {{ balance.payment_name.session}}</strong></span>
+
                                                             </td>
 															<!-- if students paid by themselves -->
 															{% if balance.discount > 0 %}
@@ -155,7 +156,8 @@
 														<td class="text-nowrap">
 															
 																<span class="text-nowrap" style="color:red;">{{ balance.bank_name_a }}, <br>{{ balance.bank_name_b }}, <br>{{ balance.bank_name_c }}</span>
-																
+																<span> <a class =" btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'payment:my_payments' %}"> Update</a></span>
+
 																<span></span>
 															
 														</td>

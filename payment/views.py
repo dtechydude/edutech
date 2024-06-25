@@ -139,7 +139,7 @@ def paymentlist(request):
 @login_required
 def view_self_payments(request):
     # mypayment = PaymentDetail.objects.filter(student=StudentDetail.objects.get(user=request.user))
-    mypayment = PaymentDetail.objects.filter(payee=User.objects.get(username=request.user))
+    mypayment = PaymentDetail.objects.filter(student_detail=User.objects.get(username=request.user))
     mypayment_filter = MyPaymentFilter(request.GET, queryset=mypayment)
     mypayment = mypayment_filter.qs
 
@@ -153,7 +153,7 @@ def view_self_payments(request):
         mypayment = paginator.page(paginator.num_pages)
     context = {
         # 'mypayment' : PaymentDetail.objects.filter(student=StudentDetail.objects.get(user=request.user)).order_by("-payment_date"),
-        'mypayment' : PaymentDetail.objects.filter(payee=User.objects.get(username=request.user)).order_by("payment_date"),
+        'mypayment' : PaymentDetail.objects.filter(student_detail=User.objects.get(username=request.user)).order_by("payment_date"),
         'mypayment':mypayment,
         'mypayment_filter' : mypayment_filter,
     }
@@ -478,3 +478,32 @@ def search(request):
 
         
     return render(request, 'payment/search.html', {'query': query, 'debtor': results})
+
+
+class PaymentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    fields = ('amount_paid_a', 'payment_date_a', 'bank_name_a',)
+    model = PaymentDetail
+    template_name = 'portal/payment_update_form.html'
+    context_object_name = 'payment_update'
+    
+    # #function to check if user is the login user
+    # def form_valid(self, form):
+    #     form.instance.author = self.request.user
+    #     return super().form_valid(form)
+
+    # #preventing other users from update other people's post
+    # def test_func(self):
+    #     post = self.get_object()
+    #     if self.request.user == post.created_by:
+    #         return True
+    #     return False
+    
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False

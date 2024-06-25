@@ -95,6 +95,7 @@ class PaymentDetail(models.Model):
 
     def get_absolute_url(self):
         return reverse('payment:payment_detail', kwargs={'id':self.id})
+    
 
     @property
     def balance_pay(self):

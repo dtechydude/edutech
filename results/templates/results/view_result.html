@@ -118,7 +118,7 @@
 																<img class="me-3 rounded" src="{{res.student_id.profile.image.url}}" alt="">
 																<div> -->
 																	<span class="fs-16 mb-0 text-nowrap">
-																	<a class="text-black" href="{% url 'results:result-update' res.pk %} ">{{ res.student_id.username}}</span>
+																	<a class="text-black" href="{% url 'results:result-update' res.pk %} ">{{ res.student_detail.student_username}}</span>
 																	<span class="text-primary fs-14">{{ res.student_detail.last_name}} {{ res.student_detail.first_name}} - {{res.standard}}-{{ res.student_detail.class_group}}</span></a>
 																</div>
 															</div>

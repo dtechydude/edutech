@@ -28,4 +28,6 @@ urlpatterns = [
     path('payment-category/', views.PaymentCategoryListView.as_view(), name='payment-category'),
     path('bank-list/', views.BankListView.as_view(), name='bank-list'),
     path('bank-create/', views.BankCreateView.as_view(), name="bank-create"),
+       
+    path('<int:pk>/payment_update', views.PaymentUpdateView.as_view(), name='payment_update'),
 ]

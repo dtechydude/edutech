@@ -145,7 +145,6 @@ class StudentListView(LoginRequiredMixin, ListView):
 
 class StudentDetailView(LoginRequiredMixin, DetailView):  
     model = StudentDetail
-    context_object_name = 'student_detail'
     template_name = 'students/student_detail_view.html'
     # queryset = User.objects.all()
     def get_object(self):

@@ -41,6 +41,7 @@ class ResultCreateForm(forms.ModelForm):
         class Meta:
             model = ResultSheet
             fields =  '__all__'
+            exclude = ('student_id',)
 
             widgets = {
             'exam_date' : forms.DateInput(
@@ -65,5 +66,6 @@ class ResultUpdateForm(forms.ModelForm):
     class Meta:
         model = ResultSheet
         fields = '__all__'
+        exclude = ('student_id',)
         # exclude = ('user',)
        
