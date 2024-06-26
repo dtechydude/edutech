@@ -110,6 +110,7 @@ class StudentDetail(models.Model):
     relationship = models.CharField(max_length=25, choices=relationship, default=select)
     
     active = 'active'
+    inactive = 'inactive'
     graduated = 'graduated'
     dropped = 'dropped'
     expelled = 'expelled'
@@ -117,6 +118,7 @@ class StudentDetail(models.Model):
 
     student_status = [
         (active, 'active'),
+        (inactive, 'inactive'),
         (graduated, 'graduated'),
         (dropped, 'dropped'),
         (expelled, 'expelled'),
@@ -124,7 +126,7 @@ class StudentDetail(models.Model):
 
     ]
 
-    student_status = models.CharField(max_length=15, choices=student_status, default=active)
+    student_status = models.CharField(max_length=15, choices=student_status, default=inactive)
 
     class Meta:
         ordering = ['user']
@@ -134,3 +136,8 @@ class StudentDetail(models.Model):
     
     def get_absolute_url(self):
         return reverse('students:students-detail', kwargs={'id':self.id})
+    
+    def save(self, *args, **kwargs):
+        if self.student_username:
+           
+            super().save(*args, **kwargs)

@@ -101,10 +101,10 @@
 														
 														<td>
 													
-															<span class="fs-16 mb-0 text-nowrap"><a class="text-black" href="">
+															<span class="fs-16 mb-0 text-nowrap"><a class="text-black" href="{% url 'payment:payment_detail' pk=balance.pk %}">
 																<!-- if it is a student that paid -->
 																<span>{{ balance.student_detail.first_name }} {{ balance.student_detail.last_name}}</span><br>
-																{{balance.student_detail.user }} </a></span>
+																{{balance.student_id.studentdetail.first_name }}<br>{{balance.student_id.studentdetail.student_username }}  </a></span>
 																
 											
 																</div>

@@ -18,6 +18,7 @@ class PaymentDetailAdmin(admin.ModelAdmin):
     search_fields = ('student_detail__user__username', 'student_detail__last_name', 'student_detail__first_name')
     raw_id_fields = ['student_detail', 'payment_name']
     readonly_fields = ('no_of_payments',)
+    exclude = ('student_id',)
 
 
 class BankDetailAdmin(admin.ModelAdmin):

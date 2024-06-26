@@ -59,6 +59,7 @@ class PaymentChart(models.Model):
 
 class PaymentDetail(models.Model):
     student_detail = models.ForeignKey(StudentDetail, on_delete=models.CASCADE, default=None, null=True)
+    student_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None, null=True, blank=True,  help_text='confirm student username', related_name='student_detail')
     payment_name = models.ForeignKey(PaymentChart, on_delete=models.CASCADE, default= None, related_name='payment_name')
     amount_paid_a = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True)
     bank_name_a = models.ForeignKey(BankDetail, on_delete=models.CASCADE, default=None, null=True, related_name='bank_name_a')   
@@ -86,12 +87,12 @@ class PaymentDetail(models.Model):
     class Meta:
         ordering = ['-student_detail' ]
 
-        unique_together = ['student_detail', 'payment_name',]
+        # unique_together = ['student_detail', 'payment_name',]
 
         
 
     def __str__ (self):
-       return f'{self.student_detail}'
+       return f'{self.student_id}'
 
     def get_absolute_url(self):
         return reverse('payment:payment_detail', kwargs={'id':self.id})
@@ -124,6 +125,10 @@ class PaymentDetail(models.Model):
     @property
     def no_of_payments(request):
       return PaymentDetail.objects.filter(student_detail = request.student_detail).count()
+    
+    @property
+    def studentdetail(self):
+       return self.student_detail
 
        
     

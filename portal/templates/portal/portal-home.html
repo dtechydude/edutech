@@ -94,6 +94,8 @@
 								Admin Dashboard
 								{% elif user.is_authenticated and user.profile.user_type == 'admin' %}
 								Admin Dashboard
+								{% elif user.is_authenticated and user.studentdetail.student_status == 'active' %}
+								Student Dashboard
 								{% else %}
 								User Type is "Inactive"
 								{% endif%}
@@ -900,7 +902,7 @@
 					<!-- STUDENT DASHBOAR ENDS HERE -->
 
 					<!-- INACTIVE USER DASHBOARD START -->
-					{% elif user.is_authenticated and user.profile.user_type == 'inactive'%}
+					{% elif user.is_authenticated and user.studentdetail.student_status == 'inactive'%}
 					<h1>Your account is not profiled yet!</h1>
 					<div>Contact admin to profile your account</div>
 					<!-- INACTIVE USER DASHBOARD ENDS -->

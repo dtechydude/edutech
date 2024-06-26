@@ -69,8 +69,8 @@
 														</th>
 														<th>No.</th>
 														<th>Payment Name</th>
-                                                        <th>Amount</th>
-														<th>Date</th>
+                                                        <th>Amount Due</th>
+														<th>Payment/Date</th>
 														<th>Depositor</th>
                                                         <th>Method</th>
 														<th>Receipt</th>
@@ -99,12 +99,14 @@
                                                         </div>
 														</td>
 														<td>															
-                                                            <span class="text-nowrap">{{ payment.amount_paid}}</span>
+                                                            <span class="text-nowrap">{{ payment.payment_name.amount_due}}</span>
 																														
 														</td>
 														<td>
 															<div>
-																<span class="text-nowrap">{{ payment.payment_date }}</span>
+																<span class="text-nowrap">1. N{{ payment.amount_paid_a }} - {{ payment.payment_date_a }}</span><br>
+																<span class="text-nowrap">2. N{{ payment.amount_paid_b }} - {{ payment.payment_date_b }}</span><br>
+																<span class="text-nowrap">3. N{{ payment.amount_paid_c }} - {{ payment.payment_date_c }}</span>
 																<span></span>
 															</div>
 														</td>

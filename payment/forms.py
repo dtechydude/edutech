@@ -50,7 +50,7 @@ class PaymentCreateForm(forms.ModelForm):
         class Meta:
             model = PaymentDetail
             fields = '__all__'
-            exclude = ('confirmed', 'discount', 'file', 'payee', 'student_detail',)
+            exclude = ('confirmed', 'discount', 'file', 'student_id', 'student_detail',)
 
             widgets = {
             'payment_date': forms.DateInput(

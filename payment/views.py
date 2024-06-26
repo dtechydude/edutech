@@ -56,7 +56,7 @@ class PaymentCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         print('form_valid called')
         object = form.save(commit=False)
-        object.student_detail = self.request.user
+        object.student_id = self.request.user
         object.save()
         return super(PaymentCreateView, self).form_valid(form)
 
@@ -139,7 +139,7 @@ def paymentlist(request):
 @login_required
 def view_self_payments(request):
     # mypayment = PaymentDetail.objects.filter(student=StudentDetail.objects.get(user=request.user))
-    mypayment = PaymentDetail.objects.filter(student_detail=User.objects.get(username=request.user))
+    mypayment = PaymentDetail.objects.filter(student_id=User.objects.get(username=request.user))
     mypayment_filter = MyPaymentFilter(request.GET, queryset=mypayment)
     mypayment = mypayment_filter.qs
 
@@ -153,7 +153,7 @@ def view_self_payments(request):
         mypayment = paginator.page(paginator.num_pages)
     context = {
         # 'mypayment' : PaymentDetail.objects.filter(student=StudentDetail.objects.get(user=request.user)).order_by("-payment_date"),
-        'mypayment' : PaymentDetail.objects.filter(student_detail=User.objects.get(username=request.user)).order_by("payment_date"),
+        'mypayment' : PaymentDetail.objects.filter(student_id=User.objects.get(username=request.user)).order_by("payment_date_a"),
         'mypayment':mypayment,
         'mypayment_filter' : mypayment_filter,
     }
