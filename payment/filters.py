@@ -33,7 +33,7 @@ class PaymentReportFilter(django_filters.FilterSet):
         model = PaymentDetail
         # # fields = '__all__'
         # fields = {'current_class': ['exact']}
-        fields = {'student_detail__current_class' }
+        fields = {'student_detail' }
 
 class PaymentSummaryFilter(django_filters.FilterSet):
 

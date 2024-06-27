@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Student Search List</title>
+    <title>Payment Search List</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
@@ -12,14 +12,14 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-          <span><strong>Search Students </strong></span>- Use the search form to filter for students by : <em>first name, last name, teacher's name or current class.</em>
+          <span><strong>Search Payments </strong></span>- Use the search form to filter for payment by : <em><strong>first name, last name,  or current class.</strong></em>
         </div>
         <div class="card-body">
  
-    <form action="{% url 'students:search' %}" class="form-inline" method="get">
+    <form action="{% url 'payment:search' %}" class="form-inline" method="get">
        <div class="form-group mb-8">
        
-            <h5>{% if first_name %}{{ standard.name }}{% else %} Search All Student Record {% endif %}</h5>
+            <h5>{% if first_name %}{{ standard.name }}{% else %} Search All Payment {% endif %}</h5>
        </div>
        <div class="form-group mx-sm-3 mb-2">
         <label for="" class="sr-only">search</label>
@@ -29,15 +29,13 @@
    </form>
    </div>
    <!-- <div class="card-body"  style="padding-top:1px;"> -->
-    <!-- {% for x in student %} -->
-    <!-- <h6> <a href="{{ x.get_absolute_url }}">  -->
-        <!-- {{x.first_name}}  {{x.middle_name}}  {{x.last_name}} -->
-    <!-- </a></h6> -->
-    <!-- <p class="">Guardian Name :<strong> {{x.guardian_name}} </strong>  - Guardian Phone : <strong>{{x.guardian_phone}}</strong> </br>
-      Current Class:  <strong>{{x.current_class}} </strong>  -  <span>Class Teacher:  <strong>{{ x.class_teacher.first_name}} {{ x.class_teacher.last_name}}</strong></span></p> -->
+    <!-- {% for x in payment %} -->
+    <!-- <h6> <a href="{{ x.get_absolute_url }}"> {{x.other_detail_b}}    {{x.other_detail_c}}</a></h6> -->
+    
      <!-- <hr> -->
     <!-- {% endfor %} -->
     <!-- </div> -->
+    <div class="container"><a href="{% url 'payment:payment_report' %}"><h5>"Go Back" </h5></a></div>
 <!-- Page Paginator start -->
 <div class="card-body">
         {% if student.has_other_pages %}

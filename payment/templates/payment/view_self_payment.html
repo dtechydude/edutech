@@ -71,9 +71,9 @@
 														<th>Payment Name</th>
                                                         <th>Amount Due</th>
 														<th>Payment/Date</th>
-														<th>Depositor</th>
-                                                        <th>Method</th>
-														<th>Receipt</th>
+														<th>Debt</th>
+                                                        <th>Update</th>
+														<th>Receipt/update</th>
 																									
 													</tr>
 												</thead>
@@ -94,12 +94,13 @@
 														<td>
                                                             <div>
                                                         <!-- <h5 class="text-nowrap">{{ payment.payment_name }}</h5> -->
-														<a href="{% url 'payment:payment_detail' pk=payment.pk  %}">{{payment.payment_name }}</a>
+														<a href="{% url 'payment:payment_detail' pk=payment.pk  %}">{{payment.payment_name }}<br>
+																													{{payment.payment_name.session }}</a>
 															<span></span>
                                                         </div>
 														</td>
 														<td>															
-                                                            <span class="text-nowrap">{{ payment.payment_name.amount_due}}</span>
+                                                            <span class="text-nowrap" style="font-size: 17px;">N{{ payment.payment_name.amount_due}}</span>
 																														
 														</td>
 														<td>
@@ -110,12 +111,13 @@
 																<span></span>
 															</div>
 														</td>
-														<td>
-														<div>
-															<span class="text-nowrap">{{ payment.depositor }}</span>
-															<span></span>
-														</div>
-														
+														<td class="text-nowrap">
+															{% if payment.discount > 0 %}
+															
+															<span class="text-nowrap">Discounted: <br>N {{ payment.discounted_balance_pay}}</span>
+															{% else %}
+															<span class="text-nowrap" style="font-size: 17px;">N {{ payment.balance_pay}}</span>
+															{% endif %}
 														</td>
                                                         <td>
                                                             <div>
@@ -132,6 +134,8 @@
                                                                     <a href="{% url 'payment:payment_detail' pk=payment.pk  %}"><strong style="color:green;"><u>Get Receipt</u></strong></a>
                                                                     {% else %}
                                                                     <a href="{% url 'payment:payment_detail' pk=payment.pk  %}"><span style="color:red;">View Status</span></a>
+																	<span> <a class =" btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'payment:payment_update' pk=payment.pk %}"> Update</a></span>
+
                                                                     {% endif %}
 															    </div>																										
 															   </td>	

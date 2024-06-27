@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 from curriculum.models import Session
 from students.models import StudentDetail
 from django.conf import settings
@@ -95,8 +96,9 @@ class PaymentDetail(models.Model):
        return f'{self.student_id}'
 
     def get_absolute_url(self):
-        return reverse('payment:payment_detail', kwargs={'id':self.id})
+        return reverse('payment:my_payments')  
     
+       
 
     @property
     def balance_pay(self):

@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% load mathfilters%}
 {% load static %}
-{% block title %}<title> Payment Summary Report</title>{% endblock title%}
+{% block title %}<title> Debtors Report</title>{% endblock title%}
 
 {% block content_body %}
 {% if user.is_authenticated and user.is_superuser or user.profile.user_type == "admin" %}
@@ -25,7 +25,7 @@
 					<div class="d-flex align-items-center mb-2 flex-wrap"> 
 						<div class="guest-calendar">
 							<div id="reportrange" class="pull-right reportrange" style="width: 100%">
-								<span>Payment Summary Report</span><b class="caret"></b>
+								<span>Debtors Report</span><b class="caret"></b>
 								<i class="fas fa-user ms-3"></i>
 							</div>
 						</div>
@@ -38,16 +38,14 @@
 
                 <!-- USING FILTER TO GET INFORMATION -->
                     <div class="row">
-                        <div ">	
+                        <div>	
                             <div>
                                 <!-- <div style="float:left; padding:4px; width:30%;"> -->
                                     <div>
                                         <form action="" method="get">
                                     
-                                        <!-- {{ StudentFilter.form|crispy}} -->
-                                        {{ allpayments_filter.form }}
+											<span>{{ paymentreport_filter.form }}<span> <button class="btn btn-primary" type="submit">Search </button></span></span>
                                        
-                                        <button class="btn btn-primary" type="submit">Search </button>
                                     </form>	</div>
                                 </div>
                             
@@ -57,9 +55,7 @@
 			
 					</div>
 					</div>
-							
-				
-									
+														
 					<div class="col-xl-12">
 						<div class="card">
 							
@@ -87,8 +83,8 @@
 												</thead>
 												<tbody>
                                                  
-                                                    {% for t in total_pay %}
-								
+                                                    {% for t in debtorlist %}
+													
 							
 													<tr>
 																												
@@ -102,11 +98,8 @@
 													
 															<span class="fs-16 mb-0 text-nowrap"><a class="text-black" href="">
 																<!-- if it is a student that paid -->
-																<span>{{ t.student_detail__student_username }}</span><br>
-																{{ t.student_detail__first_name }} - {{ t.student_detail__last_name }} 
-																
-																<span style="color:red;">- {{ t.student_detail__current_class__name }}</span></a></span>
-														
+																<span>{{ t.student_detail }} - <span style="color:red;">{{ t.student_detail.current_class }}</span></span><br>
+																{{ t.student_detail__last_name }} 											
 															
 																
 											
@@ -116,27 +109,32 @@
 														
 														<td class="text-nowrap">
 															<!-- if admin or other person paid for students -->
-															<span class="text-nowrap">{{ t.payment_name__name}}</span><br>
-                                                            <span><strong> {{t.payment_name__session__name}} - {{t.payment_name__term}} </strong></span>
+															<span class="text-nowrap">{{ t.payment_name}}</span><br>
+                                                            <span><strong> {{t.payment_name.session}} </strong></span>
                                                             </td>
 															<!-- if students paid by themselves -->
 															{% if t.discount > 0 %}
                                                         <td class="text-nowrap">                                                
-                                                            <span class="text-nowrap">Have Discount: {{t.discount}}%<br>N {{ t.payment_name__amount_due }}</span>
+                                                            <span class="text-nowrap">Have Discount: {{t.discount}}%<br>N {{ t.payment_name.amount_due }}</span>
                                                             </td>
 															{% else %}
 															<td class="text-nowrap">                                                
-																<span class="text-nowrap">N {{ t.payment_name__amount_due }}</span>
+																<span class="text-nowrap">N {{ t.payment_name.amount_due }}</span>
 																</td>
 															{% endif %}
 
                                                         <td class="text-nowrap">
-															<span class="text-nowrap">N {{ t.total_payment }}</span><br>
+															<span class="text-nowrap">N {{ t.total_amount_paid }}</span><br>
                                                             <span></span>
 														
 														</td>		
 														<td class="text-nowrap">
-															<span class="text-nowrap">N {{ t.payment_name__amount_due|sub:t.total_payment}}</span><br>
+															{% if t.payment_name.amount_due > t.total_amount_paid%}
+															<span class="text-nowrap" style="color:red;">N {{ t.balance_pay}}</span><br>
+														{% else %}
+															<span class="text-nowrap" style="color:green;">Has No Debt</span><br>
+															{% endif %}
+														
                                                             <span></span>
 														
 														</td>												
@@ -157,16 +155,16 @@
 											</table>								
 
                                             
-										{% if total_pay.has_other_pages %}
-										{% if total_pay.has_previous %}
-                                            <a class="btn btn-outline-info mb-4" href="?page={{ total_pay.previous_page_number }}">&laquo;</a>
+										{% if debtorlist.has_other_pages %}
+										{% if debtorlist.has_previous %}
+                                            <a class="btn btn-outline-info mb-4" href="?page={{ debtorlist.previous_page_number }}">&laquo;</a>
                                         {% else %}
                                             <a class="btn btn-outline-info mb-4" href="">&raquo;</a>
 
 										{% endif %}
 
-										{% for i in total_pay.paginator.page_range %}
-										{% if total_pay.number == i %}
+										{% for i in debtorlist.paginator.page_range %}
+										{% if debtorlist.number == i %}
 
 										    <a class="btn btn-info mb-4" href="">{{ i }}</a>
 										{% else %}
@@ -175,7 +173,7 @@
 										{% endfor %}
 										
                                         {% if total_pay.has_next %}
-										    <a class="btn btn-outline-info mb-4" href="?page={{ total_pay.next_page_number }}">&raquo;</a>
+										    <a class="btn btn-outline-info mb-4" href="?page={{ debtorlist.next_page_number }}">&raquo;</a>
 										{% else %}
 										
 										    <a class="btn btn-outline-info mb-4" href="">&raquo;</a>

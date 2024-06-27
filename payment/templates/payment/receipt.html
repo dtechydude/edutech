@@ -49,7 +49,7 @@
         <thead>
             <th><span style="font-size:18px;">OFFICIAL RECEIPT</span><br>
             <span style="color:red; font-size:18px;">#{{user.profile.code}}-00{{my_receipt.id}}
-            <th>Payment Date <br>{{ my_receipt.payment_date }}</th>
+            <th>Purpose: {{ my_receipt.payment_name}}</th>
             <th>Recorded<br>{{ my_receipt.payment_recorded_date}}</th>
             <th style="text-align:center;"><img src="{% static 'pages/qr_code.png' %}" width="80px" height="80px"></th>
             </thead>
@@ -80,11 +80,10 @@
                 <td>{{user.studentdetail.last_name}} {{user.studentdetail.first_name}} {{user.studentdetail.middle_name}}</td>
                 <td>{{user.studentdetail.current_class}} - Current Session : {{ my_receipt.payment_name.session }}</td>
                 <td>
-                    {% if my_receipt.confirmed %}
-                    <span class="label label-success" style="font-size:medium;">PAID - "Confirmed"</span>
-                    {% else %}
-                     <span class="label label-danger" style="font-size:medium;">UNCONFIRMED</span>
-                    {% endif %}
+                    
+                    <span pan class="label label-success" style="font-size:small;">Detailed Payments</span>
+                    <!-- <span class="label label-success" style="font-size:medium;">PAID - "Confirmed"</span> -->
+          
                 </td>
             </tr>
 
@@ -105,17 +104,23 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>Payment Name:</strong> {{ my_receipt.payment_name }} - <strong>Total Due:</strong>{% if my_receipt.installment_level == 'First Payment'%} {{ my_receipt.payment_name.amount_due }}{% endif %}</td>
-<td class="text-center">{{ my_receipt.installment_level }}</td>
-<td class="text-center">N {{ my_receipt.amount_paid}}</td>
+<td><strong>Payment Name:</strong> {{ my_receipt.payment_name }} - <strong>Total Due: {{ my_receipt.payment_name.amount_due }}</strong>{% if my_receipt.amount_paid_a == 'First Payment'%} {{ my_receipt.payment_name.amount_due }}{% endif %}</td>
+<td class="text-center">{% if my_receipt.amount_paid_a %}  1st Payment -  {{ my_receipt.payment_date_a }}{% if my_receipt.confirmed_a %} <span style="color:green;"> "confirmed" </span>{%else%} <span style="color:red;"> "Unconfirmed"</span>{% endif %}{% endif %}<br>
+                        {% if my_receipt.amount_paid_b %}  2nd Payment - {{ my_receipt.payment_date_b }} {% if my_receipt.confirmed_b %} <span style="color:green;"> "confirmed" </span>{%else%} <span style="color:red;"> "Unconfirmed"</span>{% endif %} {% endif %}<br>
+                        {% if my_receipt.amount_paid_c %}  3nd Payment - {{ my_receipt.payment_date_c }} {% if my_receipt.confirmed_c %} <span style="color:green;"> "confirmed" </span>{%else%} <span style="color:red;"> "Unconfirmed"</span>{% endif %} {% endif %}
+</td>
+<td class="text-center">N {% if my_receipt.amount_paid_a %} {{ my_receipt.amount_paid_a}} {% endif %}<br>
+                         {% if my_receipt.amount_paid_b %} N{{ my_receipt.amount_paid_b}} {% endif %}<br>
+                         {% if my_receipt.amount_paid_c %} N{{ my_receipt.amount_paid_c}} {% endif %}
+                        </td>
 </tr>
 <tr>
-<td><strong>Payment Method: </strong>{{ my_receipt.payment_method }}</td>
+<td><strong>STUDENT DISCOUNTED AMOUNT DUE: </strong>{{my_receipt.discounted_amount_due}}</td>
 <td class="text-center">n/a</td>
 <td class="text-center"> - </td>
 </tr>
 <tr>
-<td><strong>Other Information : </strong>{% if my_receipt.description%}{{ my_receipt.description }}{% else %} No description provided {% endif %}  </td>
+<td><strong>Payment Last Updated : </strong>{{ my_receipt.payment_updated_date}}  </td>
 <td class="text-center">n/a</td>
 <td class="text-center"> - </td>
 </tr>
@@ -123,19 +128,22 @@
 <tfoot>
 <tr>
 <th colspan="2" class="text-right">Sub Total:</th>
-<th class="text-center">N {{ my_receipt.amount_paid}}</th>
+<th class="text-center">N {{ my_receipt.total_amount_paid}}</th>
 </tr>
 <tr>
-<th colspan="2" class="text-right"> VAT:</th>
-<th class="text-center">N/A</th>
+<th colspan="2" class="text-right"> Outstanding DEBT/CREDIT</th>
+<th class="text-center">{% if my_receipt.balance_pay  > 0 %}<span style="color: red;"> DEBT : {{ my_receipt.balance_pay}}</span>
+                        {% elif my_receipt.balance_pay  < 0 %} <span style="color: green;">CREDIT-{{ my_receipt.balance_pay}}(N) </span>
+                         {% else %}{% endif %}</th>
 </tr>
-<tr>
-<th colspan="2" class="text-right">Total Paid:</th>
-<th class="text-center">N {{ my_receipt.amount_paid}} 
-- {% if my_receipt.installment_level == 'First Payment' %}{{ my_receipt.balance_pay}} {% endif %}- {{ my_receipt.no_of_payments}} {{my_receipt.total_of_payments}}
+<!-- <tr>
+<th colspan="2" class="text-right">Outstanding Balance:</th>
+<th class="text-center">{% if my_receipt.balance_pay > 0 %}N {{ my_receipt.balance_pay}} 
+                        {% elif my_receipt.balance_pay == 0 %} You've Paid In Full
+                        {% elif my_receipt.balance_pay < 0 %} Credit:{{my_receipt.balance_pay}}{% endif %}
 
 </th>
-</tr>
+</tr> -->
 <tr>
     {% if my_receipt.balance_pay < 0 and my_receipt.installment_level == "First_payment"%}
     <th colspan="" class="text-right"> You Have A Credit</th>
@@ -143,12 +151,12 @@
     {% elif my_receipt.balance_pay > 0 and my_receipt.installment_level == "First_payment" %}
     <th colspan="" class="text-right"> You Still Owe</th>
     <th class="text-center" style="color:red;">N {{ my_receipt.balance_pay}} </th>
-    {% elif my_receipt.amount_paid == my_receipt.payment_name.amount_due %}
+    {% elif my_receipt.amount_paid_a == my_receipt.payment_name.amount_due %}
     <th colspan="" class="text-right"> You Paid In Full</th>
     <th class="text-center" style="color:green;">No Balance Due </th>
     {% else %}
-    <th colspan="2" class="text-right"> <span style="color:green; font-size:12px;"><em>This Is Not Your First Payment</em></span> - 
-        <span style="color:green; font-size:12px;">Check Your Previous Payments History For Balance Details</span> </th>
+    <th colspan="2" class="text-right"> <span style="color:green; font-size:12px;"><em>This Is All Your Payment</em></span> - 
+        <span style="color:green; font-size:12px;">In Reference To The Payment Name:  <span style=color:blue;>{{ my_receipt.payment_name}} - {{ my_receipt.payment_name.session}}</span></span> </th>
     {% endif %}
     </tr>
 </tfoot>

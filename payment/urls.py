@@ -10,7 +10,8 @@ app_name = 'payment'
 urlpatterns = [
     path('payment-form/', payment_views.payment_form, name="payment_form"),   
     path('payment-report/', payment_views.payment_report, name="payment_report"),
-    path('summary-payment-report/', payment_views.summary_payment_report, name="summary_payment_report"),      
+    # path('summary-payment-report/', payment_views.summary_payment_report, name="summary_payment_report"),
+    path('debtor-list/', payment_views.debtor_list, name="debtor_list"),      
     path('payment-cat-form/', payment_views.payment_cat_form, name="payment_cat_form"),
     path('payment-chart-form/', payment_views.payment_chart_form, name="payment_chart_form"),
     path('payment-record/', payment_views.paymentlist, name="payment_record"),
@@ -30,4 +31,8 @@ urlpatterns = [
     path('bank-create/', views.BankCreateView.as_view(), name="bank-create"),
        
     path('<int:pk>/payment_update', views.PaymentUpdateView.as_view(), name='payment_update'),
+
+    # Search student detail app
+    path('payment-search/', payment_views.payment_search_list, name='payment_search_list'),
+    path('search/', payment_views.search, name='search'),
 ]

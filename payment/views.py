@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.db.models import F, Sum, Q
 from payment.forms import PaymentForm, PaymentChartForm, PaymentCatForm,PaymentCreateForm, BankRegisterForm
 from django.contrib import messages
@@ -107,7 +108,7 @@ def paymentlist(request):
     paymentlist = PaymentDetail.objects.all()
     paymentlist_filter = PaymentFilter(request.GET, queryset=paymentlist)
     #balance_pay = PaymentDetail.objects.annotate(balance_pay= F('amount_paid') - F('payment_name__amount_due'))
-    balance_pay = PaymentDetail.objects.annotate(balance_pay= F('amount_paid_a') - F('payment_name__amount_due'))
+    balance_pay = PaymentDetail.objects.annotate(balance_pay= F('payment_name__amount_due') - F('amount_paid_a' + 'amount_paid_b' + 'amount_paid_c'))
   
 
     paymentlist = paymentlist_filter.qs
@@ -127,7 +128,7 @@ def paymentlist(request):
         'paymentlist_filter': paymentlist_filter,
         'paymentlist' : paymentlist,
         'balance_pay': balance_pay,
-        'balance_pay' : PaymentDetail.objects.annotate(balance_pay= F('amount_paid_a') - F('payment_name__amount_due'))
+        'balance_pay' : PaymentDetail.objects.annotate(balance_pay= F('payment_name__amount_due') - F('amount_paid_a' + 'amount_paid_b' + 'amount_paid_c'))
          
 
     }
@@ -385,41 +386,41 @@ def payment_report(request):
    
     return render(request, 'payment/payment_report_table.html', context )
     
-    
+
+
+
 @login_required
-def summary_payment_report(request):
-    allpayments = PaymentDetail.objects.all()
-    total_pay = PaymentDetail.objects.values('student_detail__student_username', 'student_detail__first_name', 'student_detail__last_name',
-                                            'payment_name__amount_due', 'payment_name__name', 'payment_name__session__name', 'student_detail__current_class__name',
-                                            'payment_name__term', 'discount').annotate(total_payment=Sum('amount_paid_a')).order_by('student_detail')
-    
-    allpayments_filter = PaymentSummaryFilter(request.GET, queryset=total_pay)
-    
-    allpayments = allpayments_filter.qs
+def debtor_list(request):
+    debtorlist = PaymentDetail.objects.all()
+    total_pay = PaymentDetail.objects.values('student_detail__student_username', 'student_detail__first_name', 'payment_name__amount_due', 'payment_name__name').annotate(total_payment=Sum('amount_paid_a')).order_by('student_detail')
+    paymentreport_filter = PaymentReportFilter(request.GET, queryset=debtorlist)
+    balance_pay = PaymentDetail.objects.annotate(balance_pay= F('amount_paid_a') + ('amount_paid_b') + ('amount_paid_c')- F('payment_name__amount_due'))
+
+  
+
+    debtorlist = paymentreport_filter.qs
 
     page = request.GET.get('page', 1)
-
-    paginator = Paginator(total_pay, 40)
+    paginator = Paginator(debtorlist, 40)
     try:
-        total_pay = paginator.page(page)
+        debtorlist = paginator.page(page)
     except PageNotAnInteger:
-        total_pay = paginator.page(1)
+        debtorlist = paginator.page(1)
     except EmptyPage:
-        total_pay = paginator.page(paginator.num_pages)
+        debtorlist = paginator.page(paginator.num_pages)
 
 
     context = {
-
+        # 'debtorlist': PaymentDetail.objects.all(),
+        'paymentreport_filter': paymentreport_filter,
+        'debtorlist' : debtorlist,
+        'balance_pay': balance_pay,
         'total_pay': total_pay,
-        'allpayments':allpayments,
-        'allpayments': PaymentDetail.objects.all(),
-        'allpayments_filter' : allpayments_filter,
-     
-
+        'balance_pay' : PaymentDetail.objects.annotate(balance_pay= F('amount_paid_a') +('amount_paid_b') + ('amount_paid_c') - F('payment_name__amount_due')),
    
     }
    
-    return render(request, 'payment/summary_report.html', context )
+    return render(request, 'payment/debtor_report.html', context )
 
 
 
@@ -481,29 +482,54 @@ def search(request):
 
 
 class PaymentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    fields = ('amount_paid_a', 'payment_date_a', 'bank_name_a',)
+    fields = ('amount_paid_a', 'payment_date_a', 'bank_name_a', 
+              'amount_paid_b', 'payment_date_b', 'bank_name_b',
+              'amount_paid_c', 'payment_date_c', 'bank_name_c',)
     model = PaymentDetail
-    template_name = 'portal/payment_update_form.html'
+    template_name = 'payment/payment_update_form.html'
     context_object_name = 'payment_update'
     
-    # #function to check if user is the login user
-    # def form_valid(self, form):
-    #     form.instance.author = self.request.user
-    #     return super().form_valid(form)
-
-    # #preventing other users from update other people's post
-    # def test_func(self):
-    #     post = self.get_object()
-    #     if self.request.user == post.created_by:
-    #         return True
-    #     return False
     
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.student_id = self.request.user
         return super().form_valid(form)
 
     def test_func(self):
         post = self.get_object()
-        if self.request.user == post.author:
+        if self.request.user == post.student_id:
             return True
         return False
+    
+
+# Student Search Query App
+
+def payment_search_list(request):
+    payment = PaymentDetail.objects.all()
+    
+     # PAGINATOR METHOD
+    page = request.GET.get('page', 1)
+    paginator = Paginator(payment, 30)
+    try:
+        payment = paginator.page(page)
+    except PageNotAnInteger:
+        payment = paginator.page(1)
+    except EmptyPage:
+        payment = paginator.page(paginator.num_pages)
+
+    return render(request, 'payment/payment_search_list.html', {'payment': payment })
+
+# Define function to search student
+def search(request):
+    results = []
+
+    if request.method == "GET":
+        query = request.GET.get('search')
+
+        if query == '':
+            query = 'None'
+           
+
+        results = PaymentDetail.objects.filter(Q(student_detail__student_username__icontains=query) | Q(student_detail__first_name__icontains=query) | Q(student_detail__current_class__name__icontains=query) )
+
+        
+    return render(request, 'payment/payment_search.html', {'query': query, 'results': results})
