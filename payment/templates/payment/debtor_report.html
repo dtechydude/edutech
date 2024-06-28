@@ -27,6 +27,9 @@
 							<div id="reportrange" class="pull-right reportrange" style="width: 100%">
 								<span>Debtors Report</span><b class="caret"></b>
 								<i class="fas fa-user ms-3"></i>
+								<button class="btn btn-primary"><a href="{% url 'payment:payment_search_list' %}" style="color:azure;">Search For Payments </a></button> ---
+								<button class="btn btn-primary"><a href="{% url 'payment:payment-csv' %}" style="color:azure;">DOWNLOAD TO EXCEL </a></button>
+
 							</div>
 						</div>
 						<div class="newest ms-3">
@@ -41,12 +44,12 @@
                         <div>	
                             <div>
                                 <!-- <div style="float:left; padding:4px; width:30%;"> -->
-                                    <div>
-                                        <form action="" method="get">
+                                    <!-- <div> -->
+                                        <!-- <form action="" method="get"> -->
                                     
-											<span>{{ paymentreport_filter.form }}<span> <button class="btn btn-primary" type="submit">Search </button></span></span>
+											<!-- <span>{{ paymentreport_filter.form }}<span> <button class="btn btn-primary" type="submit">Search </button></span></span> -->
                                        
-                                    </form>	</div>
+                                    <!-- </form>	</div> -->
                                 </div>
                             
                                 </div>		
@@ -99,7 +102,7 @@
 															<span class="fs-16 mb-0 text-nowrap"><a class="text-black" href="">
 																<!-- if it is a student that paid -->
 																<span>{{ t.student_detail }} - <span style="color:red;">{{ t.student_detail.current_class }}</span></span><br>
-																{{ t.student_detail__last_name }} 											
+																{{ t.student_id__last_name }} 											
 															
 																
 											

@@ -88,7 +88,7 @@ class PaymentDetail(models.Model):
     class Meta:
         ordering = ['-student_detail' ]
 
-        # unique_together = ['student_detail', 'payment_name',]
+        unique_together = ['student_detail', 'payment_name']
 
         
 

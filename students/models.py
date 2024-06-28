@@ -132,12 +132,13 @@ class StudentDetail(models.Model):
         ordering = ['user']
 
     def __str__(self):
-        return f'{self.last_name } - {self.first_name} ({self.student_username})'
+        return f'{self.last_name } - {self.first_name} ({self.user.username})'
     
     def get_absolute_url(self):
         return reverse('students:students-detail', kwargs={'id':self.id})
     
     def save(self, *args, **kwargs):
-        if self.student_username:
-           
+        if self.student_username == "":
+            student_username=self.user.username
+            self.username = student_username
             super().save(*args, **kwargs)

@@ -32,7 +32,7 @@ class StudentRegisterForm(forms.ModelForm):
 
     class Meta:
         model = StudentDetail
-        fields = [ 'student_username', 'current_class', 'class_group', 'date_admitted', 'student_type', 'class_teacher', 'class_on_admission', 'badge']
+        fields = [ 'current_class', 'class_group', 'date_admitted', 'student_type', 'class_teacher', 'class_on_admission', 'badge']
       
         widgets = {
             'date_admitted': forms.DateInput(

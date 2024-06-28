@@ -9,7 +9,7 @@ class StudentAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_filter = ['current_class']
     search_fields = ('first_name', 'last_name', 'user__username')
     raw_id_fields = ['user', 'class_teacher', 'badge', 'class_group']
-   
+    exclude = ['student_username']
 
    
 

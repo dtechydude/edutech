@@ -11,5 +11,4 @@ class StaffProfileAdmin(ImportExportModelAdmin, admin.ModelAdmin):
 
 admin.site.register(StaffCategory)
 admin.site.register(StaffProfile, StaffProfileAdmin)
-# admin.site.register(StaffAcademicInfo)
 admin.site.register(Department)

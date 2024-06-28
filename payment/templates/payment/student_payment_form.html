@@ -58,13 +58,14 @@
                             in this form with accurate information. Ensure you've checked the payment chart before you proceed</p>
                     BANK DETAILS <br>
                     <a href="javascript:void(0);" class="btn btn-primary">Bank Details</a>
-                    {% for b in bank_detail %}
-                    {{b.name}}
-                    {% endfor %}
+                   <p>{% for b in payment %}
+                    {{b.payment_name.name}}
+                    {% endfor %}</p>
+
                         </div>
                     <div class="card-footer d-sm-flex justify-content-between align-items-center">
                         
-                        <a href="javascript:void(0);" class="btn btn-primary">Bank Details</a>
+                        <!-- <a href="javascript:void(0);" class="btn btn-primary">Bank Details</a> -->
                     </div>
                 </div>
             </div>

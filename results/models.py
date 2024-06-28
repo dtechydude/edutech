@@ -189,12 +189,17 @@ class ResultSheet(models.Model):
     publish = models.BooleanField(default=False) 
 
     class Meta:
-        ordering = ['exam_date']
-    
+        ordering = ['student_detail']
+
+        unique_together = ['student_detail', 'exam']
         
-    class Meta:
         verbose_name = 'Result Sheet'
         verbose_name_plural = 'Result Sheet'
+    
+        
+    # class Meta:
+    #     verbose_name = 'Result Sheet'
+    #     verbose_name_plural = 'Result Sheet'
     
     def get_absolute_url(self):
         return reverse('results:result-sheet', kwargs={'id':self.id})

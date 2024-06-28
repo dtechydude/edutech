@@ -33,6 +33,7 @@ import csv
 # Create your views here.
 @login_required
 def payment_form(request):
+    account_info = PaymentCategory.objects.all()
     if request.method == 'POST':       
         payment_form = PaymentForm(request.POST)
 
@@ -44,15 +45,21 @@ def payment_form(request):
         payment_form = PaymentForm()
 
     context ={
-        'payment_form' : payment_form
+        'payment_form' : payment_form,
+        'account_info' : account_info
     }
     return render(request, 'payment/make_payment.html', context)
 
 class PaymentCreateView(LoginRequiredMixin, CreateView):
     template_name = 'payment/student_payment_form.html'
     form_class = PaymentCreateForm
+    context_object_name = 'payment_create'
+    # model = PaymentDetail
     
+
     success_url = reverse_lazy('payment:my_payments')
+
+
 
     def form_valid(self, form):
         print('form_valid called')
@@ -60,7 +67,7 @@ class PaymentCreateView(LoginRequiredMixin, CreateView):
         object.student_id = self.request.user
         object.save()
         return super(PaymentCreateView, self).form_valid(form)
-
+    
 
 
 @login_required
@@ -139,8 +146,8 @@ def paymentlist(request):
 
 @login_required
 def view_self_payments(request):
-    # mypayment = PaymentDetail.objects.filter(student=StudentDetail.objects.get(user=request.user))
-    mypayment = PaymentDetail.objects.filter(student_id=User.objects.get(username=request.user))
+    mypayment = PaymentDetail.objects.filter(student_detail=StudentDetail.objects.get(user=request.user))
+    # mypayment = PaymentDetail.objects.filter(student_id=User.objects.get(username=request.user))
     mypayment_filter = MyPaymentFilter(request.GET, queryset=mypayment)
     mypayment = mypayment_filter.qs
 
@@ -449,37 +456,6 @@ class BankCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         return super().form_valid(form)
 
-# Payment Search 
-
-def student_search_list(request):
-    student = PaymentDetail.objects.all()
-     # PAGINATOR METHOD
-    page = request.GET.get('page', 1)
-    paginator = Paginator(student, 30)
-    try:
-        payment = paginator.page(page)
-    except PageNotAnInteger:
-        payment = paginator.page(1)
-    except EmptyPage:
-        payment = paginator.page(paginator.num_pages)
-
-    return render(request, 'payment/debtors.html', {'payment': payment })
-
-# Define function to search student
-def search(request):
-    results = []
-
-    if request.method == "GET":
-        query = request.GET.get('search')
-
-        if query == '':
-            query = 'None'
-
-        debtor = PaymentDetail.objects.filter(Q(student_detail__last_name__icontains=query) | Q(student_detail__current_class__icontains=query) | Q(installment_level__icontains=query) | Q(balance_pay__icontains=query) | Q(student_detail__first_name__icontains=query))
-
-        
-    return render(request, 'payment/search.html', {'query': query, 'debtor': results})
-
 
 class PaymentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     fields = ('amount_paid_a', 'payment_date_a', 'bank_name_a', 
@@ -501,7 +477,7 @@ class PaymentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return False
     
 
-# Student Search Query App
+# Payment Search Query
 
 def payment_search_list(request):
     payment = PaymentDetail.objects.all()

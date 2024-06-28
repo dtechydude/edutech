@@ -45,13 +45,18 @@
                </form>
                </div>
            </div>      
-         
+     
            </div>
            </div>
 
        </div>
    </div>
 </div>
+<p> Make payment info
+    {% for acc in account_info %}
+    {{ acc.name}}
+    {% endfor %}
+ </p>
 {% endblock content_body %}
 
 
