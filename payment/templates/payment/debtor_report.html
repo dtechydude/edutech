@@ -28,7 +28,7 @@
 								<span>Debtors Report</span><b class="caret"></b>
 								<i class="fas fa-user ms-3"></i>
 								<button class="btn btn-primary"><a href="{% url 'payment:payment_search_list' %}" style="color:azure;">Search For Payments </a></button> ---
-								<button class="btn btn-primary"><a href="{% url 'payment:payment-csv' %}" style="color:azure;">DOWNLOAD TO EXCEL </a></button>
+								<button class="btn btn-primary"><a href="{% url 'payment:debtor-csv' %}" style="color:azure;">DOWNLOAD TO EXCEL </a></button>
 
 							</div>
 						</div>
@@ -101,7 +101,11 @@
 													
 															<span class="fs-16 mb-0 text-nowrap"><a class="text-black" href="">
 																<!-- if it is a student that paid -->
-																<span>{{ t.student_detail }} - <span style="color:red;">{{ t.student_detail.current_class }}</span></span><br>
+																<span>{% if t.student_detail %} {{ t.student_detail.last_name }} {{ t.student_detail.first_name }} <br>
+																	<span style="color:red;">{{ t.student_detail.student_username }}- {{ t.student_detail.current_class }}</span>
+																		{% else %}  {{t.student_id.studentdetail.last_name }} {{t.student_id.studentdetail.first_name }} <br> 
+																	<span style="color:red;">{{ t.student_id.studentdetail.student_username }}- {{ t.student_id.studentdetail.current_class }}
+																		{% endif %}</span></span><br>
 																{{ t.student_id__last_name }} 											
 															
 																

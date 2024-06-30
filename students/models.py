@@ -21,8 +21,8 @@ class Badge(models.Model):
 
 
 class StudentDetail(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='student_username', blank=True, null=True)
     student_username = models.CharField(max_length=20, unique=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='student_username', blank=True, null=True)
     first_name = models.CharField(max_length=20)
     middle_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20)
@@ -132,7 +132,7 @@ class StudentDetail(models.Model):
         ordering = ['user']
 
     def __str__(self):
-        return f'{self.last_name } - {self.first_name} ({self.user.username})'
+        return f'{self.last_name } - {self.first_name} ({self.user.username}) {self.current_class}'
     
     def get_absolute_url(self):
         return reverse('students:students-detail', kwargs={'id':self.id})

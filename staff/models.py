@@ -10,7 +10,7 @@ import datetime
 
 class StaffCategory(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    description = models.TextField(max_length=500, blank=True)
+    description = models.TextField(max_length=200, blank=True)
     slug = models.SlugField(null=True, blank=True)
 
     def __str__(self):
@@ -26,8 +26,8 @@ class StaffCategory(models.Model):
 
 class Department(models.Model):
     name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(max_length=200, blank=True)
     slug = models.SlugField(null=True, blank=True)
-    description = models.TextField(max_length=500, blank=True)
 
     def __str__(self):
         return self.name

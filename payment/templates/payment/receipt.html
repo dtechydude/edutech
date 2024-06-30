@@ -79,7 +79,7 @@
                 <td>{{my_receipt.student_id.studentdetail.student_username}} {% if my_receipt.student_detail %}{{my_receipt.student_detail.student_username}} {% endif %}</td>
                 <td>{{my_receipt.student_id.studentdetail.first_name}} {{my_receipt.student_id.studentdetail.last_name}} {{my_receipt.student_id.studentdetail.middle_name}} 
                     {% if my_receipt.student_detail %}{{my_receipt.student_detail.last_name }} {{my_receipt.student_detail.first_name }} {{my_receipt.student_detail.middle_name }} {% endif %}</td>
-                <td>{{user.studentdetail.current_class}} - Current Session : {{ my_receipt.payment_name.session }}</td>
+                <td>{{user.studentdetail.current_class}} - Session : {{ my_receipt.payment_name.session }}</td>
                 <td>
                     
                     <span pan class="label label-success" style="font-size:small;">Detailed Payments</span>

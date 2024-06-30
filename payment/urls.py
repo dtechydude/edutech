@@ -21,6 +21,7 @@ urlpatterns = [
     # path('make-payment/', payment_views.make_payments, name="make_payment"),
     path('payment-pdf', payment_views.allpayment_pdf, name="payment-pdf"),
     path('payment-csv', payment_views.allpayment_csv, name="payment-csv"),
+    path('debtor-csv', payment_views.debtor_csv, name="debtor-csv"),
     path('payment_chart-pdf', payment_views.payment_chart_pdf, name="payment_chart-pdf"),
     path('payment_chart-csv', payment_views.payment_chart_csv, name="payment_chart-csv"),
 

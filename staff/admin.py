@@ -9,6 +9,11 @@ class StaffProfileAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_filter = ['class_in_charge']
     search_fields = ('first_name', 'last_name', 'staff_username')
 
-admin.site.register(StaffCategory)
+class DepartmentAdmin(admin.ModelAdmin):
+       
+    list_display=('name', 'description',)
+    exclude = ('slug',)
+
+# admin.site.register(StaffCategory)
 admin.site.register(StaffProfile, StaffProfileAdmin)
-admin.site.register(Department)
+admin.site.register(Department, DepartmentAdmin)

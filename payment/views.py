@@ -262,7 +262,7 @@ def allpayment_pdf(request):
 # Generate a CSV staff list
 def allpayment_csv(request):
     response = HttpResponse(content_type ='text/csv')
-    response['Content-Disposition'] = 'attachment; filename=payment.csv'
+    response['Content-Disposition'] = 'attachment; filename=payment-detail.csv'
 
 # Create a csv writer
     writer = csv.writer(response)
@@ -270,17 +270,21 @@ def allpayment_csv(request):
     payment = PaymentDetail.objects.all()
 
     # Add column headings to the csv files
-    writer.writerow(['STD.ID', 'SURNAME ', 'FIRSTNAME', 'CLASS',  'SESSION', 'TERM', 'FEE DUE',  'PURPOSE', 'PAID_1', 'DATE_1', 'METHOD_1', 'CHECKED_1', 'PAID_2', 'DATE_2', 'METHOD_2', 'CHECKED_2', 'PAID_3', 'DATE_3', 'METHOD_3', 'CHECKED_3', 'TOTAL PAID', 'TOTAL DEBT'])
+    writer.writerow(['STD.ID', 'STUDENT DETAIL ', 'SESSION', 'TERM', 'FEE DUE',  'PURPOSE', 'PAID_1', 'DATE_1', 'METHOD_1', 'CHECKED_1', 'PAID_2', 'DATE_2', 'METHOD_2', 'CHECKED_2', 'PAID_3', 'DATE_3', 'METHOD_3', 'CHECKED_3', 'TOTAL PAID', 'TOTAL DEBT'])
 
 
     # Loop thru and output
     for payments in payment:
-        writer.writerow([payments.student_detail.user.username, payments.student_detail.last_name, payments.student_detail.first_name, payments.student_detail.current_class, payments.payment_name.session, payments.payment_name.term, payments.payment_name.amount_due, payments.payment_name, payments.amount_paid_a, payments.payment_date_a, payments.bank_name_a, payments.confirmed_a,
+        
+        # writer.writerow([payments.student_detail.user.username, payments.student_detail.last_name, payments.student_detail.first_name, payments.student_detail.current_class, payments.payment_name.session, payments.payment_name.term, payments.payment_name.amount_due, payments.payment_name, payments.amount_paid_a, payments.payment_date_a, payments.bank_name_a, payments.confirmed_a,
+        #  payments.amount_paid_b, payments.payment_date_b, payments.bank_name_b, payments.confirmed_b, payments.amount_paid_c, payments.payment_date_c, payments.bank_name_c, payments.confirmed_c, payments.amount_paid_a + payments.amount_paid_b + payments.amount_paid_c, payments.payment_name.amount_due - (payments.amount_paid_a + payments.amount_paid_b + payments.amount_paid_c) ])
+
+        writer.writerow([  payments.student_id, payments.student_detail, payments.payment_name.session, payments.payment_name.term, payments.payment_name.amount_due, payments.payment_name, payments.amount_paid_a, payments.payment_date_a, payments.bank_name_a, payments.confirmed_a,
          payments.amount_paid_b, payments.payment_date_b, payments.bank_name_b, payments.confirmed_b, payments.amount_paid_c, payments.payment_date_c, payments.bank_name_c, payments.confirmed_c, payments.amount_paid_a + payments.amount_paid_b + payments.amount_paid_c, payments.payment_name.amount_due - (payments.amount_paid_a + payments.amount_paid_b + payments.amount_paid_c) ])
 
     return response
 
-
+ 
 def payment_chart_pdf(request):
     # create Bytestream buffer
     buf = io.BytesIO()
@@ -428,6 +432,26 @@ def debtor_list(request):
     }
    
     return render(request, 'payment/debtor_report.html', context )
+
+def debtor_csv(request):
+    response = HttpResponse(content_type ='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=debtor.csv'
+
+# Create a csv writer
+    writer = csv.writer(response)
+
+    payment = PaymentDetail.objects.all()
+
+    # Add column headings to the csv files
+    writer.writerow(['STD.ID', 'STUDENT DETAILS ',  'SESSION', 'FEE DUE',  'PURPOSE', 'TOTAL PAID', 'TOTAL DEBT'])
+
+
+    # Loop thru and output
+    for payments in payment:
+        
+        writer.writerow([ payments.student_id, payments.student_detail, payments.payment_name.session, payments.payment_name.amount_due, payments.payment_name, payments.amount_paid_a + payments.amount_paid_b + payments.amount_paid_c, payments.payment_name.amount_due - (payments.amount_paid_a + payments.amount_paid_b + payments.amount_paid_c)])
+
+    return response
 
 
 

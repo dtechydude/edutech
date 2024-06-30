@@ -16,6 +16,7 @@ class StudentAdmin(ImportExportModelAdmin, admin.ModelAdmin):
 class BadgeAdmin(admin.ModelAdmin):
        
     list_display=('name', 'description',)
+    exclude=('slug',)
 
 
 # Register your models here.
