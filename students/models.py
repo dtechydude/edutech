@@ -8,7 +8,7 @@ from django.urls import reverse
 from staff.models import StaffProfile
 
 class Badge(models.Model):
-    name = models.CharField(max_length=50, blank=True)
+    name = models.CharField(max_length=50, blank=True, null=True)
     description = models.CharField(max_length=120, blank=True)
     slug = models.SlugField(null=True, blank=True)
     
@@ -42,7 +42,7 @@ class StudentDetail(models.Model):
     current_class = models.ForeignKey(Standard, on_delete=models.CASCADE, blank=True, null=True)
     class_group = models.ForeignKey(ClassGroup, on_delete=models.CASCADE, blank=True, null=True)
     class_teacher = models.ForeignKey(StaffProfile, on_delete=models.CASCADE, blank=True, null=True)
-    badge =  models.ForeignKey(Badge, on_delete=models.CASCADE, blank=True, null=True, default='select')
+    badge =  models.ForeignKey(Badge, on_delete=models.CASCADE, blank=True, null=True, default='not a prefect', verbose_name='Prefect Tittle (if is prefect)')
 
     day_student = 'day_student'
     boarder = 'boarder'
@@ -137,8 +137,8 @@ class StudentDetail(models.Model):
     def get_absolute_url(self):
         return reverse('students:students-detail', kwargs={'id':self.id})
     
-    def save(self, *args, **kwargs):
-        if self.student_username == "":
-            student_username=self.user.username
-            self.username = student_username
-            super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if self.student_username == "":
+    #         student_username=self.user
+    #         self.student_username = student_username
+    #         super().save(*args, **kwargs)

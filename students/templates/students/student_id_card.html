@@ -29,7 +29,7 @@
 
     <div class="container">
       <div class="col-sm-12" style="padding:10px; text-align:center; width:100%; white-space:nowrap;">
-        <img src="https://goldencitadelschool.org/portal/static/pages/school_id_header.jpg " width="100%" height="auto">
+        <img src="https://schoolly.com.ng/portal/static/pages/school_id_header.png " width="100%" height="auto">
        </div>
     <div class=" col-sm-8" style="margin: 0 auto; text-align:center;">
         <div class="profile-picture profile-picture-lg bg-gradient bg-warning mb-2">
@@ -49,18 +49,18 @@
         <tr col-span="2">
 
           <td colspan="2" scope="row" style="text-align:center;">
-            <span style="text-transform: uppercase"><strong> IDRIS O OYEWUSI</strong></span><br>
-            <span style=" text-align:left;">Student ID: <strong>2024GCIS659</strong></span><br>
-            <span>Current Class: <span style="color:orange;"><strong><br>10TH GRADE A (SSS 1A)</strong></span></span> |
-            <span style="color:orange;"><span>IVY</span></span><br>
-            <span>Student Type : <span style="color:orange;"> day_student</span></span> <br>
-            <span>Class Teacher : <span style="color:orange;"> - CHINEDU  OLUEBUBE</span></span></td>
+            <span style="text-transform: uppercase"><strong> {{ user.studentdetail.last_name }} - {{ user.studentdetail.first_name }} - {{ user.studentdetail.middle_name }}</strong></span><br>
+            <span style=" text-align:left;">Student ID: <strong>{{ user.studentdetail.student_username}}</strong></span><br>
+            <span>Current Class: <span style="color:orange;"><strong><br>{{ user.studentdetail.current_class }}</strong></span></span> |
+            <span style="color:orange;"><span>{{ user.studentdetail.class_group }}</span></span><br>
+            <span>Student Type : <span style="color:orange;"> {{ user.studentdetail.student_type }}</span></span> <br>
+            <span>Prefect : <span style="color:orange;"> - {{ user.studentdetail.badge }}</span></span></td>
 
 
         </tr>
         <tr>
-          <td class=" p-3 mb-2 text-rgb(0, 183, 255)" scope="row" style="font-size:11px;">Student Since: <br>Jan. 8, 2024</td>
-          <td class=" p-3 mb-2 text-rgb(0, 183, 255)"  scope="row" style="font-size:11px;">Emergency Contact: <br><span style="text-align:center;">08065160766</td>
+          <td class=" p-3 mb-2 text-rgb(0, 183, 255)" scope="row" style="font-size:11px;">Student Since: <br>{{ user.studentdetail.date_admitted }}</td>
+          <td class=" p-3 mb-2 text-rgb(0, 183, 255)"  scope="row" style="font-size:11px;">Emergency Contact: <br><span style="text-align:center;">{{ user.studentdetail.guardian_phone}}</td>
 
           </tr>
 
@@ -80,12 +80,12 @@
         <tr>
 
           <td>
-        <span><p>This Document is a property of <strong>Golden Citadel Int'l School</strong>. If found,
+        <span><p>This Document is a property of <strong>Schoolly EduTech</strong>. If found,
           please return to the school authority<br> Contact details as stated below;</p>
             <p>1 Aker Road, opposite First Sawaco Filling Station [now IMW fuel station],<br>
              before Naval Base Pathfinder, RUMUOLUMENI. , Port Harcourt.<br>
               Phone:+234 7067083278</p></span>
-                <img src="https://goldencitadelschool.org/portal/static/pages/qr_code.png" width="100px" height="100px"></td>
+                <img src="https://schoolly.com.ng/portal/static/pages/qr_code.png" width="100px" height="100px"></td>
 
         </tr>
 
@@ -94,7 +94,7 @@
   </div>
   <div class="col-sm-10 " style="padding-top:20px; margin: 0 auto; text-align:center">
 
-    <img src="https://goldencitadelschool.org/portal/static/pages/barcode2.jpg" width="50%" height="60">
+    <img src="https://schoolly.com.ng/portal/static/pages/barcode2.jpg" width="50%" height="60">
 
     </div>
 

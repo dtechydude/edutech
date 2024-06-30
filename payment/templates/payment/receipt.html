@@ -48,7 +48,7 @@
         <table class="table table-bordered">
         <thead>
             <th><span style="font-size:18px;">OFFICIAL RECEIPT</span><br>
-            <span style="color:red; font-size:18px;">#{{user.profile.code}}-00{{my_receipt.id}}
+            <span style="color:red; font-size:18px;">#{{my_receipt.student_id.studentdetail.student_username}}{% if my_receipt.student_detail %}{{my_receipt.student_detail.student_username }} {% endif %} - 00{{my_receipt.id}}
             <th>Purpose: {{ my_receipt.payment_name}}</th>
             <th>Recorded<br>{{ my_receipt.payment_recorded_date}}</th>
             <th style="text-align:center;"><img src="{% static 'pages/qr_code.png' %}" width="80px" height="80px"></th>
@@ -76,8 +76,9 @@
         </thead>
         <tbody>
             <tr>
-                <td>{{user.username}}</td>
-                <td>{{user.studentdetail.last_name}} {{user.studentdetail.first_name}} {{user.studentdetail.middle_name}}</td>
+                <td>{{my_receipt.student_id.studentdetail.student_username}} {% if my_receipt.student_detail %}{{my_receipt.student_detail.student_username}} {% endif %}</td>
+                <td>{{my_receipt.student_id.studentdetail.first_name}} {{my_receipt.student_id.studentdetail.last_name}} {{my_receipt.student_id.studentdetail.middle_name}} 
+                    {% if my_receipt.student_detail %}{{my_receipt.student_detail.last_name }} {{my_receipt.student_detail.first_name }} {{my_receipt.student_detail.middle_name }} {% endif %}</td>
                 <td>{{user.studentdetail.current_class}} - Current Session : {{ my_receipt.payment_name.session }}</td>
                 <td>
                     

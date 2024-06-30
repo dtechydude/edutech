@@ -146,8 +146,8 @@ def paymentlist(request):
 
 @login_required
 def view_self_payments(request):
-    mypayment = PaymentDetail.objects.filter(student_detail=StudentDetail.objects.get(user=request.user))
-    # mypayment = PaymentDetail.objects.filter(student_id=User.objects.get(username=request.user))
+    # mypayment = PaymentDetail.objects.filter(student_detail=StudentDetail.objects.get(user=request.user))
+    mypayment = PaymentDetail.objects.filter(student_id=User.objects.get(username=request.user))
     mypayment_filter = MyPaymentFilter(request.GET, queryset=mypayment)
     mypayment = mypayment_filter.qs
 
@@ -463,7 +463,7 @@ class PaymentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
               'amount_paid_c', 'payment_date_c', 'bank_name_c',)
     model = PaymentDetail
     template_name = 'payment/payment_update_form.html'
-    context_object_name = 'payment_update'
+    # context_object_name = 'payment_update'
     
     
     def form_valid(self, form):
@@ -471,8 +471,8 @@ class PaymentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return super().form_valid(form)
 
     def test_func(self):
-        post = self.get_object()
-        if self.request.user == post.student_id:
+        paymentdetail = self.get_object()
+        if self.request.user == paymentdetail.student_detail:
             return True
         return False
     

@@ -107,7 +107,11 @@
 													
 															<span class="fs-16 mb-0 text-nowrap"><a class="text-black" href="{% url 'payment:payment_detail' pk=balance.pk %}">
 																<!-- if it is a student that paid -->
-																<span>{{ balance.student_detail.first_name }} {{ balance.student_detail.last_name}}</span><br>{{balance.student_detail.student_username}}
+																 {% if balance.student_id  %}
+																<span>{{ balance.student_id.studentdetail.first_name }} {{ balance.student_id.studentdetail.last_name}}</span><br>{{balance.student_id }}
+																{% else %}
+																<span> {{balance.student_detail.first_name }} {{balance.student_detail.first_name }}</span><br>{{balance.student_detail.student_username }}
+																{% endif %}
 																</span>
 																
 											

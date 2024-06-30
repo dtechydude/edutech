@@ -93,7 +93,7 @@ class PaymentDetail(models.Model):
         
 
     def __str__ (self):
-       return f'{self.student_id}'
+       return f'{self.student_detail} {self.student_id}'
 
     def get_absolute_url(self):
         return reverse('payment:my_payments')  

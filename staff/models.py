@@ -98,7 +98,7 @@ class StaffProfile(models.Model):
         ('head_teacher', head_teacher),
         ('admin_officer', admin_officer),
         ('account_officer', account_officer),
-        ('non_teching', non_teaching),
+        ('non_teaching', non_teaching),
         ('others', others),
         ('select', select),
             

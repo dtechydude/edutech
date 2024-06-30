@@ -15,7 +15,7 @@
 	<meta name="format-detection" content="telephone=no">
 	
 	<!-- PAGE TITLE HERE -->
-	{% block title %}<title>Schoolly Admin </title>{% endblock title %}
+	{% block title %}<title>Schoolly Admin Portal </title>{% endblock title %}
 	
 	<!-- FAVICONS ICON -->
 	{% block favicon %}<link rel="shortcut icon" type="image/png" href="{% static 'portal/images/logo.png' %}" />{% endblock favicon %}
@@ -84,16 +84,12 @@
 					<div class="collapse navbar-collapse justify-content-between">
 						<div class="header-left">
 							<div class="dashboard_bar">
-								{% if user.is_authenticated and user.profile.user_type == 'teacher' %}
-								Teacher/Staff Dashboard
-								{% elif user.is_authenticated and user.profile.user_type == 'student' %}
-								Student Dashboard
-								{% elif user.is_authenticated and user.profile.user_type == 'parent' %}
-								Parent Dashboard
-								{% elif user.is_authenticated and user.is_superuser %}
+								{% if user.is_authenticated and user.is_superuser %}
+								Admin SuperUser Dashboard
+								{% elif user.is_authenticated and user.staffprofile.staff_role == 'admin_officer' %}
 								Admin Dashboard
-								{% elif user.is_authenticated and user.profile.user_type == 'admin' %}
-								Admin Dashboard
+								{% elif user.is_authenticated and user.staffprofile.staff_role == 'form_teacher' %}
+								Form Teacher Dashboard
 								{% elif user.is_authenticated and user.studentdetail.student_status == 'active' %}
 								Student Dashboard
 								{% else %}
@@ -190,23 +186,23 @@
 						{% endif %}
 						</li>
 
-						{% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'admin' %}
+						{% if user.is_authenticated and user.is_superuser or user.staffprofile.staff_role == 'admin_officer' %}
 						<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-025-dashboard"></i>
 							<span class="nav-text">Setup School Info</span>
 						</a> {% endif %}
 						<ul aria-expanded="false">
-							{% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'admin' %}
+							{% if user.is_authenticated and user.is_superuser or user.staffprofile.staff_role == 'admin_officer' %}
 										
-							<li><a href="{% url 'portal:register-session' %}">Add New Session </a></li>
+							<li><a href="/admin">Add New Session </a></li>
 							<li><a href="{% url 'portal:session_list' %}">Session List </a></li>
-							<li><a href="{% url 'portal:register-class' %}">Add New class</a></li>
+							<li><a href="/admin">Add New class</a></li>
 							<li><a href="{% url 'curriculum:standard_list' %}">Class List </a></li>
 							<li><a href="{% url 'portal:register-classgroup' %}">Add ClassArm </a></li>
 							<li><a href="{% url 'portal:classgroup_list' %}">ClassArm List </a></li>
-							<li><a href="{% url 'portal:register-subject' %}">Add Exam Subjects</a></li>
+							<li><a href="/admin">Add Exam Subjects</a></li>
 							<li><a href="{% url 'portal:subject_list' %}">Subjects List </a></li>
-							<li><a href="{% url 'portal:register-exam' %}">Add Exams </a></li>
+							<li><a href="/admin">Add Exams </a></li>
 							<li><a href="{% url 'portal:exam_list' %}">Exam List </a></li>
 							<li><a href="{% url 'portal:register-category' %}">Add Staff Category </a></li>
 							<li><a href="{% url 'portal:category_list' %}">Staff Category List </a></li>
@@ -224,8 +220,8 @@
 							<span class="nav-text">Students Tools</span>
 						</a>
 						<ul aria-expanded="false">
-							{% if user.is_authenticated and user.profile.user_type == 'student' %}
-							{% for idcard in my_idcard%}
+							{% if user.is_authenticated and user.studentdetail.student_status == 'active' %}
+							{% for idcard in my_idcard %}
 							<a href="{% url 'portal:my_idcard' pk=idcard.pk  %}">My ID CARD</a>
 							{% endfor %}
 							<li><a href="{% url 'payment:bank-list' %}">School Account Detail</a></li>
@@ -237,11 +233,11 @@
 							<!-- <li><a href="{% url 'results:my-reportsheet' %}">View Marksheet</a></li> -->
 							{% endif %}
 
-							{% if user.is_authenticated and user.profile.user_type == 'inactive' %}
+							{% if user.is_authenticated and user.staffprofile.staff_role == 'inactive' %}
 							<li>Noting to show</li>
 							{% endif %}
 							
-							{% if user.is_authenticated and user.profile.user_type == 'teacher'%}
+							{% if user.is_authenticated and user.staffprofile.staff_role == 'form_teacher'%}
 							{% if user.is_authenticated and user.staffprofile.staff_role == 'form_teacher' %}
 							<li><a href="#">You are a Form Teacher</a></li>
 							{% endif %}
@@ -252,7 +248,7 @@
 							<li><a href="{% url 'staff:my-students-attendance' %}">Attendance Report</a></li>
 							{% endif %}
 															
-							{% if user.is_authenticated and user.profile.user_type == 'admin' %}
+							{% if user.is_authenticated and user.is_superuser or user.staffprofile.staff_role == 'admin_officer' %}
 							<li><a href="{% url 'students:student_search_list' %}">SEARCH STUDENTS</a></li>
 							<li><a href="{% url 'students:student-list' %}">Student List</a></li>
 							<li><a href="{% url 'students:student-registration' %}">Add New Student</a></li>
@@ -267,16 +263,16 @@
 						</ul>
 
 					</li>
-					{% if user.is_authenticated and user.profile.user_type == 'admin'%}
+					{% if user.is_authenticated and user.is_superuser or user.staffprofile.staff_role == 'admin_officer' %}
 					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-050-info"></i>
 							<span class="nav-text">Staff Info</span>{% endif %}
 						</a>
 						<ul aria-expanded="false">
-							{% if user.is_authenticated and user.profile.user_type == 'admin'%}
+							{% if user.is_authenticated and user.is_superuser or user.staffprofile.staff_role == 'admin_officer'%}
 							<li><a href="{% url 'staff:staff_list' %}">Staff List</a></li>
 						
-							<li><a href="{% url 'staff:staff_create' %}">Add New Staff</a></li>
+							<li><a href="/admin">Add New Staff</a></li>
 							
 							{% endif %}
 						
@@ -284,7 +280,7 @@
 						</ul>
 						
 					</li>
-					{% if user.is_authenticated and user.profile.user_type == 'admin' %}
+					{% if user.is_authenticated and user.is_superuser or user.staffprofile.staff_role == 'admin_officer' %}
 					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-025-dashboard"></i>
 						<span class="nav-text">Payments</span>
@@ -307,7 +303,7 @@
 				</li>
 				{% endif %}
 
-				{% if user.is_authenticated and user.profile.user_type == 'admin' %}
+				{% if user.is_authenticated and user.staffprofile.staff_role == 'admin_officer' %}
 					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-025-dashboard"></i>
 						<span class="nav-text">Inventory</span>
@@ -325,14 +321,14 @@
 						</a>
 						
 						<ul aria-expanded="false">
-							{% if user.is_authenticated and user.profile.user_type == 'inactive' %}
+							{% if user.is_authenticated and user.staffprofile.staff_role == 'inactive' or user.studentdetail.student_status == 'inactive' %}
 							<li>Noting to show</li>
 							{% elif user.is_authenticated and user.profile.user_type == 'student' %}
 							<li><a href="{% url 'curriculum:my-standard' %}">Learning Center</a></li>
-							{% elif user.is_authenticated and user.profile.user_type == 'teacher' or user.profile.user_type == 'admin' %}
+							{% elif user.is_authenticated and user.staffprofile.staff_role == 'form_teacher' or user.staffprofile.staff_role == 'admin_officer' %}
 							<li><a href="{% url 'curriculum:standard_list' %}">Class List</a></li>
 							
-							{% if user.is_authenticated and user.is_superuser or user.profile.user_type == "admin" %}
+							{% if user.is_authenticated and user.is_superuser or user.staffprofile.staff_role == "admin_officer" %}
 							<li><a href="/admin">Add Subjects & Lessons From Admin Panel (Curriculum) </a></li>
 							
 							{% else %}
@@ -350,11 +346,11 @@
 					</a>
 					
 						<ul aria-expanded="false">
-						{% if user.is_authenticated and user.profile.user_type == 'inactive' %}
+						{% if user.is_authenticated and user.staffprofile.staff_role == 'inactive' or user.studentdetail.student_status == 'inactive' %}
 						<li>Noting to show</li>
 						{% else %}
 						<li><a href="{% url 'quizes:main-view' %}">Take Exam/Test</a></li>
-						{% if user.is_authenticated and user.profile.user_type == 'admin' %}
+						{% if user.is_authenticated and user.staffprofile.staff_role == 'admin_officer' %}
 						<li><a href="{% url 'quiz_results:quiz-result-list' %}">Quiz RESULTS</a></li>
 					
 						{% endif%}
@@ -371,7 +367,7 @@
 				
 				<ul aria-expanded="false">
 					<li><a href="{% url 'notification:calendar' %}">School Calendar</a></li>
-					{% if user.is_authenticated and user.is_superuser or user.profile.user_type == "admin" %}
+					{% if user.is_authenticated and user.is_superuser or user.staffprofile.staff_role == "admin_officer" %}
 					<li><a href="{% url 'notification:calendar-form' %}">Add Events</a></li>
 					<li><a href="{% url 'notification:new-mail' %}">Send Message</a></li>
 					{% endif %}
@@ -421,7 +417,7 @@
 					</div>
 				</div>
 				<div class="copyright">
-					<p class="text-center"><strong>Schoolly User Dashboard</strong> © 2022 All Rights Reserved</p>
+					<p class="text-center"><strong>Schoolly User Dashboard</strong> © 2024 All Rights Reserved</p>
 					<p class="fs-12 text-center">Powered by <span class="heart"></span><a href="https://fizcos.com">Fizcos Infotech</a> </p>
 				</div>
 			</div>
@@ -487,7 +483,7 @@
 														</svg>
 													</span>
 													<div class="ms-4">
-														{% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'admin' %}
+														{% if user.is_authenticated and user.is_superuser or user.staffprofile.staff_role == 'admin_officer' %}
 														<h4 class="mb-0 font-w600">{{ student_num }}</h4>
 														<p class="mb-0">Total Students</p>
 													</div>
@@ -516,7 +512,7 @@
 								</div>
 								
 							</div>
-							{% elif user.is_authenticated and user.profile.user_type == 'teacher' %}
+							{% elif user.is_authenticated and user.staffprofile.staff_role == 'form_teacher' %}
 											<p class="mb-0 font-w600">{{ user.staffprofile.class_in_charge }} - {{ user.staffprofile.class_group }} </p>
 											<p class="mb-0">Class-In-Charge</p>
 										</div>
@@ -577,7 +573,7 @@
 							{% endif %}
 
 							<!-- STUDENT DASHBOARD START -->
-							{% if user.is_authenticated and user.profile.user_type == 'student' %}
+							{% if user.is_authenticated and user.studentdetail.student_status == 'active' %}
 
 							  <!-- row -->
 							  <div class="row">
@@ -908,7 +904,7 @@
 					<!-- INACTIVE USER DASHBOARD ENDS -->
 
 					<!-- TEACHERS DASBOARD STARTS -->
-					{% elif user.is_authenticated and user.profile.user_type == 'teacher' %}
+					{% elif user.is_authenticated and user.staffprofile.staff_role == 'form_teacher' %}
 
 					<!-- row -->
 					<div class="row">
