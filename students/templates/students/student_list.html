@@ -17,9 +17,9 @@
 							<!-- <li class="nav-item">
 								<a class="nav-link"href="{% url 'students:student-pdf' %}">View PDF</a>
 							</li> -->
-							<li class="nav-item">
+							<!-- <li class="nav-item">
 								<a class="nav-link" href="{% url 'students:student-csv' %}">Download CSV File</a>
-							</li>
+							</li> -->
 							<li><div>                 
 								{% if messages %}
 								{% for message in messages %}
@@ -30,11 +30,23 @@
 		
 						</ul>
 					</div>
+					<div>
+					<form action="" method="get">
+											
+						<!-- {{ StudentFilter.form|crispy}} -->
+						{{ studentdetail_filter.form }}
+						
+						<button class="btn btn-primary" type="submit">Search </button>
+					</form>	</div>
+
 					<div class="d-flex align-items-center mb-2 flex-wrap"> 
 						<div class="guest-calendar">
 							<div id="reportrange" class="pull-right reportrange" style="width: 100%">
 								<span>Students List</span><b class="caret"></b>
 								<i class="fas fa-user ms-3"></i>
+								<button class="btn btn-primary"><a href="{% url 'students:student_search_list' %}" style="color:azure;">Search For Student </a></button> ---
+								<button class="btn btn-primary"><a href="{% url 'students:student-csv' %}" style="color:azure;">DOWNLOAD TO EXCEL </a></button>
+
 							</div>
 						</div>
 						<div class="newest ms-3">
@@ -51,14 +63,14 @@
 								<div ">	
 									<div>
 										<!-- <div style="float:left; padding:4px; width:30%;"> -->
-											<div>
-												<form action="" method="get">
+											<!-- <div> -->
+												<!-- <form action="" method="get"> -->
 											
 												<!-- {{ StudentFilter.form|crispy}} -->
-												{{ studentdetail_filter.form }}
+												<!-- {{ studentdetail_filter.form }} -->
 												
-												<button class="btn btn-primary" type="submit">Search </button>
-											</form>	</div>
+												<!-- <button class="btn btn-primary" type="submit">Search </button> -->
+											<!-- </form>	</div> -->
 										</div>
 									
 									  </div>		

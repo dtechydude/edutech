@@ -5,7 +5,7 @@
 {% load static %}
 
 {% block content_body %}
-{% if user.is_authenticated and user.profile.user_type == 'teacher' %}
+{% if user.is_authenticated and user.staffprofile.staff_role == 'form_teacher' %}
 
 		<div class="content-body">
 			<!-- row -->

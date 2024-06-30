@@ -11,7 +11,7 @@
     <title>Student Attendance</title>
   </head>
   <body>
-    {% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'teacher' or user.profile.user_type == 'admin'%}
+    {% if user.is_authenticated and user.is_superuser or user.staffprofile.staff_role == 'form_teacher' or user.staffprofile.staff_role == 'admin_officer'%}
     <div class="container">
         <div class="col-sm-12" style="padding-top:20px; text-align:center">
             <h2 style="color:red;">Portal: Attendance Report</h2>

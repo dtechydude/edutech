@@ -12,6 +12,7 @@ from curriculum.models import Standard
 from django.contrib.auth.models import User
 from users.models import Profile
 from users.forms import UserUpdateForm, UserRegisterForm
+from attendance.models import Attendance
 from django.http import HttpResponse
 from django.views.generic import DetailView, UpdateView, DeleteView, ListView
 from django.db.models import Count
