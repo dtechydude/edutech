@@ -56,7 +56,6 @@ class PaymentCreateView(LoginRequiredMixin, CreateView):
     context_object_name = 'payment_create'
     # model = PaymentDetail
     
-
     success_url = reverse_lazy('payment:my_payments')
 
 
@@ -481,7 +480,7 @@ class BankCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class PaymentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class PaymentUpdateView(LoginRequiredMixin, UpdateView):
     fields = ('amount_paid_a', 'payment_date_a', 'bank_name_a', 
               'amount_paid_b', 'payment_date_b', 'bank_name_b',
               'amount_paid_c', 'payment_date_c', 'bank_name_c',)

@@ -88,6 +88,7 @@
 														<th>DEBT.</th>                                                        
 														<!-- <th>INST. </th> -->
                                                         <th>PAYMENT METHOD</th>
+														<th>UPDATE</th>
 														
 													</tr>
 												</thead>
@@ -172,6 +173,7 @@
 														
 														<td class="text-nowrap">
 															<div>
+																<span> <a class =" btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'payment:payment_update' pk=balance.pk %}"> Update</a></span>
 																
 															</div>
 																									

@@ -23,9 +23,10 @@
                             {% if user.is_authenticated %}
                         
                             {% for bk in banklist %}    
-                                                                            
-                              <p> <span style="font-size:16px;"><strong>{{ bk.name}}</strong> - <span style="color:red;"> {{ bk.name}}<strong>{{ bk.acc_number}}</strong></span> <span style="font-size:14px; color:rgba(0, 0, 255, 0.541);">  -   {{ bk.description}}</span></span></p>
-                                <hr>
+                               <ul>                                             
+                              <li> <span style="font-size:16px;"><strong>** {{ bk.acc_name}}</strong> - <span style="color:red;"> {{ bk.acc_number}}<strong>  </strong></span> <span style="font-size:14px; color:rgba(0, 0, 255, 0.541);">  -   {{ bk.description}}</span></span></li>
+                            </ul>  
+                              
                                                              
                                 {% endfor %}                                                   
                           
