@@ -434,7 +434,7 @@ def debtor_list(request):
 
 def debtor_csv(request):
     response = HttpResponse(content_type ='text/csv')
-    response['Content-Disposition'] = 'attachment; filename=debtor.csv'
+    response['Content-Disposition'] = 'attachment; filename=debtors_list.csv'
 
 # Create a csv writer
     writer = csv.writer(response)
