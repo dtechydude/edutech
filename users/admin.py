@@ -10,4 +10,4 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 
 # Register your models here.
-admin.site.register(Profile, UserProfileAdmin)
+# admin.site.register(Profile, UserProfileAdmin)

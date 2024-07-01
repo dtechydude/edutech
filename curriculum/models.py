@@ -32,7 +32,7 @@ class Session(models.Model):
 
     ]
 
-    term = models.CharField(max_length=15, choices=term_status, default='First Term')
+    term = models.CharField(max_length=15, choices=term_status, blank=True, null=True, default='First Term')
     start_date = models.DateField(blank=True, null=True, verbose_name='Start Date')
     end_date = models.DateField(blank=True, null=True, verbose_name='End Date')
     description = models.TextField(max_length=500, blank=True)

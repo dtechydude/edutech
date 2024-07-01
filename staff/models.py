@@ -38,8 +38,8 @@ class Department(models.Model):
 
 
 class StaffProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     staff_username = models.CharField(max_length=20, unique=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     first_name = models.CharField(max_length=20)
     middle_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20)
@@ -82,29 +82,6 @@ class StaffProfile(models.Model):
     class_group = models.ForeignKey(ClassGroup, on_delete=models.CASCADE, blank=True, null=True)
     date_employed = models.DateField()
 
-    form_teacher = 'form_teacher'
-    principal = 'principal'
-    head_teacher = 'head_teacher'
-    admin_officer = 'admin_officer'
-    account_officer = 'account_officer'
-    non_teaching = 'non_teaching'
-    others = 'others'
-    select = 'select'
-
-    
-    staff_role = [
-        ('form_teacher', form_teacher),
-        ('principal', principal),
-        ('head_teacher', head_teacher),
-        ('admin_officer', admin_officer),
-        ('account_officer', account_officer),
-        ('non_teaching', non_teaching),
-        ('others', others),
-        ('select', select),
-            
-    ]
-    staff_role= models.CharField(max_length=20, choices=staff_role, default=select)
-
     married = 'married'
     single = 'single'
     select = 'select'
@@ -135,6 +112,29 @@ class StaffProfile(models.Model):
     next_of_kin_name = models.CharField(max_length=60, blank=True)  
     next_of_kin_address = models.CharField(max_length=150, blank=True)  
     next_of_kin_phone = models.CharField(max_length=15, blank=True) 
+
+    form_teacher = 'form_teacher'
+    principal = 'principal'
+    head_teacher = 'head_teacher'
+    admin_officer = 'admin_officer'
+    account_officer = 'account_officer'
+    non_teaching = 'non_teaching'
+    others = 'others'
+    select = 'select'
+
+    
+    staff_role = [
+        ('form_teacher', form_teacher),
+        ('principal', principal),
+        ('head_teacher', head_teacher),
+        ('admin_officer', admin_officer),
+        ('account_officer', account_officer),
+        ('non_teaching', non_teaching),
+        ('others', others),
+        ('select', select),
+            
+    ]
+    staff_role= models.CharField(max_length=20, choices=staff_role, default=select)
 
     @property
     def is_teacher(self):

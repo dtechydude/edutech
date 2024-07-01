@@ -42,7 +42,7 @@ class ResultSheetAdmin(admin.ModelAdmin):
 
 class ExaminationAdmin(admin.ModelAdmin):
        
-    list_display=('name',)
+    list_display=('name', 'standard', 'session')
 
 class MarkedSheetAdmin(admin.ModelAdmin):
        
@@ -58,9 +58,9 @@ class MarkedSheetAdmin(admin.ModelAdmin):
 #     raw_id_fields = ['resultsheet']
 
 
-admin.site.register(MarkedSheet, MarkedSheetAdmin)
+# admin.site.register(MarkedSheet, MarkedSheetAdmin)
 admin.site.register(Examination, ExaminationAdmin)
-admin.site.register(UploadCertificate, UploadCertificateAdmin)
+# admin.site.register(UploadCertificate, UploadCertificateAdmin)
 admin.site.register(ExamSubject, ExamSubjectAdmin)
 admin.site.register(ResultSheet, ResultSheetAdmin)
 # admin.site.register(ResultImage, ResultImageAdmin)
