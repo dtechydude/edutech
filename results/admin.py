@@ -1,7 +1,7 @@
 from doctest import Example
 from django.contrib import admin
 
-from results.models import Examination, UploadCertificate, MarkedSheet, Session, ResultSheet, ExamSubject, MotorAbility, ResultImage
+from results.models import Examination, UploadCertificate, MarkedSheet, Session, ResultSheet, ExamSubject, MotorAbility, ResultImage, ResultSheet3, ExamSubject, MotorAbility3, ResultImage3, MotorAbility2, ResultImage2, ResultSheet2
 
 # Register your models here.
 
@@ -40,6 +40,58 @@ class ResultSheetAdmin(admin.ModelAdmin):
     search_fields = ('student_detail__student_username', 'student_detail__last_name', 'student_detail__first_name')
     raw_id_fields = ['student_id', 'student_detail']
 
+# Second Term Result
+class MotorAbility2Inline(admin.TabularInline):
+    model = MotorAbility2
+    max_num = 1
+    
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+class ResultImage2Inline(admin.TabularInline):
+    model = ResultImage2
+    exclude =['f_1', 'f_2', 'f_3']
+    max_num = 1
+    
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+class ResultSheet2Admin(admin.ModelAdmin):
+    inlines = [MotorAbility2Inline, ResultImage2Inline] 
+    exclude =['remark', 'student_id']
+    list_display=('student_detail', 'exam',)
+    list_filter  = ['student_detail__current_class']
+    search_fields = ('student_detail__student_username', 'student_detail__last_name', 'student_detail__first_name')
+    raw_id_fields = ['student_id', 'student_detail']
+
+
+
+# Third Term REsult
+class MotorAbility3Inline(admin.TabularInline):
+    model = MotorAbility3
+    max_num = 1
+    
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+class ResultImage3Inline(admin.TabularInline):
+    model = ResultImage3
+    exclude =['f_1', 'f_2', 'f_3']
+    max_num = 1
+    
+    def has_delete_permission(self, request, obj=None):
+        return False
+    
+
+class ResultSheet3Admin(admin.ModelAdmin):
+    inlines = [MotorAbility3Inline, ResultImage3Inline] 
+    exclude =['remark', 'student_id']
+    list_display=('student_detail', 'exam',)
+    list_filter  = ['student_detail__current_class']
+    search_fields = ('student_detail__student_username', 'student_detail__last_name', 'student_detail__first_name')
+    raw_id_fields = ['student_id', 'student_detail', 'first_term', 'second_term']
+
+
 class ExaminationAdmin(admin.ModelAdmin):
        
     list_display=('name', 'standard', 'session')
@@ -63,4 +115,6 @@ admin.site.register(Examination, ExaminationAdmin)
 # admin.site.register(UploadCertificate, UploadCertificateAdmin)
 admin.site.register(ExamSubject, ExamSubjectAdmin)
 admin.site.register(ResultSheet, ResultSheetAdmin)
+admin.site.register(ResultSheet2, ResultSheet2Admin)
+admin.site.register(ResultSheet3, ResultSheet3Admin)
 # admin.site.register(ResultImage, ResultImageAdmin)

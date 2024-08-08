@@ -10,8 +10,7 @@ from students.views import (StudentListView,
                             StudentCreateView,
                             StudentUpdateView,
                             StudentDeleteView,
-                            MyStudentList,
-                            # StudentResultUpdateView,
+                           # StudentResultUpdateView,
                             StudentCardDetailView,
                             GuardianListView,
 )
@@ -45,9 +44,6 @@ urlpatterns = [
     path('student-search/', student_views.student_search_list, name='student_search_list'),
     path('search/', student_views.search, name='search'),
 
-    #for my rest_framework
-    path('api-auth/', MyStudentList.as_view(), name="apiview"),
-    
     #render id card as pdf
     path('idcard-pdf/<pk>/', student_views.id_render_pdf_view, name="idcard-pdf-view"),
     #path('idcard/', PDFTemplateView.as_view(template_name='students/student_id_card.html',

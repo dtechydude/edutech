@@ -230,10 +230,16 @@
 		<td>
 				<a class="text-black" href="{% url 'results:result-update' res.pk %}"><span style="color:green;">UPDATE</span></a><br>
 				<a class="text-black" href="{% url 'results:result-detail' pk=res.pk %}"><span style="color:red;">VIEW</span></a>
+				
+				{% for r in result3 %}
+				<a class="text-black" href="{% url 'results:third-term-detail' r.pk %}"><span style="color:red;">-3rd</span></a>
+
+				{% endfor %}
 
 			</td>		
 
 							{% endfor %}
+				
 						</tr>	
 					</tbody>
 				</table>

@@ -213,7 +213,6 @@
 						</ul>
 
 					</li>
-
 						
 						<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-025-dashboard"></i>
@@ -225,12 +224,20 @@
 							<a href="{% url 'portal:my_idcard' pk=idcard.pk  %}">My ID CARD</a>
 							{% endfor %}
 							<li><a href="{% url 'payment:bank-list' %}">School Account Detail</a></li>
+							<li><a href="{% url 'payment:payment_chart' %}">Payment Chart</a></li>
 							<li><a href="{% url 'payment:payment-create' %}">Make Payment</a></li>
 							<li><a href="{% url 'payment:my_payments' %}">Payment History</a></li>
-							<li><a href="{% url 'payment:payment_chart' %}">Payment Chart</a></li>
-							<!-- <li><a href="{% url 'results:my-reportsheet' %}">Result History</a></li> -->
-							<li><a href="{% url 'results:my-result' %}">Result History</a></li>
-							<!-- <li><a href="{% url 'results:my-reportsheet' %}">View Marksheet</a></li> -->
+							
+							<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+								<span class="nav-text">Result History</span></a>
+								<ul aria-expanded="false">
+									<li><a href="{% url 'results:my-result' %}">First Term Results</a></li>
+									<li><a href="{% url 'results:mysecond-term-result' %}">Second Term Results</a></li>
+									<li><a href="{% url 'results:mythird-term-result' %}">Third Term Results</a></li>
+								
+								</ul>
+							</li>
+							
 							{% endif %}
 
 							{% if user.is_authenticated and user.staffprofile.staff_role == 'inactive' %}

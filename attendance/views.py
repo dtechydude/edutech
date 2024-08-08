@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from attendance.models import Attendance
-from attendance.forms import StudentAttendanceForm
+from attendance.forms import StudentAttendanceForm, MyStudentAttendanceForm
 from students.models import StudentDetail
 # For Filter
 from .filters import AttendanceFilter
@@ -76,6 +76,8 @@ def my_student_att_form(request):
         my_students = StudentDetail.objects.filter(class_teacher__user=request.user).order_by('student_username')
         my_student_att = Attendance.objects.filter(student_id__class_teacher__user=request.user).order_by('student_username')
         attd_form = StudentAttendanceForm(request.POST)
+
+        my_attd_form = MyStudentAttendanceForm(request.POST, user=request.user)
       
         if attd_form.is_valid():
             attd_form.save()
@@ -190,7 +192,5 @@ def e_confirm(request, student_id):
         a.save()
 
     return HttpResponseRedirect(reverse('t_clas', args=(ass.teacher_id, 1)))
-
-
 
 

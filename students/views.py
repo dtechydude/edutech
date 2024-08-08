@@ -342,17 +342,6 @@ def mystudent_csv(request):
     return response
 
 
-# for rest framework
-class MyStudentList(APIView):
-    def get(self, request):
-        students1 = StudentDetail.objects.all().order_by('-date_admitted')
-        serializer = StudentDetailSerializer(students1, many=True)
-        return Response(serializer.data)
-
-    def post(self):
-        pass
-
-
 
 
 def studentupdate(request):
@@ -373,21 +362,6 @@ def studentupdate(request):
     }
 
     return render(request, 'users/student_update_form.html', context)
-
-
-# class ResultUpdateView(LoginRequiredMixin, UpdateView):
-#     form_class = ResultUpdateForm
-#     template_name = 'students/student_result_update_form.html'
-#     context_object_name = 'result'
- 
-
-#     def get_object(self):
-#         id_ = self.kwargs.get("id")
-#         return get_object_or_404(ResultSheet, id=id_)
-
-#     def form_valid(self, form):
-#         print(form.cleaned_data)
-#         return super().form_valid(form)
 
 
 class StudentCardDetailView(LoginRequiredMixin, DetailView):

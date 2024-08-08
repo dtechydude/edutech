@@ -2,8 +2,13 @@
 {% load static %}
 
 {% block branding %}
-<h1 id="head"> Schoolly Portal</h1>
+<h1 id="head" style="color:white;"> Schoolly Edutech Portal</h1>
 {% endblock branding %}
 {% block extrahead %}
     <link rel="shortcut icon" href="{% static 'portal/images/favicon.png' %}" />
 {% endblock extrahead %}
+
+{% block userlinks %}
+{{ block.super }}
+{% include "admin/color_theme_toggle.html" %}
+{% endblock %}

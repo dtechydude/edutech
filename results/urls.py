@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 from results import views as result_views 
 from django.contrib.auth import views as auth_views
 from . import views
-from .views import ResultListView, ResultDetailView, ResultUpdateView
+from .views import ResultListView, ResultDetailView, ResultDetail2View, ResultDetail3View, ResultUpdateView
 # from . import views
 
 app_name = 'results'
@@ -14,8 +14,12 @@ app_name = 'results'
 urlpatterns = [
     path('print-result/', result_views.printresult, name="print-result"),
     path('result-sheet/', result_views.resultsheet, name="result-sheet"),
+    path('third-term-result/', result_views.third_term_resultsheet, name="third-term-result"),
     path('result-create/', result_views.result_create_form, name="result-create"),
+
     path('my-result/', result_views.view_self_result, name="my-result"),
+    path('mysecond-term-result/', result_views.view_self_result2, name="mysecond-term-result"),
+    path('mythird-term-result/', result_views.view_self_result3, name="mythird-term-result"),
 
     path('print-resultform/', result_views.printresultform, name="print-resultform"),
     path('upload-result/', result_views.uploadresult, name="upload-result"),
@@ -27,10 +31,14 @@ urlpatterns = [
 
     path('result-list/', ResultListView.as_view(), name='result-list'),
     path('<int:pk>/', ResultDetailView.as_view(), name='result-detail'), 
+    path('<int:pk>/second-term/', ResultDetail2View.as_view(), name='second-term-detail'), 
+    path('<int:pk>/third-term/', ResultDetail3View.as_view(), name='third-term-detail'), 
     path('result-csv', result_views.results_csv, name="result-csv"),
  
     # render resultsheet as pdf
     path('pdf/<pk>/', result_views.result_render_pdf_view, name="result-pdf-view"),
+    path('pdf/<pk>/second-term/', result_views.result2_render_pdf_view, name="second-result-pdf-view"),
+    path('pdf/<pk>/third-term/', result_views.result3_render_pdf_view, name="third-result-pdf-view"),
     #path('results/', PDFTemplateView.as_view(template_name='results/result_sheet.html',
     #                                       filename='my_result.pdf'), name='result-pdf'),
 

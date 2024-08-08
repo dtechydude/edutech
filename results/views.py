@@ -8,7 +8,7 @@ from django.urls import reverse_lazy, reverse
 from results.forms import PrintCertificateForm, ResultUploadForm, ResultCreateForm, ResultUpdateForm
 from django.contrib import messages
 from django.db.models import Count
-from results.models import UploadCertificate, MarkedSheet, ResultSheet, MotorAbility
+from results.models import UploadCertificate, MarkedSheet, ResultSheet, ResultSheet2, ResultSheet3, MotorAbility
 from results.filters import MyresultFilter, MyResultSheetFilter, ResultSheetFilter
 from students.models import StudentDetail, Badge
 import os
@@ -35,6 +35,7 @@ from xhtml2pdf import pisa
 @login_required
 def printresult(request):
     result = ResultSheet.objects.all()
+    result3 = ResultSheet3.objects.all()
     resultsheet_filter = ResultSheetFilter(request.GET, queryset=result) 
     result = resultsheet_filter.qs
     
@@ -55,6 +56,7 @@ def printresult(request):
         context = {
             # 'result' : resultsheet_filter.objects.filter(student_id=StudentDetail.objects.get(student_id=request.user)),
             'result':result,
+            'result3':result3,
             'resultsheet_filter' : resultsheet_filter,
             
         }
@@ -199,6 +201,18 @@ def resultsheet(request):
     
     return render(request, 'results/result_sheet.html', context)
 
+#on testing third term resultsheet
+def third_term_resultsheet(request):
+    resultsheet = ResultSheet3.objects.all()
+ 
+    
+
+    context = {
+        'resultsheet':resultsheet
+    }
+    
+    return render(request, 'results/third_term_result.html', context)
+
 
 @login_required
 def result_create_form(request):
@@ -217,7 +231,7 @@ def result_create_form(request):
     }
     return render(request, 'results/result_create_form.html', context)
 
-
+# First Term Result
 class ResultDetailView(LoginRequiredMixin, DetailView):
     model = ResultSheet
     context_object_name = 'my_resultsheet'
@@ -243,8 +257,71 @@ class ResultDetailView(LoginRequiredMixin, DetailView):
         total_score = ResultSheet.objects.annotate(total_score= F('score_1ca') + F('score_1exam'))
         num_in_class = ResultSheet.objects.filter(student_detail__current_class = request.self.student_detail.current_class).count()
         return num_in_class
+
+# Second Term Result Sheet Detail
+class ResultDetail2View(LoginRequiredMixin, DetailView):
+    model = ResultSheet2
+    context_object_name = 'my_resultsheet'
+    template_name = 'results/second_term_result.html'
+
+    def get_object(self, queryset=None):
+        if queryset is None:
+            queryset = self.get_queryset()
+        new_str = self.kwargs.get('pk') or self.request.GET.get('pk') or None
+
+        queryset = queryset.filter(pk=new_str)
+        obj = queryset.get()
+        return obj
+
+    # Adding another model (MotorAbility to the ResultSheet)to the original model
+    def get_queryset(self):
+        my_resultsheet = super().get_queryset()
+        my_resultsheet = my_resultsheet.prefetch_related("motorabilitys2")
+        
+        return my_resultsheet
+
  
 
+    def result_calculation(request):
+       
+        total_score = ResultSheet3.objects.annotate(total_score= F('score_1ca') + F('score_1exam'))
+        num_in_class = ResultSheet3.objects.filter(student_detail__current_class = request.self.student_detail.current_class).count()
+        return num_in_class
+ 
+
+
+# Third Term Result Sheet Detail
+class ResultDetail3View(LoginRequiredMixin, DetailView):
+    model = ResultSheet3
+    context_object_name = 'my_resultsheet'
+    template_name = 'results/third_term_result.html'
+
+    def get_object(self, queryset=None):
+        if queryset is None:
+            queryset = self.get_queryset()
+        new_str = self.kwargs.get('pk') or self.request.GET.get('pk') or None
+
+        queryset = queryset.filter(pk=new_str)
+        obj = queryset.get()
+        return obj
+
+    # Adding another model (MotorAbility to the ResultSheet)to the original model
+    def get_queryset(self):
+        my_resultsheet = super().get_queryset()
+        my_resultsheet = my_resultsheet.prefetch_related("motorabilitys3")
+        
+        return my_resultsheet
+
+ 
+
+    def result_calculation(request):
+       
+        total_score = ResultSheet3.objects.annotate(total_score= F('score_1ca') + F('score_1exam'))
+        num_in_class = ResultSheet3.objects.filter(student_detail__current_class = request.self.student_detail.current_class).count()
+        return num_in_class
+ 
+ 
+# First Term Result
 @login_required
 def result_render_pdf_view(request, *args, **kwargs):    
 
@@ -273,7 +350,64 @@ def result_render_pdf_view(request, *args, **kwargs):
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
+# Second Term Result
+@login_required
+def result2_render_pdf_view(request, *args, **kwargs):    
 
+    pk = kwargs.get('pk')
+    
+    my_resultsheet = get_object_or_404(ResultSheet2, pk=pk)
+    template_path = 'results/second_term_result_pdf.html'
+    # template_path = 'results/result_sheet.html'
+    context = {'my_resultsheet': my_resultsheet}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    # if you want to download
+    # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    # if you just want to display
+    response['Content-Disposition'] = 'filename="report.pdf"'
+
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+    html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+# Third Term Result PDF
+@login_required
+def result3_render_pdf_view(request, *args, **kwargs):    
+
+    pk = kwargs.get('pk')
+    
+    my_resultsheet = get_object_or_404(ResultSheet3, pk=pk)
+    template_path = 'results/third_term_result_pdf.html'
+    context = {'my_resultsheet': my_resultsheet}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    # if you want to download
+    # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    # if you just want to display
+    response['Content-Disposition'] = 'filename="report.pdf"'
+
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+    html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+# View Self Result First Term
 @login_required
 def view_self_result(request):
     # mypayment = PaymentDetail.objects.filter(student=StudentDetail.objects.get(user=request.user))
@@ -298,6 +432,57 @@ def view_self_result(request):
     }
 
     return render(request, 'results/result_self_list.html', context)
+
+# View Self Result Second Term
+@login_required
+def view_self_result2(request):
+    # mypayment = PaymentDetail.objects.filter(student=StudentDetail.objects.get(user=request.user))
+    # myresultsheet = ResultSheet.objects.filter(student_id=User.objects.get(username=request.user))
+    myresultsheet = ResultSheet2.objects.filter(student_detail=StudentDetail.objects.get(user=request.user))
+    myresultsheet_filter = MyResultSheetFilter(request.GET, queryset=myresultsheet)
+    myresultsheet = myresultsheet_filter.qs
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(myresultsheet, 20)
+    try:
+        myresultsheet = paginator.page(page)
+    except PageNotAnInteger:
+        myresultsheet = paginator.page(1)
+    except EmptyPage:
+        myresultsheet = paginator.page(paginator.num_pages)
+    context = {
+        # 'mypayment' : PaymentDetail.objects.filter(student=StudentDetail.objects.get(user=request.user)).order_by("-payment_date"),
+        'myresultsheet' : ResultSheet2.objects.filter(student_id=User.objects.get(username=request.user)).order_by("exam__exam_date"),
+        'myresultsheet':myresultsheet,
+        'myresultsheet_filter' : myresultsheet_filter,
+    }
+
+    return render(request, 'results/result_self_list2.html', context)
+
+# View Self Result Third Term
+@login_required
+def view_self_result3(request):
+   
+    myresultsheet = ResultSheet3.objects.filter(student_detail=StudentDetail.objects.get(user=request.user))
+    myresultsheet_filter = MyResultSheetFilter(request.GET, queryset=myresultsheet)
+    myresultsheet = myresultsheet_filter.qs
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(myresultsheet, 20)
+    try:
+        myresultsheet = paginator.page(page)
+    except PageNotAnInteger:
+        myresultsheet = paginator.page(1)
+    except EmptyPage:
+        myresultsheet = paginator.page(paginator.num_pages)
+    context = {
+        # 'mypayment' : PaymentDetail.objects.filter(student=StudentDetail.objects.get(user=request.user)).order_by("-payment_date"),
+        'myresultsheet' : ResultSheet3.objects.filter(student_id=User.objects.get(username=request.user)).order_by("exam__exam_date"),
+        'myresultsheet':myresultsheet,
+        'myresultsheet_filter' : myresultsheet_filter,
+    }
+
+    return render(request, 'results/result_self_list3.html', context)
 
 
 #Result Detail

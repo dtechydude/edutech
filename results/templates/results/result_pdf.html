@@ -369,7 +369,19 @@
           <!-- <th scope="row" colspan="1"></th> -->
            <td class=" text-white" colspan="4" style="text-align:center;">
             <span style="color:white;"><strong>1st Term Average :  N/a | 2nd Term Average : N/a | 3rd Term Average :  N/a  </strong></span> </td>
-          <td class=" text-white" colspan="3" style="text-align:center;"> <span style="color:white; font-size:14px"><strong>OVERALL PERCENTAGE : {{ my_resultsheet.overall_percentage|floatformat:1  }}% </strong></span></td>
+          <td class=" text-white" colspan="3" style="text-align:center;"> <span style="color:white; font-size:14px"><strong>OVERALL PERCENTAGE : {{ my_resultsheet.overall_percentage|floatformat:1  }}% </strong></span>
+            <br>
+            {% if my_resultsheet.exam.term == 'Third Term' %}
+            {% if my_resultsheet.overall_percentage > 49.9 %}
+        
+            <span style="font-size:14px; color: green; background-color: aliceblue; "><strong>Promoted To The Next Class </strong> </span>
+            {% else %}
+            <span style="font-size:14px; color: yellow;"><strong>NOT PROMOTED </strong> </span>
+            {% endif %}
+          
+            
+            {% endif %}
+          </td>
                 
         </tr>    
 
