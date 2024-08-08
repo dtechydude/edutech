@@ -1,5 +1,5 @@
 import django_filters
-from .models import UploadCertificate, ResultSheet
+from .models import UploadCertificate, ResultSheet, ResultSheet2, ResultSheet3
 from django.contrib.auth.models import User
 
 class MyresultFilter(django_filters.FilterSet):
@@ -26,5 +26,23 @@ class ResultSheetFilter(django_filters.FilterSet):
         model = ResultSheet
         # # fields = '__all__'
         # fields = {'current_class': ['exact']}
-        fields = {'exam__name', 'exam__session', 'exam__term'}
+        fields = {'exam__session', 'exam__standard',}
+
+
+class ResultSheetFilter2(django_filters.FilterSet):
+
+    class Meta:
+        model = ResultSheet2
+        # # fields = '__all__'
+        # fields = {'current_class': ['exact']}
+        fields = {'exam__session', 'exam__standard',}
+
+
+class ResultSheetFilter3(django_filters.FilterSet):
+
+    class Meta:
+        model = ResultSheet3
+        # # fields = '__all__'
+        # fields = {'current_class': ['exact']}
+        fields = {'exam__session', 'exam__standard',}
         

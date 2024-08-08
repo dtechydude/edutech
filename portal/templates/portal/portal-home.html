@@ -259,13 +259,21 @@
 							<li><a href="{% url 'students:student_search_list' %}">SEARCH STUDENTS</a></li>
 							<li><a href="{% url 'students:student-list' %}">Student List</a></li>
 							<li><a href="{% url 'students:student-registration' %}">Add New Student</a></li>
-							
-							<li><a href="{% url 'results:print-result' %}">View Students Result</a></li>
-							<!-- <li><a href="{% url 'results:print-resultform' %}">Upload Students Result</a></li> -->
-							<li><a href="{% url 'results:result-create' %}">Load Report Sheet</a></li>	
+
 							<li><a href="/admin">Take Attendance</a></li>
 							<li><a href="{% url 'attendance:attendance_view' %}">View Attendance</a></li>
-								
+							
+							<li><a href="{% url 'results:result-create' %}">Load Report Sheet</a></li>
+							<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+							<span class="nav-text">Results History</span></a>
+							<ul aria-expanded="false">							
+								<li><a href="{% url 'results:print-result' %}">First Term</a></li>
+								<li><a href="{% url 'results:print-second-result' %}">Second Term</a></li>
+								<li><a href="{% url 'results:print-third-result' %}">Third Term</a></li>
+							</ul>
+						</li>
+						</li>
+						
 							{% endif %}
 						</ul>
 

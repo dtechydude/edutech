@@ -17,7 +17,7 @@ from django.utils.html import strip_tags
 
 
 class Session(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
 
     first_term = 'First Term'
     second_term = 'Second Term'
@@ -42,7 +42,7 @@ class Session(models.Model):
         unique_together = ['name', 'term']
 
     def __str__(self):
-        return f"{self.name} - {self.term}"
+        return f"{self.name}"
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)

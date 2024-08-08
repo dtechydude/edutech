@@ -32,7 +32,7 @@ class Examination(models.Model):
     exam_date = models.DateField(null=True) 
     description = models.CharField(max_length=150, blank=True)  
     def __str__ (self):
-        return f'{self.name} - {self.session}'
+        return f'{self.name} - {self.session.name}'
     
 
 

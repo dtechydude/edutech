@@ -9,7 +9,7 @@ from results.forms import PrintCertificateForm, ResultUploadForm, ResultCreateFo
 from django.contrib import messages
 from django.db.models import Count
 from results.models import UploadCertificate, MarkedSheet, ResultSheet, ResultSheet2, ResultSheet3, MotorAbility
-from results.filters import MyresultFilter, MyResultSheetFilter, ResultSheetFilter
+from results.filters import MyresultFilter, MyResultSheetFilter, ResultSheetFilter, ResultSheetFilter2, ResultSheetFilter3
 from students.models import StudentDetail, Badge
 import os
 from django_filters.views import FilterView
@@ -30,12 +30,10 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 
 
-# Create your views here.
-
+# View First Term Results-ADMIN
 @login_required
 def printresult(request):
     result = ResultSheet.objects.all()
-    result3 = ResultSheet3.objects.all()
     resultsheet_filter = ResultSheetFilter(request.GET, queryset=result) 
     result = resultsheet_filter.qs
     
@@ -56,7 +54,6 @@ def printresult(request):
         context = {
             # 'result' : resultsheet_filter.objects.filter(student_id=StudentDetail.objects.get(student_id=request.user)),
             'result':result,
-            'result3':result3,
             'resultsheet_filter' : resultsheet_filter,
             
         }
@@ -70,7 +67,78 @@ def printresult(request):
                             )
         
 
+# View Second Term Results-ADMIN
+@login_required
+def printresult2(request):
+    result = ResultSheet2.objects.all()
+    resultsheet_filter = ResultSheetFilter2(request.GET, queryset=result) 
+    result = resultsheet_filter.qs
+    
 
+     # PAGINATOR METHOD
+    page = request.GET.get('page', 1)
+    paginator = Paginator(result, 50)
+    try:
+        result = paginator.page(page)
+    except PageNotAnInteger:
+        result = paginator.page(1)
+    except EmptyPage:
+        result = paginator.page(paginator.num_pages)
+
+    try:     
+        # result = ResultSheet.objects.filter(student_id=StudentDetail.objects.get(user_id=request.user))
+    
+        context = {
+            # 'result' : resultsheet_filter.objects.filter(student_id=StudentDetail.objects.get(student_id=request.user)),
+            'result':result,
+            'resultsheet_filter' : resultsheet_filter,
+            
+        }
+
+        return render(request, 'results/view_secondterm_result.html', context)
+
+    except StudentDetail.DoesNotExist:
+        return HttpResponse('<div style="text-align:center; padding-top:100px;"><h1 > Oops! You are not a student</h1>'
+                            '<p>Please <a href="#">register</a> as a student</p>'
+                            '</div>'
+                            )
+
+ # View Third Term Results-ADMIN
+@login_required
+def printresult3(request):
+    result = ResultSheet3.objects.all()
+    resultsheet_filter = ResultSheetFilter3(request.GET, queryset=result) 
+    result = resultsheet_filter.qs
+    
+
+     # PAGINATOR METHOD
+    page = request.GET.get('page', 1)
+    paginator = Paginator(result, 50)
+    try:
+        result = paginator.page(page)
+    except PageNotAnInteger:
+        result = paginator.page(1)
+    except EmptyPage:
+        result = paginator.page(paginator.num_pages)
+
+    try:     
+        # result = ResultSheet.objects.filter(student_id=StudentDetail.objects.get(user_id=request.user))
+    
+        context = {
+            # 'result' : resultsheet_filter.objects.filter(student_id=StudentDetail.objects.get(student_id=request.user)),
+            'result':result,
+            'resultsheet_filter' : resultsheet_filter,
+            
+        }
+
+        return render(request, 'results/view_thirdterm_result.html', context)
+
+    except StudentDetail.DoesNotExist:
+        return HttpResponse('<div style="text-align:center; padding-top:100px;"><h1 > Oops! You are not a student</h1>'
+                            '<p>Please <a href="#">register</a> as a student</p>'
+                            '</div>'
+                            )
+               
 
 @login_required
 def printresultform(request):
@@ -200,19 +268,6 @@ def resultsheet(request):
     }
     
     return render(request, 'results/result_sheet.html', context)
-
-#on testing third term resultsheet
-def third_term_resultsheet(request):
-    resultsheet = ResultSheet3.objects.all()
- 
-    
-
-    context = {
-        'resultsheet':resultsheet
-    }
-    
-    return render(request, 'results/third_term_result.html', context)
-
 
 @login_required
 def result_create_form(request):
@@ -485,18 +540,44 @@ def view_self_result3(request):
     return render(request, 'results/result_self_list3.html', context)
 
 
-#Result Detail
-class ResultListView(LoginRequiredMixin, ListView):
-    context_object_name = 'result'
-    model = ResultSheet
-    queryset = ResultSheet.objects.all()
-    template_name = 'results/view_result.html'
-    paginate_by = 50
-    # filterset_class = StudentFilter
+# # First Term Result List View
+# class ResultListView(LoginRequiredMixin, ListView):
+#     context_object_name = 'result'
+#     model = ResultSheet
+#     queryset = ResultSheet.objects.all()
+#     template_name = 'results/view_result.html'
+#     paginate_by = 50
+#     filterset_class = ResultSheetFilter
+    
+#     # query list if neccessary not applied yet anyway
+#     def get_queryset(self):
+#         queryset = ResultSheet.objects.all()
+
+#         if self.request.GET.get('student_id'):
+#             queryset = queryset.filter(student_id=self.request.GET.get('student_id'))
+#         return queryset
+
+# # Second Term Result List View
+# class ResultListView2(LoginRequiredMixin, ListView):
+#     context_object_name = 'result'
+#     model = ResultSheet2
+#     queryset = ResultSheet2.objects.all()
+#     template_name = 'results/view_secondterm_result.html'
+#     paginate_by = 50
+#     # filterset_class = StudentFilter
+
+# # Third Term Result List View
+# class ResultListView3(LoginRequiredMixin, ListView):
+#     context_object_name = 'result'
+#     model = ResultSheet3
+#     queryset = ResultSheet3.objects.all()
+#     template_name = 'results/view_thirdterm_result.html'
+#     paginate_by = 50
+#     # filterset_class = StudentFilter
 
 
 
-
+# First Term Result Update View
 class ResultUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ResultUpdateForm
     template_name = 'results/result_update_form.html'
@@ -513,12 +594,48 @@ class ResultUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return  ('/results/result-list/')
+    
+# Second Term Result Update View
+class ResultUpdateView2(LoginRequiredMixin, UpdateView):
+    form_class = ResultUpdateForm
+    template_name = 'results/result_update_form.html'
+    queryset = ResultSheet2.objects.all()
+    success_url = '/results/second-result-list/'
+
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(ResultSheet2, id=id_)
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return  ('/results/second-result-list/')
+    
+# Third Term Result Update View
+class ResultUpdateView3(LoginRequiredMixin, UpdateView):
+    form_class = ResultUpdateForm
+    template_name = 'results/result_update_form.html'
+    queryset = ResultSheet3.objects.all()
+    success_url = '/results/third-result-list/'
+
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(ResultSheet3, id=id_)
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return  ('/results/third-result-list/')
 
 
-
+# First Term Result CSV FORMAT For Filtering
 def results_csv(request):
     response = HttpResponse(content_type ='text/csv')
-    response['Content-Disposition'] = 'attachment; filename=results.csv'
+    response['Content-Disposition'] = 'attachment; filename=first-term-results.csv'
     
 # Create a csv writer
     writer = csv.writer(response)
@@ -526,15 +643,76 @@ def results_csv(request):
     results = ResultSheet.objects.all()
     
     # Add column headings to the csv files
-    writer.writerow(['USERNAME', 'FIRST NAME', 'MIDDLE NAME', 'LAST NAME', 'CURRENT CLASS', 'EXAM', 'SESSION', 'TERM', 'SUBJECT 1', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 2', 'C.A', 'EXAM', 'TOTAL',
+    writer.writerow(['USERNAME', 'FIRST NAME', 'MIDDLE NAME', 'LAST NAME', 'CLASS/STANDARD', 'EXAM', 'SESSION', 'TERM', 'SUBJECT 1', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 2', 'C.A', 'EXAM', 'TOTAL',
                         'SUBJECT 3', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 4', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 5', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 6', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 7', 'C.A', 'EXAM', 'TOTAL',
                         'SUBJECT 8', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 9', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 10', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 11', 'C.A', 'EXAM', 'TOTAL',
-                        'SUBJECT 12', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 13', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 14', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 15', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 16', 'SUBJECT 17', 'SUBJECT 18', 'SUBJECT 19', 'SUBJECT 20',  'C.A', 'EXAM', 'TOTAL', 'OVERALL %' ])
+                        'SUBJECT 12', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 13', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 14', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 15', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 16', 'C.A', 'EXAM', 'TOTAL',
+                        'SUBJECT 17', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 18', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 19', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 20',  'C.A', 'EXAM', 'TOTAL', 'OVERALL %' ])
 
 
     # Loop thru and output
     for result in results:
-        writer.writerow([result.student_id, result.student_detail.first_name, result.student_detail.middle_name, result.student_detail.last_name, result.standard, result.exam, result.session, result.term,
+        writer.writerow([result.student_detail.student_username, result.student_detail.first_name, result.student_detail.middle_name, result.student_detail.last_name, result.exam.standard, result.exam.name, result.exam.session, result.exam.term,
+                        result.subject_1, result.score_1ca, result.score_1exam, result.total_score_1, result.subject_2, result.score_2ca, result.score_2exam, result.total_score_2, result.subject_3, result.score_3ca, result.score_3exam, result.total_score_3, result.subject_4, result.score_4ca, result.score_4exam, result.total_score_4,
+                        result.subject_5, result.score_5ca, result.score_5exam, result.total_score_5, result.subject_6, result.score_6ca, result.score_6exam, result.total_score_6, result.subject_7, result.score_7ca, result.score_7exam, result.total_score_7, result.subject_8, result.score_8ca, result.score_8exam, result.total_score_8,
+                        result.subject_9, result.score_9ca, result.score_9exam, result.total_score_9, result.subject_10, result.score_10ca, result.score_10exam, result.total_score_10, result.subject_11, result.score_11ca, result.score_11exam, result.total_score_11, result.subject_12, result.score_12ca, result.score_12exam, result.total_score_12,
+                        result.subject_13, result.score_13ca, result.score_13exam, result.total_score_13, result.subject_14, result.score_14ca, result.score_14exam, result.total_score_14, result.subject_15, result.score_15ca, result.score_15exam, result.total_score_15, result.subject_16, result.score_16ca, result.score_16exam, result.total_score_16,
+                        result.subject_17, result.score_17ca, result.score_17exam, result.total_score_17, result.subject_18, result.score_18ca, result.score_18exam, result.total_score_18, result.subject_19, result.score_19ca, result.score_19exam, result.total_score_19, result.subject_20, result.score_20ca, result.score_20exam, result.total_score_20,
+                        result.overall_percentage])
+        
+    return response
+
+# Second Term Result CSV FORMAT For Filtering
+def results_csv_2(request):
+    response = HttpResponse(content_type ='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=second-term-results.csv'
+    
+# Create a csv writer
+    writer = csv.writer(response)
+
+    results = ResultSheet2.objects.all()
+    
+    # Add column headings to the csv files
+    writer.writerow(['USERNAME', 'FIRST NAME', 'MIDDLE NAME', 'LAST NAME', 'CLASS/STANDARD', 'EXAM', 'SESSION', 'TERM', 'SUBJECT 1', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 2', 'C.A', 'EXAM', 'TOTAL',
+                        'SUBJECT 3', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 4', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 5', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 6', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 7', 'C.A', 'EXAM', 'TOTAL',
+                        'SUBJECT 8', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 9', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 10', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 11', 'C.A', 'EXAM', 'TOTAL',
+                        'SUBJECT 12', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 13', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 14', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 15', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 16', 'C.A', 'EXAM', 'TOTAL',
+                        'SUBJECT 17', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 18', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 19', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 20',  'C.A', 'EXAM', 'TOTAL', 'OVERALL %' ])
+
+
+    # Loop thru and output
+    for result in results:
+        writer.writerow([result.student_detail.student_username, result.student_detail.first_name, result.student_detail.middle_name, result.student_detail.last_name, result.exam.standard, result.exam.name, result.exam.session, result.exam.term,
+                        result.subject_1, result.score_1ca, result.score_1exam, result.total_score_1, result.subject_2, result.score_2ca, result.score_2exam, result.total_score_2, result.subject_3, result.score_3ca, result.score_3exam, result.total_score_3, result.subject_4, result.score_4ca, result.score_4exam, result.total_score_4,
+                        result.subject_5, result.score_5ca, result.score_5exam, result.total_score_5, result.subject_6, result.score_6ca, result.score_6exam, result.total_score_6, result.subject_7, result.score_7ca, result.score_7exam, result.total_score_7, result.subject_8, result.score_8ca, result.score_8exam, result.total_score_8,
+                        result.subject_9, result.score_9ca, result.score_9exam, result.total_score_9, result.subject_10, result.score_10ca, result.score_10exam, result.total_score_10, result.subject_11, result.score_11ca, result.score_11exam, result.total_score_11, result.subject_12, result.score_12ca, result.score_12exam, result.total_score_12,
+                        result.subject_13, result.score_13ca, result.score_13exam, result.total_score_13, result.subject_14, result.score_14ca, result.score_14exam, result.total_score_14, result.subject_15, result.score_15ca, result.score_15exam, result.total_score_15, result.subject_16, result.score_16ca, result.score_16exam, result.total_score_16,
+                        result.subject_17, result.score_17ca, result.score_17exam, result.total_score_17, result.subject_18, result.score_18ca, result.score_18exam, result.total_score_18, result.subject_19, result.score_19ca, result.score_19exam, result.total_score_19, result.subject_20, result.score_20ca, result.score_20exam, result.total_score_20,
+                        result.overall_percentage])
+        
+    return response
+
+# Third Term Result CSV FORMAT For Filtering
+def results_csv_3(request):
+    response = HttpResponse(content_type ='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=third-term-results.csv'
+    
+# Create a csv writer
+    writer = csv.writer(response)
+
+    results = ResultSheet3.objects.all()
+    
+    # Add column headings to the csv files
+    writer.writerow(['USERNAME', 'FIRST NAME', 'MIDDLE NAME', 'LAST NAME', 'CLASS/STANDARD', 'EXAM', 'SESSION', 'TERM', 'SUBJECT 1', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 2', 'C.A', 'EXAM', 'TOTAL',
+                        'SUBJECT 3', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 4', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 5', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 6', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 7', 'C.A', 'EXAM', 'TOTAL',
+                        'SUBJECT 8', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 9', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 10', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 11', 'C.A', 'EXAM', 'TOTAL',
+                        'SUBJECT 12', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 13', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 14', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 15', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 16', 'C.A', 'EXAM', 'TOTAL',
+                        'SUBJECT 17', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 18', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 19', 'C.A', 'EXAM', 'TOTAL', 'SUBJECT 20',  'C.A', 'EXAM', 'TOTAL', 'OVERALL %' ])
+
+
+    # Loop thru and output
+    for result in results:
+        writer.writerow([result.student_detail.student_username, result.student_detail.first_name, result.student_detail.middle_name, result.student_detail.last_name, result.exam.standard, result.exam.name, result.exam.session, result.exam.term,
                         result.subject_1, result.score_1ca, result.score_1exam, result.total_score_1, result.subject_2, result.score_2ca, result.score_2exam, result.total_score_2, result.subject_3, result.score_3ca, result.score_3exam, result.total_score_3, result.subject_4, result.score_4ca, result.score_4exam, result.total_score_4,
                         result.subject_5, result.score_5ca, result.score_5exam, result.total_score_5, result.subject_6, result.score_6ca, result.score_6exam, result.total_score_6, result.subject_7, result.score_7ca, result.score_7exam, result.total_score_7, result.subject_8, result.score_8ca, result.score_8exam, result.total_score_8,
                         result.subject_9, result.score_9ca, result.score_9exam, result.total_score_9, result.subject_10, result.score_10ca, result.score_10exam, result.total_score_10, result.subject_11, result.score_11ca, result.score_11exam, result.total_score_11, result.subject_12, result.score_12ca, result.score_12exam, result.total_score_12,
