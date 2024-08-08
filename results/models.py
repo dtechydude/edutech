@@ -872,6 +872,7 @@ class ResultSheet3(models.Model):
     def total_score_20(self):
        return self.score_20ca + self.score_20exam
 
+# Third Term Average
     @property
     def total_score_exam(self):
        return self.score_1exam + self.score_2exam + self.score_3exam + self.score_4exam + self.score_5exam + self.score_6exam + self.score_7exam + self.score_8exam + self.score_9exam + self.score_10exam + self.score_11exam + self.score_12exam + self.score_13exam + self.score_14exam + self.score_15exam + self.score_16exam + self.score_17exam + self.score_18exam + self.score_19exam + self.score_20exam
@@ -884,6 +885,7 @@ class ResultSheet3(models.Model):
     @property
     def overall_total(self):
        return self.total_score_ca + self.total_score_exam
+    
 
 # getting total number of subjects taken
     @property
@@ -913,6 +915,7 @@ class ResultSheet3(models.Model):
 
       return StudentDetail.objects.filter(current_class__name = request.student_detail.current_class).count()
     
+    # Overall Subject Averages
     @property
     def total_average_1(self):
        return (self.first_term.total_score_1 + self.second_term.total_score_1 + self.total_score_1) /3
@@ -992,6 +995,12 @@ class ResultSheet3(models.Model):
     @property
     def total_average_20(self):
        return (self.first_term.total_score_20 + self.second_term.total_score_20 + self.total_score_20) /3
+
+    @property
+    def total_overall_percentage_average(self):
+       return (self.overall_percentage + self.first_term.overall_percentage + self.second_term.overall_percentage) /3
+
+
 
 
 class MotorAbility3(models.Model):

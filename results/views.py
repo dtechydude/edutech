@@ -593,7 +593,7 @@ class ResultUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return  ('/results/result-list/')
+        return  ('/results/print-result/')
     
 # Second Term Result Update View
 class ResultUpdateView2(LoginRequiredMixin, UpdateView):
@@ -611,7 +611,7 @@ class ResultUpdateView2(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return  ('/results/second-result-list/')
+        return  ('/results/print-second-result/')
     
 # Third Term Result Update View
 class ResultUpdateView3(LoginRequiredMixin, UpdateView):
@@ -629,7 +629,7 @@ class ResultUpdateView3(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return  ('/results/third-result-list/')
+        return  ('/results/print-third-result/')
 
 
 # First Term Result CSV FORMAT For Filtering

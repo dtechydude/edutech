@@ -17,7 +17,7 @@ from django.utils.html import strip_tags
 
 
 class Session(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100)
 
     first_term = 'First Term'
     second_term = 'Second Term'
