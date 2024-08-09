@@ -16,7 +16,7 @@
 					<div class="d-flex align-items-center mb-2 flex-wrap"> 
 						<div class="guest-calendar">
 							<div id="reportrange" class="pull-right reportrange" style="width: 100%">
-								<span>My Result List</span><b class="caret"></b>
+								<span>My Third Term Results</span><b class="caret"></b>
 								<i class="fas fa-user ms-3"></i>
 							</div>
 						</div>
@@ -109,7 +109,7 @@
 														</td>
 														{% if r.publish %}
 														<td class="text-nowrap">
-                                                            <a class="text-black" href="{% url 'results:third-term-detail' pk=r.pk %}"><span style="color:red;">VIEW / </span></a> <a class="text-black" href="{% url 'results:third-result-pdf-view' pk=r.pk %}"><strong>DOWNLOAD</strong></a></span></a>
+                                                        <a class="text-black" href="{% url 'results:third-result-pdf-view' pk=r.pk %}"><strong><button class="btn btn-secondary">DOWNLOAD</button> </strong></a></span></a>
 															<span></span>
 														</td>
 														{% else %}

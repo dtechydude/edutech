@@ -31,8 +31,13 @@ class Examination(models.Model):
     term = models.CharField(max_length=15, choices=term, default=others)
     exam_date = models.DateField(null=True) 
     description = models.CharField(max_length=150, blank=True)  
+
     def __str__ (self):
         return f'{self.name} - {self.session.name}'
+    
+    class Meta:
+      verbose_name = 'Examinations'
+      verbose_name_plural = 'Examinations'
     
 
 

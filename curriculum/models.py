@@ -100,6 +100,10 @@ class Subject(models.Model):
         self.slug = slugify(self.subject_id)
         super().save(*args, **kwargs)
 
+    class Meta:
+      verbose_name = 'Subjects'
+      verbose_name_plural = 'Subjects'
+
 
 def save_lesson_files(instance, filename):
     upload_to = 'Images/'

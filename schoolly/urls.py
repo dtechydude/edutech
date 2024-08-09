@@ -6,6 +6,7 @@ from django.conf.urls.static import static
 #from django.conf.urls import url
 from django.views.static import serve
 
+
 # from attendance.views import AttendanceAutocomplete
 
 urlpatterns = [
@@ -47,7 +48,8 @@ urlpatterns = [
 
   path('djrichtextfield/', include('djrichtextfield.urls')),
 
-
+# for django-rest-framework
+#   path('api-auth/', include('rest_framework.urls')),
     
 ]
 

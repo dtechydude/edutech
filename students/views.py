@@ -36,7 +36,6 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 
 
-# @login_required
 
 @login_required
 def studentregisterform(request):
@@ -419,4 +418,16 @@ class GuardianListView(LoginRequiredMixin, ListView):
     template_name = 'students/guardian_list.html'
     paginate_by = 50
     filterset_class = StudentFilter
+
+
+class MyStudentList(APIView):
+
+    def get(self, request):
+        students1 = StudentDetail.objects.all().order_by('-date_admitted')
+        serializer = StudentDetailSerializer(students1, many=True)
+        return Response(serializer.data)
+    
+    def post(self):
+        pass
+
 

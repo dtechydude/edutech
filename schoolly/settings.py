@@ -195,6 +195,18 @@ IMPORT_EXPORT_IMPORT_PERMISSION_CODE = 'delete'
 IMPORT_EXPORT_EXPORT_PERMISSION_CODE = 'delete'
 
 
+
+# # Rest Framework Stuff
+# REST_FRAMEWORK = {
+#     # Use Django's standard `django.contrib.auth` permissions,
+#     # or allow read-only access for unauthenticated users.
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+#     ]
+# }
+
+
+
 # CKEDITOR - 5 Configurations
 
 customColorPalette = [

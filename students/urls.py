@@ -13,6 +13,7 @@ from students.views import (StudentListView,
                            # StudentResultUpdateView,
                             StudentCardDetailView,
                             GuardianListView,
+                            MyStudentList
 )
 
 app_name = 'students'
@@ -48,5 +49,7 @@ urlpatterns = [
     path('idcard-pdf/<pk>/', student_views.id_render_pdf_view, name="idcard-pdf-view"),
     #path('idcard/', PDFTemplateView.as_view(template_name='students/student_id_card.html',
     #                                       filename='id_card.pdf'), name='id-card-pdf'),
+
+    path('api-auth/', MyStudentList.as_view(), name="apiview"),
 
 ]
