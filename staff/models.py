@@ -38,8 +38,8 @@ class Department(models.Model):
 
 
 class StaffProfile(models.Model):
-    staff_username = models.CharField(max_length=20, unique=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+    staff_username = models.CharField(max_length=20, unique=True, verbose_name='Staff ID')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Staff ID (same as above)')
     first_name = models.CharField(max_length=20)
     middle_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20)

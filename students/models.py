@@ -21,8 +21,8 @@ class Badge(models.Model):
 
 
 class StudentDetail(models.Model):
-    student_username = models.CharField(max_length=20, unique=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='student_username', blank=True, null=True)
+    student_username = models.CharField(max_length=20, unique=True, verbose_name='Student ID')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Student Username')
     first_name = models.CharField(max_length=20)
     middle_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20)
@@ -77,7 +77,7 @@ class StudentDetail(models.Model):
 
     region_origin = models.CharField(max_length=20, choices=region_origin, default=select)
 
-    date_admitted = models.DateField( verbose_name='Admission date (MM-DD-YYYY)')
+    date_admitted = models.DateField()
     class_on_admission = models.ForeignKey(Standard, on_delete=models.CASCADE, related_name='studentdetails', verbose_name='class_on_admission') 
     
     # Guardian details here..

@@ -13,7 +13,7 @@ urlpatterns = [
 
     # path('pdf/<pk>/', attendance_views.attendance_render_pdf_view, name="attendance-pdf-view"),
 
-    path('attendance-pdf', attendance_views.attendance_pdf, name="attendance-pdf"),
+    # path('attendance-pdf', attendance_views.attendance_pdf, name="attendance-pdf"),
     path('attendance-csv', attendance_views.attendance_csv, name="attendance-csv"),
  
     

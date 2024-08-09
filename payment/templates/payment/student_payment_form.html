@@ -58,8 +58,8 @@
                             in this form with accurate information. Ensure you've checked the payment chart before you proceed</p>
                     BANK DETAILS <br>
                     <a href="javascript:void(0);" class="btn btn-primary">Bank Details</a>
-                   <p>{% for b in payment %}
-                    {{b.payment_name.name}}
+                   <p>{% for b in account_info %}
+                    {{b.acc_name}}
                     {% endfor %}</p>
 
                         </div>

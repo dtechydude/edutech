@@ -24,7 +24,11 @@
                         
                             {% for bk in banklist %}    
                                <ul>                                             
-                              <li> <span style="font-size:16px;"><strong>** {{ bk.acc_name}}</strong> - <span style="color:red;"> {{ bk.acc_number}}<strong>  </strong></span> <span style="font-size:14px; color:rgba(0, 0, 255, 0.541);">  -   {{ bk.description}}</span></span></li>
+                              <li> <span style="font-size:16px;">Acc. Name: <strong>{{ bk.acc_name}}</strong><br>
+                                 <span style="color:grey;"> Acc. No.: <strong> {{ bk.acc_number}} </strong></span> <br>
+                                 <span style="font-size:16px; color:rgba(0, 0, 255, 0.541);"> Bank Name: <strong>{{ bk.description}}</strong></span>
+                                <hr>
+                                </li>
                             </ul>  
                               
                                                              

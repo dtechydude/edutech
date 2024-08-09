@@ -33,7 +33,7 @@ import csv
 # Create your views here.
 @login_required
 def payment_form(request):
-    account_info = PaymentCategory.objects.all()
+    account_info = BankDetail.objects.all()
     if request.method == 'POST':       
         payment_form = PaymentForm(request.POST)
 
@@ -46,7 +46,7 @@ def payment_form(request):
 
     context ={
         'payment_form' : payment_form,
-        'account_info' : account_info
+        'account_info' : account_info,
     }
     return render(request, 'payment/make_payment.html', context)
 

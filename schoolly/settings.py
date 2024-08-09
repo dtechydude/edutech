@@ -56,7 +56,6 @@ INSTALLED_APPS = [
     'notification',
     'django_filters',
     #'ckeditor',
-    # 'crispy_forms',
     'storages',
     #'ckeditor_uploader',  #for ckeditor image upload
     'django_ckeditor_5',
