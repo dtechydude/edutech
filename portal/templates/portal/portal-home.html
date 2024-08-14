@@ -249,9 +249,8 @@
 							<li><a href="#">You are a Form Teacher</a></li>
 							{% endif %}
 							<li><a href="{% url 'staff:my-students' %}">My Student List</a></li>
-							<!-- <li><a href="{% url 'attendance:attendance_form' %}">Take Attendance</a></li> -->
+							
 							<li><a href="/admin">Take Attendance</a></li>			
-							<!-- <li><a href="{% url 'attendance:attendance_view' %}">View Admin Att.</a></li>	 -->
 							<li><a href="{% url 'staff:my-students-attendance' %}">Attendance Report</a></li>
 							{% endif %}
 															
@@ -261,7 +260,7 @@
 							<li><a href="{% url 'students:student-registration' %}">Add New Student</a></li>
 
 							<li><a href="/admin">Take Attendance</a></li>
-							<li><a href="{% url 'attendance:attendance_view' %}">View Attendance</a></li>
+							<li><a href="">View Attendance</a></li>
 							
 							<li><a href="{% url 'results:result-create' %}">Load Report Sheet</a></li>
 							<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
