@@ -121,27 +121,3 @@ def attendance_csv(request):
     return response
 
 
-
-
-#Attendance logic
-@login_required()
-def e_confirm(request, student_id):
-    ass = get_object_or_404(StudentDetail, id=student_id)
-    cr = ass.current_class
-    cl = ass.class_teacher
-    assc = ass.attendance_set.create(morning_status=True, attendance_date=request.POST['attendance_date'])
-    assc.save()
-
-    for i, s in enumerate(cl.current_class_set.all()):
-        morning_status = request.POST[s.first_name]
-        if morning_status == 'present':
-            morning_status = 'True'
-        else:
-            morning_status = 'False'
-        attendance_date = request.POST['attendance_date']
-        a = Attendance(student_id=cr, session=s, morning_status=morning_status, attendance_date=attendance_date, term=assc, afternoon_status=afternoon_status, authorized_sign=authorized_sing5)
-        a.save()
-
-    return HttpResponseRedirect(reverse('t_clas', args=(ass.teacher_id, 1)))
-
-

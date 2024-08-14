@@ -1,7 +1,7 @@
 from django.urls import path
 #from wkhtmltopdf.views import PDFTemplateView
 #from wkhtmltopdf import PDFTemplateView
-from wkhtmltopdf import WKHtmlToPdf
+# from wkhtmltopdf import WKHtmlToPdf
 from django.conf.urls.static import static
 from results import views as result_views 
 from django.contrib.auth import views as auth_views

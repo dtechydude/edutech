@@ -1,6 +1,6 @@
 from django.urls import path
 #from wkhtmltopdf.views import PDFTemplateView
-from wkhtmltopdf import WKHtmlToPdf
+# from wkhtmltopdf import WKHtmltoPdf
 from django.conf import settings
 from django.conf.urls.static import static
 from students import views as student_views 

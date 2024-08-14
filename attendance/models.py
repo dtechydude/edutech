@@ -4,12 +4,20 @@ from django.contrib.auth.models import User
 from django.db import models
 from curriculum.models import Standard, Session
 from students.models import StudentDetail
+from staff.models import StaffProfile
+from curriculum.models import Standard, ClassGroup
+
+import math
+from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.auth.models import AbstractUser
+from django.db.models.signals import post_save, post_delete
+from datetime import timedelta
 
 
 
 class Attendance(models.Model):
     student_id = models.ForeignKey(StudentDetail, on_delete=models.CASCADE, blank=True, null=True)
-    # standard = models.ForeignKey(Standard, on_delete=models.CASCADE, blank=True, null=True)
+    standard = models.ForeignKey(Standard, on_delete=models.CASCADE, blank=True, null=True)
     session = models.ForeignKey(Session, on_delete=models.CASCADE, blank=True, null=True, default='2023/2024')
     attendance_date = models.DateField(null=True)
     morning_status = models.BooleanField(default=False)
@@ -22,4 +30,6 @@ class Attendance(models.Model):
     
     def __str__ (self):
         return f'{self.student_id}'
+
+
 
