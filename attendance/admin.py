@@ -89,16 +89,17 @@ class StudentCourseAdmin(admin.ModelAdmin):
 
 
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ('USN', 'name', 'class_id')
+    list_display = ('student_id', 'user', 'class_id', 'current_class')
     search_fields = ('USN', 'name', 'class_id__id', 'class_id__dept__name')
     ordering = ['class_id__dept__name', 'class_id__id', 'USN']
     raw_id_fields = ['student_id', 'class_id', 'current_class', 'user']
 
 
 class TeacherAdmin(admin.ModelAdmin):
-    list_display = ('name', 'dept')
+    list_display = ('user', 'name', 'dept')
     search_fields = ('name', 'dept__name')
     ordering = ['dept__name', 'name']
+    raw_id_fields = ['user']
 
 
 class AttendanceClassAdmin(admin.ModelAdmin):

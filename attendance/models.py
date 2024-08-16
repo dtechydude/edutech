@@ -102,7 +102,7 @@ class Class(models.Model):
 
     def __str__(self):
         d = Dept.objects.get(name=self.dept)
-        return '%s : %d %s' % (d.name, self.sem, self.section)
+        return '%s : %d %s  ' % (self.section, self.sem, d.name )
 
 class Student(models.Model):
     student_id = models.OneToOneField(StudentDetail, on_delete=models.CASCADE, null=True, verbose_name='Student Detail')
@@ -113,7 +113,7 @@ class Student(models.Model):
     current_class = models.OneToOneField(Standard, on_delete=models.CASCADE, null=True)
     
     
-    # DOB = models.DateField(default='1998-01-01')
+    # DOB = models.DateField(default='1998-01-01', null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -122,11 +122,13 @@ class Student(models.Model):
 
 
 class Teacher(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-    id = models.CharField(primary_key=True, max_length=100)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, verbose_name= 'Teacher Username')
+    staff_profile = models.OneToOneField(StaffProfile, on_delete=models.CASCADE, null=True, verbose_name= "Teacher's Detail")
+    name = models.CharField(max_length=100, verbose_name='Full Name')
+    id = models.CharField(primary_key=True, max_length=100, verbose_name= 'Enter Username Again', help_text='Click Search Button To Select Same As Above')
     dept = models.ForeignKey(Dept, on_delete=models.CASCADE, default=1)
-    name = models.CharField(max_length=100)
-    DOB = models.DateField(default='1980-01-01')
+    
+    # DOB = models.DateField(default='1980-01-01')
 
     def __str__(self):
         return self.name

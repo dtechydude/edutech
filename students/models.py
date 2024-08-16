@@ -22,7 +22,7 @@ class Badge(models.Model):
 
 class StudentDetail(models.Model):
     student_username = models.CharField(max_length=20, unique=True, verbose_name='Student ID', help_text='Type New Username For Student')
-    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Student Username', help_text='Click The Search Button To Select The New Username')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Student Username', help_text='Click The Search Button To Select The New Username If Not Available, ADD New User')
     first_name = models.CharField(max_length=20)
     middle_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20)
