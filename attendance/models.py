@@ -72,32 +72,6 @@ test_name = (
 
 
 
-# class Profile(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     address = models.CharField(max_length=20, blank=True, null=True)
-#     is_teacher = models.BooleanField()
-#     is_student = models.BooleanField()
-#     code = models.CharField(max_length=6, blank=True)
-#     updated = models.DateTimeField(auto_now=True)
-#     created = models.DateTimeField(auto_now_add=True)
-
-#     class Meta:
-#         ordering = ['user']
-
-
-# #this function returns the profile name in the admin panel profile table
-#     def __str__ (self):
-#         return f'{self.user.username}-{self.code}'
-
-    
-#     def save(self, *args, **kwargs):
-#         if self.code =="":
-#             code = generate_ref_code()
-#             self.code = code
-#         super().save(*args, **kwargs)
-
-
-
 class Dept(models.Model):
     id = models.CharField(primary_key='True', max_length=100)
     name = models.CharField(max_length=200)
@@ -119,8 +93,9 @@ class Class(models.Model):
     # courses = models.ManyToManyField(Course, default=1)
     id = models.CharField(primary_key='True', max_length=100)
     dept = models.ForeignKey(Dept, on_delete=models.CASCADE)
-    section = models.CharField(max_length=100)
-    sem = models.IntegerField()
+    # section = models.CharField(max_length=100)
+    section = models.ForeignKey(Session, on_delete=models.CASCADE, verbose_name='Session')
+    sem = models.IntegerField(verbose_name='Term', help_text='Enter 1 for 1stTerm, 2 for 2ndTerm & 3 for 3rdTerm')
 
     class Meta:
         verbose_name_plural = 'classes'
@@ -130,14 +105,20 @@ class Class(models.Model):
         return '%s : %d %s' % (d.name, self.sem, self.section)
 
 class Student(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    student_id = models.OneToOneField(StudentDetail, on_delete=models.CASCADE, null=True, verbose_name='Student Detail')
+    name = models.CharField(max_length=200, verbose_name='Full Name')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, verbose_name='Student Username')
+    USN = models.CharField(primary_key='True', max_length=100, verbose_name= 'Repeat Std. Username')
     class_id = models.ForeignKey(Class, on_delete=models.CASCADE, default=1)
-    USN = models.CharField(primary_key='True', max_length=100)
-    name = models.CharField(max_length=200)
-    DOB = models.DateField(default='1998-01-01')
+    current_class = models.OneToOneField(Standard, on_delete=models.CASCADE, null=True)
+    
+    
+    # DOB = models.DateField(default='1998-01-01')
 
     def __str__(self):
         return self.name
+        # return f' {self.name} - {self.student_id}'
+    
 
 
 class Teacher(models.Model):

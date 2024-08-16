@@ -1,133 +1,16 @@
-from django.shortcuts import render
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 from attendance.models import Attendance
-#from attendance.forms import StudentAttendanceForm
-from students.models import StudentDetail
-# For Filter
-# from .filters import AttendanceFilter
-from django_filters.views import FilterView
-# For panigation
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-#for pdf
-from django.http import HttpResponse
-from django.http import FileResponse
-import io
-from reportlab.pdfgen import canvas
-from reportlab.lib.units import inch
-from reportlab.lib.pagesizes import letter
+from django.urls import reverse
+from django.urls import reverse_lazy
 
-
+from django.http import HttpResponseRedirect 
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from students.models import StudentDetail
 from staff.models import StaffProfile
 from attendance.models import Dept, Class, Student, Attendance, Course, Teacher, Assign, AttendanceTotal, time_slots, \
     DAYS_OF_WEEK, AssignTime, AttendanceClass, StudentCourse, Marks, MarksClass
-
-# from dal import autocomplete
-# for csv
-import csv
-
-
-# @login_required
-# def student_attendance(request):
-#     if request.method == 'POST':
-#         attd_form = StudentAttendanceForm(request.POST)
-      
-#         if attd_form.is_valid():
-#             attd_form.save()
-            
-#             messages.success(request, f'Attendance taken. exit or enter another')
-#             return redirect('attendance:attendance_form')
-#     else:
-#          attd_form = StudentAttendanceForm()
-                  
-#     context = {
-#         'attd_form': attd_form,
-         
-#     }
-
-#     return render(request, 'attendance/take-attendance.html', context)
-
-# @login_required
-# def attendance_view(request):
-#     attendance = Attendance.objects.all()
-#     attendance_filter = AttendanceFilter(request.GET, queryset=attendance) 
-#     attendance = attendance_filter.qs
-    
-#     # PAGINATOR METHOD
-#     page = request.GET.get('page', 1)
-#     paginator = Paginator(attendance, 30)
-#     try:
-#         attendance = paginator.page(page)
-#     except PageNotAnInteger:
-#         attendance = paginator.page(1)
-#     except EmptyPage:
-#         attendance = paginator.page(paginator.num_pages)
-
-#     context = {
-#         'attendance' : Attendance.objects.all(),
-#         'attendance_filter': attendance_filter,
-#         'attendance': attendance
-
-#     }
-
-#     return render(request, 'attendance/attendance_view.html', context)
-
-
-# def my_student_att_form(request):
-#     # my_students = StudentDetail.objects.filter(class_teacher__user=request.user).order_by('student_username')
-#     if request.method == 'POST':
-#         my_students = StudentDetail.objects.filter(class_teacher__user=request.user).order_by('student_username')
-#         my_student_att = Attendance.objects.filter(student_id__class_teacher__user=request.user).order_by('student_username')
-#         attd_form = StudentAttendanceForm(request.POST)
-
-#         my_attd_form = MyStudentAttendanceForm(request.POST, user=request.user)
-      
-#         if attd_form.is_valid():
-#             attd_form.save()
-            
-#             messages.success(request, f'Attendance taken. exit or enter another')
-#             return redirect('attendance:my-std-att-form')
-#     else:
-#          attd_form = StudentAttendanceForm()
-                  
-#     context = {
-#         'attd_form': attd_form,
-#         'my_students':StudentDetail.objects.filter(class_teacher__user=request.user).order_by('student_username'),
-#         'my_student_att': Attendance.objects.filter(student_id__class_teacher__user=request.user)
-         
-#     }
-
-#     return render(request, 'attendance/my-std-att-form.html', context)
-#     # return render(request, 'attendance/test_form.html', context)
-
-
-
-# # Generate a CSV Attendance list
-# def attendance_csv(request):
-#     response = HttpResponse(content_type ='text/csv')
-#     response['Content-Disposition'] = 'attachment; filename=attendance.csv'
-    
-# # Create a csv writer
-#     writer = csv.writer(response)
-
-#     attendance = Attendance.objects.all()
-    
-#     # Add column headings to the csv files
-#     writer.writerow(['STUDENT ID', 'CLASS', 'ATT.DATE',
-#                     'MORNING', 'AFTERNOON', 'AUTHORIZED SIGN', 'DATE TAKEN',])
-
-
-#     # Loop thru and output
-#     for att in attendance:
-#         writer.writerow([att.student_id,
-#                         att.attendance_date, att.morning_status, att.afternoon_status, att.authorized_sign, att.date_taken,])
-        
-#     return response
-
 
 
 
@@ -208,7 +91,7 @@ def cancel_class(request, ass_c_id):
     assc = get_object_or_404(AttendanceClass, id=ass_c_id)
     assc.status = 2
     assc.save()
-    return HttpResponseRedirect(reverse('t_class_date', args=(assc.assign_id,)))
+    return HttpResponseRedirect(reverse('attendance:t_class_date', args=(assc.assign_id,)))
 
 
 @login_required()
@@ -262,7 +145,7 @@ def confirm(request, ass_c_id):
             assc.status = 1
             assc.save()
 
-    return HttpResponseRedirect(reverse('t_class_date', args=(ass.id,)))
+    return HttpResponseRedirect(reverse('attendance:t_class_date', args=(ass.id,)))
 
 
 @login_required()
@@ -278,7 +161,7 @@ def change_att(request, att_id):
     a = get_object_or_404(Attendance, id=att_id)
     a.status = not a.status
     a.save()
-    return HttpResponseRedirect(reverse('t_attendance_detail', args=(a.student.USN, a.course_id)))
+    return HttpResponseRedirect(reverse('attendance:t_attendance_detail', args=(a.student.USN, a.course_id)))
 
 
 @login_required()
@@ -297,7 +180,7 @@ def e_confirm(request, assign_id):
     ass = get_object_or_404(Assign, id=assign_id)
     cr = ass.course
     cl = ass.class_id
-    assc = ass.attendanceclass_set.create(status=1, date=request.POST['date'])
+    assc = ass.attendanceclass_set.create(status=1, date=request.POST["date"])
     assc.save()
 
     for i, s in enumerate(cl.student_set.all()):
@@ -310,7 +193,7 @@ def e_confirm(request, assign_id):
         a = Attendance(course=cr, student=s, status=status, date=date, attendanceclass=assc)
         a.save()
 
-    return HttpResponseRedirect(reverse('t_clas', args=(ass.teacher_id, 1)))
+    return HttpResponseRedirect(reverse('attendance:t_clas', args=(ass.teacher_id, 1)))
 
 
 @login_required()
@@ -448,7 +331,7 @@ def marks_confirm(request, marks_c_id):
     mc.status = True
     mc.save()
 
-    return HttpResponseRedirect(reverse('t_marks_list', args=(ass.id,)))
+    return HttpResponseRedirect(reverse('attendance:t_marks_list', args=(ass.id,)))
 
 
 @login_required()
@@ -472,5 +355,5 @@ def edit_marks(request, marks_c_id):
 def student_marks(request, assign_id):
     ass = Assign.objects.get(id=assign_id)
     sc_list = StudentCourse.objects.filter(student__in=ass.class_id.student_set.all(), course=ass.course)
-    return render(request, 'info/t_student_marks.html', {'sc_list': sc_list})
+    return render(request, 'attendance/t_student_marks.html', {'sc_list': sc_list})
 

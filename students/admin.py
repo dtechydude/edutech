@@ -11,8 +11,6 @@ class StudentAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     raw_id_fields = ['user', 'class_teacher', 'badge', 'class_group']
    
 
-   
-
 class BadgeAdmin(admin.ModelAdmin):
        
     list_display=('name', 'description',)

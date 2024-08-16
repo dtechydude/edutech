@@ -15,20 +15,6 @@ from .models import StudentCourse, Marks, User, AttendanceRange
 
 
 
-# class AttendanceAdmin(admin.ModelAdmin):
-
-#     list_display=('student_id', 'attendance_date', 'morning_status', 'afternoon_status')
-#     list_filter  = ['student_id__current_class']
-#     search_fields = ('student_id__user__username', 'student_id__last_name', 'student_id__first_name')
-#     raw_id_fields = ['student_id',]
-  
-
-
-# admin.site.register(Attendance, AttendanceAdmin)
-
-
-
-
 
 # Register your models here.
 
@@ -106,6 +92,7 @@ class StudentAdmin(admin.ModelAdmin):
     list_display = ('USN', 'name', 'class_id')
     search_fields = ('USN', 'name', 'class_id__id', 'class_id__dept__name')
     ordering = ['class_id__dept__name', 'class_id__id', 'USN']
+    raw_id_fields = ['student_id', 'class_id', 'current_class', 'user']
 
 
 class TeacherAdmin(admin.ModelAdmin):
@@ -154,9 +141,9 @@ class AttendanceClassAdmin(admin.ModelAdmin):
         self.message_user(request, "Attendance Dates reset successfully!")
         return HttpResponseRedirect("../")
 
-class UserProfileAdmin(admin.ModelAdmin):
+# class UserProfileAdmin(admin.ModelAdmin):
        
-    list_display=('user', 'code', 'is_student', 'is_teacher')
+#     list_display=('user', 'code', 'is_student', 'is_teacher')
     # list_filter  = ['user_type',]
     # search_fields = ('user__username', 'code', 'user_type')
 
