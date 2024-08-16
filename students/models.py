@@ -21,12 +21,12 @@ class Badge(models.Model):
 
 
 class StudentDetail(models.Model):
-    student_username = models.CharField(max_length=20, unique=True, verbose_name='Student ID')
-    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Student Username')
+    student_username = models.CharField(max_length=20, unique=True, verbose_name='Student ID', help_text='Type New Username For Student')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Student Username', help_text='Click The Search Button To Select The New Username')
     first_name = models.CharField(max_length=20)
     middle_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20)
-    dob = models.DateField(blank=True, null=True, verbose_name='Date of Birth (YYYY-MM-DD)')
+    dob = models.DateField(blank=True, null=True, verbose_name='Date of Birth(Y-M-D)', default='2020-01-01')
 
     female = 'female'
     male = 'male'
@@ -77,7 +77,7 @@ class StudentDetail(models.Model):
 
     region_origin = models.CharField(max_length=20, choices=region_origin, default=select)
 
-    date_admitted = models.DateField()
+    date_admitted = models.DateField(default='2020-01-01')
     class_on_admission = models.ForeignKey(Standard, on_delete=models.CASCADE, related_name='studentdetails', verbose_name='class_on_admission') 
     
     # Guardian details here..
@@ -86,6 +86,7 @@ class StudentDetail(models.Model):
     guardian_phone = models.CharField(max_length=15, blank=True)
     guardian_email = models.CharField(max_length=30, blank=True)
 
+    select = 'select'
     father = 'father'
     mother = 'mother'
     sister = 'sister'
@@ -93,9 +94,10 @@ class StudentDetail(models.Model):
     aunt = 'aunt'
     uncle = 'uncle'
     other = 'other'
-    select = 'select'
+    
 
     relationship = [
+        (select, 'select'),
         (father, 'father'),
         (mother, 'mother'),
         (sister, 'sister'),
@@ -103,11 +105,11 @@ class StudentDetail(models.Model):
         (aunt, 'aunt'),
         (uncle, 'uncle'),
         (other, 'other'), 
-        (select, 'select'), 
+         
 
     ]
 
-    relationship = models.CharField(max_length=25, choices=relationship, default=select)
+    relationship = models.CharField(max_length=25, choices=relationship, default=select, help_text="Guardian's Relationship With Student")
     
     active = 'active'
     inactive = 'inactive'
