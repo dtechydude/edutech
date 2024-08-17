@@ -35,9 +35,11 @@
   <body id="page-top">
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
-
+      {% if user.staffprofile.staff_role == 'form_teacher' %}
       <a class="navbar-brand mr-1" href="{% url 'attendance:index' %}">SchoollyEdtech Attendance Mgt.</a>
-
+      {% else %}
+      <a class="navbar-brand mr-1" href="{% url 'attendance:index2' %}">SchoollyEdtech Attendance Mgt.</a>
+      {% endif %}
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
       </button>
@@ -94,6 +96,11 @@
               <li class="nav-item">
               <a class="nav-link" href="{% url 'attendance:timetable' request.user.student.class_id_id %}">
                 <span>Time Table</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'portal:portal-home' %}">
+                <span>Portal Dashboard</span>
               </a>
             </li>
 

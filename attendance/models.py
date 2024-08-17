@@ -110,7 +110,7 @@ class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, verbose_name='Student Username')
     USN = models.CharField(primary_key='True', max_length=100, verbose_name= 'Repeat Std. Username')
     class_id = models.ForeignKey(Class, on_delete=models.CASCADE, default=1)
-    current_class = models.OneToOneField(Standard, on_delete=models.CASCADE, null=True)
+    current_class = models.OneToOneField(Standard, on_delete=models.CASCADE, null=True, default='Primary1')
     
     
     # DOB = models.DateField(default='1998-01-01', null=True, blank=True)

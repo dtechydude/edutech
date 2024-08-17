@@ -221,8 +221,9 @@
 						<ul aria-expanded="false">
 							{% if user.is_authenticated and user.studentdetail.student_status == 'active' %}
 							{% for idcard in my_idcard %}
-							<a href="{% url 'portal:my_idcard' pk=idcard.pk  %}">My ID CARD</a>
+							<li><a href="{% url 'portal:my_idcard' pk=idcard.pk  %}">My ID CARD</a></li>
 							{% endfor %}
+							<li><a href="{% url 'attendance:index2' %}">My Attendance</a></li>
 							<li><a href="{% url 'payment:bank-list' %}">School Account Detail</a></li>
 							<li><a href="{% url 'payment:payment_chart' %}">Payment Chart</a></li>
 							<li><a href="{% url 'payment:payment-create' %}">Make Payment</a></li>
