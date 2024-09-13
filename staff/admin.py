@@ -16,6 +16,7 @@ class StaffProfileAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display=('staff_username', 'last_name', 'first_name', 'cat_name', 'class_in_charge', 'class_group')
     list_filter = ['class_in_charge']
     search_fields = ('first_name', 'last_name', 'staff_username')
+    raw_id_fields = ['user']
 
 class DepartmentAdmin(admin.ModelAdmin):
        

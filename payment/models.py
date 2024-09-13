@@ -14,7 +14,7 @@ class BankDetail(models.Model):
     description = models.CharField(max_length=150, blank=False, verbose_name='Bank Name')
 
     def __str__(self):
-        return f'{self.acc_name}'
+        return f'{self.acc_number} - {self.description}'
 
     class Meta:
         ordering:['acc_number']
@@ -62,22 +62,22 @@ class PaymentDetail(models.Model):
     student_detail = models.ForeignKey(StudentDetail, on_delete=models.CASCADE, default=None, null=True)
     student_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None, null=True,  help_text='confirm student username', related_name='student_detail')
     payment_name = models.ForeignKey(PaymentChart, on_delete=models.CASCADE, default= None, related_name='payment_name')
-    amount_paid_a = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True)
+    amount_paid_a = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True, help_text='First Payment Amount')
     bank_name_a = models.ForeignKey(BankDetail, on_delete=models.CASCADE, default=None, null=True, related_name='bank_name_a')   
     payment_date_a = models.DateField()
     other_details_a = models.CharField(max_length=200, blank=True, verbose_name='description(if any)')
 
-    amount_paid_b = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True)
+    amount_paid_b = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True, help_text='Second Payment Amount')
     bank_name_b = models.ForeignKey(BankDetail, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='bank_name_b')   
     payment_date_b = models.DateField(blank=True, null=True)
     other_details_b = models.CharField(max_length=200, blank=True, verbose_name='description(if any)')
 
-    amount_paid_c = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True)
+    amount_paid_c = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True, help_text='Third Payment Amount')
     bank_name_c = models.ForeignKey(BankDetail, on_delete=models.CASCADE, default=None, null=True, blank=True)   
     payment_date_c = models.DateField(blank=True, null=True)
     other_details_c = models.CharField(max_length=200, blank=True, verbose_name='description(if any)')
 
-    discount = models.DecimalField(help_text='enter in %', max_digits=3, decimal_places=0, blank=True, null=True, verbose_name='TOTAL DISCOUNT(if any)', default=0, validators=[MinValueValidator(0), MaxValueValidator(100)]) 
+    discount = models.DecimalField(help_text='enter in (%) leave empty if no discoun is given', max_digits=3, decimal_places=0, blank=True, null=True, verbose_name='TOTAL DISCOUNT(if any)', default=0, validators=[MinValueValidator(0), MaxValueValidator(100)]) 
     # payment confirmation
     confirmed_a = models.BooleanField(default=False) 
     confirmed_b = models.BooleanField(default=False) 

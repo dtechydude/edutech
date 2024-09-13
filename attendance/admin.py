@@ -48,6 +48,7 @@ class DeptAdmin(admin.ModelAdmin):
 class StudentInline(admin.TabularInline):
     model = Student
     extra = 0
+    raw_id_fields = ['student_id', 'class_id', 'current_class', 'user']
 
 
 class ClassAdmin(admin.ModelAdmin):
@@ -86,13 +87,14 @@ class StudentCourseAdmin(admin.ModelAdmin):
     list_display = ('student', 'course',)
     search_fields = ('student__name', 'course__name', 'student__class_id__id', 'student__class_id__dept__name')
     ordering = ('student__class_id__dept__name', 'student__class_id__id', 'student__USN')
-
+    
 
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ('student_id', 'user', 'class_id', 'current_class')
+    list_display = ('student_id', 'user', 'class_id',)
     search_fields = ('USN', 'name', 'class_id__id', 'class_id__dept__name')
     ordering = ['class_id__dept__name', 'class_id__id', 'USN']
     raw_id_fields = ['student_id', 'class_id', 'current_class', 'user']
+    exclude = ('current_class',)
 
 
 class TeacherAdmin(admin.ModelAdmin):

@@ -106,11 +106,11 @@ class Class(models.Model):
 
 class Student(models.Model):
     student_id = models.OneToOneField(StudentDetail, on_delete=models.CASCADE, null=True, verbose_name='Student Detail')
-    name = models.CharField(max_length=200, verbose_name='Full Name')
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, verbose_name='Student Username')
     USN = models.CharField(primary_key='True', max_length=100, verbose_name= 'Repeat Std. Username')
+    name = models.CharField(max_length=200, verbose_name='Full Name')
     class_id = models.ForeignKey(Class, on_delete=models.CASCADE, default=1)
-    current_class = models.OneToOneField(Standard, on_delete=models.CASCADE, null=True, default='Primary1')
+    current_class = models.OneToOneField(Standard, on_delete=models.CASCADE, null=True, blank=True)
     
     
     # DOB = models.DateField(default='1998-01-01', null=True, blank=True)
@@ -122,11 +122,11 @@ class Student(models.Model):
 
 
 class Teacher(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, verbose_name= 'Teacher Username')
-    staff_profile = models.OneToOneField(StaffProfile, on_delete=models.CASCADE, null=True, verbose_name= "Teacher's Detail")
-    name = models.CharField(max_length=100, verbose_name='Full Name')
-    id = models.CharField(primary_key=True, max_length=100, verbose_name= 'Enter Username Again', help_text='Click Search Button To Select Same As Above')
-    dept = models.ForeignKey(Dept, on_delete=models.CASCADE, default=1)
+    staff_profile = models.OneToOneField(StaffProfile, on_delete=models.CASCADE, null=True, verbose_name= "Teacher's Detail",  help_text='Select Teacher Detail From List')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, verbose_name= 'Teacher Username',  help_text='Click Search Button To Select Same As Above')
+    id = models.CharField(primary_key=True, max_length=100, verbose_name= 'Enter Username Again',  help_text='Type The Username Again Correctyl here')
+    name = models.CharField(max_length=100, verbose_name='Full Name',  help_text='Enter Teacher Full Name')
+    dept = models.ForeignKey(Dept, on_delete=models.CASCADE, default=1, verbose_name='Class-In-Charge',  help_text='Select Class-In-Charge From List')
     
     # DOB = models.DateField(default='1980-01-01')
 

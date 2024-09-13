@@ -680,59 +680,59 @@ class ResultSheet3(models.Model):
 
     
 
-    subject_1 = models.ForeignKey(ExamSubject, help_text='English Language', on_delete=models.CASCADE, related_name='subject_103', null=True, blank=True,)
+    subject_1 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_103', null=True, blank=True,)
     score_1ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_1exam = models.IntegerField(help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 
     
-    subject_2 = models.ForeignKey(ExamSubject, help_text='Mathematics', on_delete=models.CASCADE, related_name='subject_203', null=True, blank=True,)
+    subject_2 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_203', null=True, blank=True,)
     score_2ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_2exam = models.IntegerField(help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 
     
-    subject_3 = models.ForeignKey(ExamSubject, help_text='Economics', on_delete=models.CASCADE, related_name='subject_303', null=True, blank=True,)
+    subject_3 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_303', null=True, blank=True,)
     score_3ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_3exam = models.IntegerField(help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 
    
-    subject_4 = models.ForeignKey(ExamSubject, help_text='Geography', on_delete=models.CASCADE, related_name='subject_403', null=True, blank=True,)
+    subject_4 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_403', null=True, blank=True,)
     score_4ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_4exam = models.IntegerField(help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 
     
-    subject_5 = models.ForeignKey(ExamSubject, help_text='Physics', on_delete=models.CASCADE, related_name='subject_503', null=True, blank=True,)
+    subject_5 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_503', null=True, blank=True,)
     score_5ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_5exam = models.IntegerField( help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 
     
-    subject_6 = models.ForeignKey(ExamSubject, help_text='Chemistry', on_delete=models.CASCADE, related_name='subject_603', null=True, blank=True,)
+    subject_6 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_603', null=True, blank=True,)
     score_6ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_6exam = models.IntegerField(help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 
     
-    subject_7 = models.ForeignKey(ExamSubject, help_text='Civic Education', on_delete=models.CASCADE, related_name='subject_703', null=True, blank=True,)
+    subject_7 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_703', null=True, blank=True,)
     score_7ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_7exam = models.IntegerField(help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 
     
-    subject_8 = models.ForeignKey(ExamSubject, help_text='Computer', on_delete=models.CASCADE, related_name='subject_803', null=True, blank=True,)
+    subject_8 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_803', null=True, blank=True,)
     score_8ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_8exam = models.IntegerField( help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 
     
-    subject_9 = models.ForeignKey(ExamSubject, help_text='Biology', on_delete=models.CASCADE, related_name='subject_903', null=True, blank=True,)
+    subject_9 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_903', null=True, blank=True,)
     score_9ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_9exam = models.IntegerField(help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 
     
-    subject_10 = models.ForeignKey(ExamSubject, help_text='Government', on_delete=models.CASCADE, related_name='subject_1003', null=True, blank=True,)
+    subject_10 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_1003', null=True, blank=True,)
     score_10ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_10exam = models.IntegerField(help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 
     
-    subject_11 = models.ForeignKey(ExamSubject, help_text='English Literature', on_delete=models.CASCADE, related_name='subject_1103', null=True, blank=True,)
+    subject_11 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_1103', null=True, blank=True,)
     score_11ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_11exam = models.IntegerField(help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 
     
-    subject_12 = models.ForeignKey(ExamSubject, help_text='Yoruba Language', on_delete=models.CASCADE, related_name='subject_1203', null=True, blank=True,)
+    subject_12 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_1203', null=True, blank=True,)
     score_12ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_12exam = models.IntegerField(help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 
    
-    subject_13 = models.ForeignKey(ExamSubject, help_text='French Language', on_delete=models.CASCADE, related_name='subject_1303', null=True, blank=True,)
+    subject_13 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_1303', null=True, blank=True,)
     score_13ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_13exam = models.IntegerField(help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 
     
-    subject_14 = models.ForeignKey(ExamSubject, help_text='Social Studies', on_delete=models.CASCADE, related_name='subject_1403', null=True, blank=True,)
+    subject_14 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_1403', null=True, blank=True,)
     score_14ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_14exam = models.IntegerField(help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 
     
@@ -740,23 +740,23 @@ class ResultSheet3(models.Model):
     score_15ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_15exam = models.IntegerField(help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 
     
-    subject_16 = models.ForeignKey(ExamSubject, help_text='Basic Technology', on_delete=models.CASCADE, related_name='subject_1603', null=True, blank=True,)
+    subject_16 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_1603', null=True, blank=True,)
     score_16ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_16exam = models.IntegerField(help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 
    
-    subject_17 = models.ForeignKey(ExamSubject, help_text='Music', on_delete=models.CASCADE, related_name='subject_1703', null=True, blank=True,)
+    subject_17 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_1703', null=True, blank=True,)
     score_17ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_17exam = models.IntegerField(help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 
     
-    subject_18 = models.ForeignKey(ExamSubject, help_text='Physical Education (PHE)', on_delete=models.CASCADE, related_name='subject_1803', null=True, blank=True,)
+    subject_18 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_1803', null=True, blank=True,)
     score_18ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_18exam = models.IntegerField(help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 
     
-    subject_19 = models.ForeignKey(ExamSubject, help_text='Home Economic', on_delete=models.CASCADE, related_name='subject_1903', null=True, blank=True,)
+    subject_19 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_1903', null=True, blank=True,)
     score_19ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_19exam = models.IntegerField(help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 
 
-    subject_20 = models.ForeignKey(ExamSubject, help_text='Igbo Language', on_delete=models.CASCADE, related_name='subject_2003', null=True, blank=True,)
+    subject_20 = models.ForeignKey(ExamSubject, on_delete=models.CASCADE, related_name='subject_2003', null=True, blank=True,)
     score_20ca = models.IntegerField(help_text='Enter C.A score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(40)]) 
     score_20exam = models.IntegerField(help_text='Enter Exam score', blank=True, default=0, validators=[MinValueValidator(0), MaxValueValidator(60)]) 
     

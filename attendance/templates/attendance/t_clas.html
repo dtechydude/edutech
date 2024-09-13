@@ -19,9 +19,10 @@
                         <td>{{ ass.course }}</td>
                         <td>
                             {% if choice == 1 %}
-                                <a class="btn btn-primary" href="{% url 'attendance:t_class_date' ass.id %}" role="button">Enter Attendance</a>
-                                <a class="btn btn-warning" href="{% url 'attendance:t_extra_class' ass.id %}">Extra Class</a>
-                                <a class="btn btn-danger" href="{% url 'attendance:t_student' ass.id %}">View Students</a>
+                                <a class="btn btn-primary" href="{% url 'attendance:t_class_date' ass.id %}" role="button">Edit Attendance</a>
+                                <a class="btn btn-warning" href="{% url 'attendance:t_extra_class' ass.id %}">Mark Attendance</a>
+                                {% comment %}<a class="btn btn-danger" href="{% url 'attendance:t_student' ass.id %}">View Students</a> {% endcomment %}
+                                <a class="btn btn-danger" href="">XXXX</a>
 
                             {% elif choice == 2 %}
                                 <a class="btn btn-primary" href="{% url 'attendance:t_marks_list' ass.id %}" role="button">Enter Marks</a>

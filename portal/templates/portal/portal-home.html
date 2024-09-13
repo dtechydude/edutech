@@ -90,10 +90,20 @@
 								Admin Dashboard
 								{% elif user.is_authenticated and user.staffprofile.staff_role == 'form_teacher' %}
 								Form Teacher Dashboard
+								{% elif user.is_authenticated and user.staffprofile.staff_role == 'others' %}
+								Subject Teacher Dashboard
+								{% elif user.is_authenticated and user.staffprofile.staff_role == 'non_teaching' %}
+								Non-Teaching Staff Dashboard
+								{% elif user.is_authenticated and user.staffprofile.staff_role == 'account_officer' %}
+								Account Officer Dashboard
+								{% elif user.is_authenticated and user.staffprofile.staff_role == 'head_teacher' %}
+								Head Teacher Dashboard
+								{% elif user.is_authenticated and user.staffprofile.staff_role == 'principal' %}
+								Principal Dashboard
 								{% elif user.is_authenticated and user.studentdetail.student_status == 'active' %}
 								Student Dashboard
 								{% else %}
-								User Type is "Inactive"
+								User Type is not "Profiled"
 								{% endif%}
 							</div>
 						</div>
@@ -221,7 +231,7 @@
 						<ul aria-expanded="false">
 							{% if user.is_authenticated and user.studentdetail.student_status == 'active' %}
 							{% for idcard in my_idcard %}
-							<li><a href="{% url 'portal:my_idcard' pk=idcard.pk  %}">My ID CARD</a></li>
+							<a href="{% url 'portal:my_idcard' pk=idcard.pk  %}">My ID CARD</a>
 							{% endfor %}
 							<li><a href="{% url 'attendance:index2' %}">My Attendance</a></li>
 							<li><a href="{% url 'payment:bank-list' %}">School Account Detail</a></li>

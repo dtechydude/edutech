@@ -23,7 +23,9 @@
                     {% for a in att_list %}
                     <tr>
                         <td>{{ a.course_id }}</td>
-                        <td><a href="{% url 'attendance:attendance_detail' a.student.USN a.course.id %}">{{a.course.name}}</a></td>
+                        {% comment %}<td><a href="{% url 'attendance:attendance_detail' a.student.USN a.course.id %}">{{a.course.name}}</a></td> {% endcomment %}
+                        <td><a href="">{{a.course.name}}</a></td>
+
                         <td>{{ a.att_class }}</td>
                         <td>{{ a.total_class }}</td>
                         {% if a.attendance < 75 %}

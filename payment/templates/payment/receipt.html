@@ -116,7 +116,13 @@
                         </td>
 </tr>
 <tr>
-<td><strong>STUDENT DISCOUNTED AMOUNT DUE: </strong>{{my_receipt.discounted_amount_due}}</td>
+<td><strong>STUDENT DISCOUNTED AMOUNT DUE: 
+    {% if my_receipt.discounted_amount > 0 %}
+</strong>{{my_receipt.discounted_amount_due |floatformat:2}}
+{% else %}
+No Discount Given
+{% endif %}
+</td>
 <td class="text-center">n/a</td>
 <td class="text-center"> - </td>
 </tr>
@@ -134,7 +140,7 @@
 <tr>
 <th colspan="2" class="text-right"> Outstanding DEBT/CREDIT</th>
 <th class="text-center">{% if my_receipt.balance_pay  > 0 %}<span style="color: red;"> DEBT : {{ my_receipt.balance_pay}}</span>
-                        {% elif my_receipt.balance_pay  < 0 %} <span style="color: green;">CREDIT-{{ my_receipt.balance_pay}}(N) </span>
+                        {% elif my_receipt.balance_pay  < 0 %} <span style="color: green;">CREDIT :  N{{ my_receipt.balance_pay |cut:"-"  }} </span>
                          {% else %}{% endif %}</th>
 </tr>
 <!-- <tr>
