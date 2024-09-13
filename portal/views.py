@@ -279,3 +279,8 @@ class ClassGroupListView(LoginRequiredMixin, ListView):
     queryset = ClassGroup.objects.all()
     template_name = 'portal/classgroup_list.html'
     paginate_by = 30
+
+
+@login_required
+def set_exam(request):
+    return render(request, 'exams/set_exam.html')

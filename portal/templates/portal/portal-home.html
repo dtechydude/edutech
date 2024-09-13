@@ -370,14 +370,17 @@
 					
 						<ul aria-expanded="false">
 						{% if user.is_authenticated and user.staffprofile.staff_role == 'inactive' or user.studentdetail.student_status == 'inactive' %}
-						<li>Noting to show</li>
-						{% else %}
-						<li><a href="{% url 'quizes:main-view' %}">Take Exam/Test</a></li>
-						{% if user.is_authenticated and user.staffprofile.staff_role == 'admin_officer' %}
+						<li>Noting to show</li>				
+						
+						{% elif user.is_authenticated and user.is_superuser %}
 						<li><a href="{% url 'quiz_results:quiz-result-list' %}">Quiz RESULTS</a></li>
-					
-						{% endif%}
-											
+						<li><a href="{% url 'portal:set-exam' %}">Set Exams</a></li>
+						<li><a href="{% url 'quizes:main-view' %}">Take Exam/Test</a></li>
+						{% elif user.is_authenticated and user.staffprofile %}
+						<li><a href="{% url 'portal:set-exam' %}">Set Exams</a></li>
+						<li><a href="{% url 'quizes:main-view' %}">Take Exam/Test</a></li>
+						
+																							
 						{% endif %}
 					
 					</ul>
@@ -396,8 +399,7 @@
 					{% endif %}
 					{% if user.is_authenticated and user.is_superuser%}
 					<li><a href="{% url 'notification:admin-mail' %}">Message Inbox</a></li>
-					{% else %}
-					<li><a href="{% url 'notification:mail-self' %}">Message Inbox</a></li>
+					
 					{% endif%}
 				
 				</ul>
@@ -419,7 +421,7 @@
 						</a>
 						<ul aria-expanded="false">
 							<li><a href="{% url 'portal:portal-home' %}">Portal Home</a></li>
-							<li><a href="#">School Website</a></li>
+							<li><a href="https://schoolly.com.ng">Schoolly Website</a></li>
 							
 							
 						</ul>
@@ -1581,7 +1583,7 @@
 		***********************************-->
 		<div class="footer">
 			<div class="copyright">
-				<p>Copyright © Developed by <a href="https://fizcos.com/" target="_blank">Fizcos Infotech</a> 2023</p>
+				<p>Copyright © Developed by <a href="https://fizcos.com/" target="_blank">Fizcos Infotech</a> (SCHOOLLYEDTECH)</p>
 			</div>
 		</div>
 		

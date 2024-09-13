@@ -22,6 +22,7 @@ urlpatterns = [
     path('exam-list/', views.ExamListView.as_view(), name="exam_list"),
     path('session-list/', views.SessionListView.as_view(), name="session_list"),
     path('class-group-list/', views.ClassGroupListView.as_view(), name="classgroup_list"),
+    path('exam/', portal_views.set_exam, name='set-exam'), 
    
 
 

@@ -7,5 +7,6 @@ app_name ='pages'
 urlpatterns = [
 
      path('', page_views.schoolly_home, name='schoolly_home'),
+     
 
 ]

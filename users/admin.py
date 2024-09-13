@@ -1,6 +1,5 @@
 from django.contrib import admin
 from users.models import Profile
-
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 import csv, datetime

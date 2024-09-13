@@ -1,0 +1,325 @@
+{% extends 'portal/portal-home.html'%}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}<title>Department List </title>{% endblock title %}
+
+		{% block content_body %}
+		
+		<div class="content-body">
+			<!-- row -->
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="row">
+							<div class="col-xl-12">
+								<div class="row">
+									<div class="col-xl-3 col-sm-6">
+										<div class="card booking">
+											<div class="card-body">
+												<div class="booking-status d-flex align-items-center">
+													<span>
+														<svg xmlns="http://www.w3.org/2000/svg" width="28" height="20" viewBox="0 0 28 20">
+														  <path  d="M27,14V7a1,1,0,0,0-1-1H6A1,1,0,0,0,5,7v7a3,3,0,0,0-3,3v8a1,1,0,0,0,2,0V24H28v1a1,1,0,0,0,2,0V17A3,3,0,0,0,27,14ZM7,8H25v6H24V12a2,2,0,0,0-2-2H19a2,2,0,0,0-2,2v2H15V12a2,2,0,0,0-2-2H10a2,2,0,0,0-2,2v2H7Zm12,6V12h3v2Zm-9,0V12h3v2ZM4,17a1,1,0,0,1,1-1H27a1,1,0,0,1,1,1v5H4Z" transform="translate(-2 -6)" fill="var(--primary)"/>
+														</svg>
+													</span>
+													<div class="ms-4">
+														
+														<p class="mb-0 text-nowrap">Mid-Term Test</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-xl-3 col-sm-6">
+										<div class="card booking">
+											<div class="card-body">
+												<div class="booking-status d-flex align-items-center">
+													<span>
+														<svg xmlns="http://www.w3.org/2000/svg" width="28" height="20" viewBox="0 0 28 20">
+														  <path  d="M27,14V7a1,1,0,0,0-1-1H6A1,1,0,0,0,5,7v7a3,3,0,0,0-3,3v8a1,1,0,0,0,2,0V24H28v1a1,1,0,0,0,2,0V17A3,3,0,0,0,27,14ZM7,8H25v6H24V12a2,2,0,0,0-2-2H19a2,2,0,0,0-2,2v2H15V12a2,2,0,0,0-2-2H10a2,2,0,0,0-2,2v2H7Zm12,6V12h3v2Zm-9,0V12h3v2ZM4,17a1,1,0,0,1,1-1H27a1,1,0,0,1,1,1v5H4Z" transform="translate(-2 -6)" fill="var(--primary)"/>
+														</svg>
+													</span>
+													<div class="ms-4">
+														
+														<p class="mb-0 text-nowrap ">Entrance Tests</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-xl-3 col-sm-6">
+										<div class="card booking">
+											<div class="card-body">
+												<div class="booking-status d-flex align-items-center">
+													<span>
+														<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+														  <path  data-name="Path 1957" d="M129.035,178.842v2.8a5.6,5.6,0,0,0,5.6,5.6h14a5.6,5.6,0,0,0,5.6-5.6v-16.8a5.6,5.6,0,0,0-5.6-5.6h-14a5.6,5.6,0,0,0-5.6,5.6v2.8a1.4,1.4,0,0,0,2.8,0v-2.8a2.8,2.8,0,0,1,2.8-2.8h14a2.8,2.8,0,0,1,2.8,2.8v16.8a2.8,2.8,0,0,1-2.8,2.8h-14a2.8,2.8,0,0,1-2.8-2.8v-2.8a1.4,1.4,0,0,0-2.8,0Zm10.62-7-1.81-1.809a1.4,1.4,0,1,1,1.98-1.981l4.2,4.2a1.4,1.4,0,0,1,0,1.981l-4.2,4.2a1.4,1.4,0,1,1-1.98-1.981l1.81-1.81h-12.02a1.4,1.4,0,1,1,0-2.8Z" transform="translate(-126.235 -159.242)" fill="var(--primary)" fill-rule="evenodd"/>
+														</svg>
+													</span>
+													<div class="ms-4">
+														{% if user.is_authenticated and user.is_superuser or user.staffprofile.staff_role == 'admin_officer' %}
+														
+														<p class="mb-0">Examinations</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-xl-3 col-sm-6">
+										<div class="card booking">
+											<div class="card-body">
+												<div class="booking-status d-flex align-items-center">
+													<span>
+														<svg id="_009-log-out" data-name="009-log-out" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+														  <path  data-name="Path 1957" d="M151.435,178.842v2.8a5.6,5.6,0,0,1-5.6,5.6h-14a5.6,5.6,0,0,1-5.6-5.6v-16.8a5.6,5.6,0,0,1,5.6-5.6h14a5.6,5.6,0,0,1,5.6,5.6v2.8a1.4,1.4,0,0,1-2.8,0v-2.8a2.8,2.8,0,0,0-2.8-2.8h-14a2.8,2.8,0,0,0-2.8,2.8v16.8a2.8,2.8,0,0,0,2.8,2.8h14a2.8,2.8,0,0,0,2.8-2.8v-2.8a1.4,1.4,0,0,1,2.8,0Zm-10.62-7,1.81-1.809a1.4,1.4,0,1,0-1.98-1.981l-4.2,4.2a1.4,1.4,0,0,0,0,1.981l4.2,4.2a1.4,1.4,0,1,0,1.98-1.981l-1.81-1.81h12.02a1.4,1.4,0,1,0,0-2.8Z" transform="translate(-126.235 -159.242)" fill="var(--primary)" fill-rule="evenodd"/>
+														</svg>
+
+													</span>
+													<div class="ms-4">
+														
+														<p class="mb-0">Quiz</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+							{% elif user.is_authenticated and user.staffprofile.staff_role == 'form_teacher' %}
+									
+										</div>
+									</div>
+								</div>
+										</div>
+									</div>
+									<div class="col-xl-3 col-sm-6">
+										<div class="card booking">
+											<div class="card-body">
+												<div class="booking-status d-flex align-items-center">
+													<span>
+														<svg id="_009-log-out" data-name="009-log-out" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+														  <path  data-name="Path 1957" d="M151.435,178.842v2.8a5.6,5.6,0,0,1-5.6,5.6h-14a5.6,5.6,0,0,1-5.6-5.6v-16.8a5.6,5.6,0,0,1,5.6-5.6h14a5.6,5.6,0,0,1,5.6,5.6v2.8a1.4,1.4,0,0,1-2.8,0v-2.8a2.8,2.8,0,0,0-2.8-2.8h-14a2.8,2.8,0,0,0-2.8,2.8v16.8a2.8,2.8,0,0,0,2.8,2.8h14a2.8,2.8,0,0,0,2.8-2.8v-2.8a1.4,1.4,0,0,1,2.8,0Zm-10.62-7,1.81-1.809a1.4,1.4,0,1,0-1.98-1.981l-4.2,4.2a1.4,1.4,0,0,0,0,1.981l4.2,4.2a1.4,1.4,0,1,0,1.98-1.981l-1.81-1.81h12.02a1.4,1.4,0,1,0,0-2.8Z" transform="translate(-126.235 -159.242)" fill="var(--primary)" fill-rule="evenodd"/>
+														</svg>
+
+													</span>
+													<div class="ms-4">
+														
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+							{% else %}
+							
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+									<div class="col-xl-3 col-sm-6">
+										<div class="card booking">
+											<div class="card-body">
+												<div class="booking-status d-flex align-items-center">
+													<span>
+														<svg id="_009-log-out" data-name="009-log-out" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+														  <path  data-name="Path 1957" d="M151.435,178.842v2.8a5.6,5.6,0,0,1-5.6,5.6h-14a5.6,5.6,0,0,1-5.6-5.6v-16.8a5.6,5.6,0,0,1,5.6-5.6h14a5.6,5.6,0,0,1,5.6,5.6v2.8a1.4,1.4,0,0,1-2.8,0v-2.8a2.8,2.8,0,0,0-2.8-2.8h-14a2.8,2.8,0,0,0-2.8,2.8v16.8a2.8,2.8,0,0,0,2.8,2.8h14a2.8,2.8,0,0,0,2.8-2.8v-2.8a1.4,1.4,0,0,1,2.8,0Zm-10.62-7,1.81-1.809a1.4,1.4,0,1,0-1.98-1.981l-4.2,4.2a1.4,1.4,0,0,0,0,1.981l4.2,4.2a1.4,1.4,0,1,0,1.98-1.981l-1.81-1.81h12.02a1.4,1.4,0,1,0,0-2.8Z" transform="translate(-126.235 -159.242)" fill="var(--primary)" fill-rule="evenodd"/>
+														</svg>
+
+													</span>
+													<div class="ms-4">
+														
+														
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+							{% endif %}
+
+					
+				
+														
+													</div>
+												</div>
+											</div>
+											<div class="col-xl-12">
+												<div class="card">
+													<div class="card-body">
+														<div class="row">
+																														
+															<div class="col-xl-3 col-sm-3 col-6 mb-4 col-xxl-6">
+																<div class="text-center">
+                                                                    <img src="https://edtech.schoolly.com.ng/portal/static/google-education.jpg " width="100%" height="auto">
+																	
+																</div>
+															</div>
+															
+															<div class="mb-5 mt-4 d-flex align-items-center">
+																<div>
+																	<h2><a href="javascript:void(0);" class="text-secondary">Setting Up Examination</a></h2>
+																	<span class="fs-16">Schoolly Management System offers you the tools to set up and manage examinations and tests 
+																		activities. With GOOGLE FOR EDUCATION & GOOGLE WORKSPACE you can quickly set quizes, tests and exams on the go.
+																		Explore our quick glance through to use the applications.<br>
+                                                                         <span><a href="https://drive.google.com"><b>Login To GOOGLE DRIVE To Set Exams</b></a></span><br>
+                                                                         <p>You can also set exams through the PORTAL ADMIN PANEL <br>
+                                                                         <span><a href="/admin"><b>GO TO ADMIN</b></a></span></p>
+
+																	</span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+													
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		{% endblock content_body %}
+		<!--**********************************
+			Content body end
+		***********************************-->
+		
+		
+		
+		<!--**********************************
+			Footer start
+		***********************************-->
+		<div class="footer">
+			<div class="copyright">
+				<p>Copyright © Developed by <a href="https://fizcos.com/" target="_blank">Fizcos Infotech</a> 2023</p>
+			</div>
+		</div>
+		
+		<!--**********************************
+			Footer end
+		***********************************-->
+
+		<!--**********************************
+		   Support ticket button start
+		***********************************-->
+		
+		<!--**********************************
+		   Support ticket button end
+		***********************************-->
+
+
+	</div>
+	<!--**********************************
+		Main wrapper end
+	***********************************-->
+
+	<!--**********************************
+		Scripts
+	***********************************-->
+	<!-- Required vendors -->
+	{% block scripts %}
+	<script src="{% static 'portal/vendor/global/global.min.js' %}"></script>
+
+	<script src="{% static 'portal/vendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>
+	
+	<!-- Apex Chart -->
+	
+	<script src="{% static 'portal/vendor/apexchart/apexchart.js' %}"></script>
+	
+	
+	<!-- Chart piety plugin files -->
+	
+	
+	<!-- Dashboard 1 -->
+	<script src="{% static 'portal/js/dashboard/dashboard-1.js' %}"></script>
+	
+	<script src="{% static 'portal/vendor/owl-carousel/owl.carousel.js' %}"></script>
+	<script src="{% static 'portal/vendor/bootstrap-datetimepicker/js/moment.js' %}"></script>
+	<script src="{% static 'portal/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js' %}"></script>
+	
+	<script src="{% static 'portal/js/custom.min.js' %}"></script>
+	<script src="{% static 'portal/js/dlabnav-init.js' %}"></script>
+	<script src="{% static 'portal/js/demo.js' %}"></script>
+	<script src="{% static 'portal/js/styleSwitcher.js' %}"></script>
+	<script>
+		function TravlCarousel()
+			{
+
+				/*  testimonial one function by = owl.carousel.js */
+				jQuery('.front-view-slider').owlCarousel({
+					loop:false,
+					margin:15,
+					nav:true,
+					autoplaySpeed: 3000,
+					navSpeed: 3000,
+					paginationSpeed: 3000,
+					slideSpeed: 3000,
+					smartSpeed: 3000,
+					autoplay: false,
+					animateOut: 'fadeOut',
+					dots:true,
+					navText: ['<i class="fas fa-arrow-left"></i>', '<i class="fas fa-arrow-right"></i>'],
+					responsive:{
+						0:{
+							items:1
+						},
+						
+						768:{
+							items:2
+						},			
+						
+						1400:{
+							items:2
+						},
+						1600:{
+							items:3
+						},
+						1750:{
+							items:3
+						}
+					}
+				})
+			}
+
+			jQuery(window).on('load',function(){
+				setTimeout(function(){
+					TravlCarousel();
+				}, 1000); 
+			});
+	</script>
+	<script>
+		$(function () {
+			$('#datetimepicker').datetimepicker({
+				inline: true,
+			});
+		});
+		
+		$(document).ready(function(){
+			$(".booking-calender .fa.fa-clock-o").removeClass(this);
+			$(".booking-calender .fa.fa-clock-o").addClass('fa-clock');
+		});
+	</script>
+	{% endblock scripts %}
+
+</body>
+</html>
