@@ -23,7 +23,7 @@
                             <div class="card-header">
                                 <h6 class="card-title">Click on the standard/class name to explore the subjects</h6>
                             </div>
-							{% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'admin' or user.profile.user_type == 'teacher' %}
+							{% if user.is_authenticated and user.is_superuser or user.staffprofile %}
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-responsive-md">

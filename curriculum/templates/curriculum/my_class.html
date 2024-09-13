@@ -24,7 +24,7 @@
                               
                             </div>
                             
-							{% if user.is_authenticated and user.profile.user_type == 'student' %}
+							{% if user.is_authenticated and user.studentdetail %}
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-responsive-md">
