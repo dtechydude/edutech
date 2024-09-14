@@ -6,7 +6,7 @@
             Content body start
         ***********************************-->
 		{% block content_body %}
-        {% if user.is_authenticated and user.is_superuser or user.staffprofile.staff_role == 'admin_officer' or user.staffprofile.staff_role == 'form_teacher' %}
+        {% if user.is_authenticated and user.is_superuser or user.staffprofile %}
         <div class="content-body">
             <div class="container-fluid">
 				<div class="row page-titles">

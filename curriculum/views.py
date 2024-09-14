@@ -130,7 +130,7 @@ class LessonCreateView(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 class LessonUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    fields = ('name', 'position', 'video', 'ppt', 'comment')
+    fields = ('name', 'position', 'video', 'comment')
     model = Lesson
     template_name = 'curriculum/lesson_update_view.html'
     context_object_name = 'lessons'

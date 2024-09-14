@@ -352,12 +352,11 @@
 							{% elif user.is_authenticated and user.staffprofile %}
 							<li><a href="{% url 'curriculum:standard_list' %}">Class List</a></li>
 							
-							{% if user.is_authenticated and user.is_superuser or user.staffprofile.staff_role == "admin_officer" %}
-							<li><a href="/admin">Add Subjects & Lessons From Admin Panel (Curriculum) </a></li>
-							
-				
-							{% endif %}
-												
+							{% elif user.is_authenticated and user.is_superuser or user.staffprofile.staff_role == "admin_officer" %}
+							<li><a href="/admin">Add Subjects & Lessons (Curriculum) </a></li>
+							<li><a href="{% url 'curriculum:standard_list' %}">Class List</a></li>
+											
+																	
 							{% endif %}
 						</ul>
 					
