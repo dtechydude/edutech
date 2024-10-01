@@ -378,6 +378,8 @@
 						{% elif user.is_authenticated and user.staffprofile %}
 						<li><a href="{% url 'portal:set-exam' %}">Set Exams</a></li>
 						<li><a href="{% url 'quizes:main-view' %}">Take Exam/Test</a></li>
+						{% elif user.is_authenticated and user.studentdetail.student_status == 'active' %}
+						<li><a href="{% url 'quizes:main-view' %}">Take Exam/Test</a></li>
 						
 																							
 						{% endif %}
@@ -395,10 +397,12 @@
 					{% if user.is_authenticated and user.is_superuser or user.staffprofile.staff_role == "admin_officer" %}
 					<li><a href="{% url 'notification:calendar-form' %}">Add Events</a></li>
 					<li><a href="{% url 'notification:new-mail' %}">Send Message</a></li>
-					{% endif %}
-					{% if user.is_authenticated and user.is_superuser%}
 					<li><a href="{% url 'notification:admin-mail' %}">Message Inbox</a></li>
-					
+				
+					{% elif user.is_authenticated and user.studentdetail.student_status == 'active' %}
+					<li><a href="{% url 'notification:admin-mail' %}">Message Inbox</a></li>
+					<li><a href="{% url 'notification:student-mail' %}">Send Mail</a></li>
+										
 					{% endif%}
 				
 				</ul>

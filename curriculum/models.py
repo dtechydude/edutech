@@ -42,7 +42,7 @@ class Session(models.Model):
         unique_together = ['name', 'term']
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.name} - {self.term}"
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
