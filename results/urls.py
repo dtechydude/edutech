@@ -55,6 +55,11 @@ urlpatterns = [
     #path('results/', PDFTemplateView.as_view(template_name='results/result_sheet.html',
     #                                       filename='my_result.pdf'), name='result-pdf'),
 
+    #path to form-teachers class results
+    path('my-student-results-first/', result_views.self_student_results_firsterm, name="my-students-results-first"),
+    path('my-student-results-second/', result_views.self_student_results_secondterm, name="my-students-results-second"),
+    path('my-student-results-third/', result_views.self_student_results_thirdterm, name="my-students-results-third"),
+
 
     
 ]

@@ -31,7 +31,7 @@
                     <div class="card-body">
                         <div id="DZ_W_TimeLine" class="widget-timeline dlab-scroll height770">
                             
-                            {% if user.is_superuser or user.profile.user_type == "admin" %}
+                            {% if user.is_superuser or user.profile.user_type == "admin" or user.staffprofile.staff_role == 'form_teacher' %}
                            <form method="post">
                             {% csrf_token%}
                             {{ form|crispy}}

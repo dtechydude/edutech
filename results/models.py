@@ -38,6 +38,7 @@ class Examination(models.Model):
     class Meta:
       verbose_name = 'Examinations'
       verbose_name_plural = 'Examinations'
+      ordering = ['name']
     
 
 

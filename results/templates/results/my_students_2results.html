@@ -1,11 +1,11 @@
 {% extends 'portal/portal-home.html'%} 
 {% load crispy_forms_tags %}
 {% load static %}
-{% block title %}<time>Second Term Results List</time>{% endblock title%}
+{% block title %}<time>Student Results</time>{% endblock title%}
 
 
 {% block content_body %}
-{% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'admin' %}
+{% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'admin' or user.staffprofile.staff_role == 'form_teacher' %}
 
 		<div class="content-body">
 			<!-- row -->
@@ -15,7 +15,7 @@
 						
 						<ul class="nav nav-tabs" role="tablist">
 							<li class="nav-item">
-								<a class="nav-link"href="{% url 'results:second-result-csv' %}"> Download CSV</a>
+								<a class="nav-link"href="{% url 'results:result-csv' %}"> Download CSV</a>
 							</li>
 							
 							
@@ -24,7 +24,7 @@
 					<div class="d-flex align-items-center mb-2 flex-wrap"> 
 						<div class="guest-calendar">
 							<div id="reportrange" class="pull-right reportrange" style="width: 100%">
-								<span>Students Second Term Result List</span><b class="caret"></b>
+								<span>Second Term Result List</span><b class="caret"></b>
 								<i class="fas fa-user ms-3"></i>
 							</div>
 						</div>
@@ -40,15 +40,18 @@
 <!-- 			
 						<!-- USING FILTER TO GET INFORMATION -->
 							<div class="row">
-								<div ">	
+								<div>	
 									<div>
+										<div>
 										<!-- <div style="float:left; padding:4px; width:30%;"> -->
-											<div>
+											
 												<form action="" method="get" class="form-inline">
+													
 												<!-- {{ StudentFilter.form|crispy}} -->
 												{{ resultsheet_filter.form}}
 												<button class="btn btn-secondary" type="submit">Filter Record </button>
-												</form>	</div>
+												
+											</form>	</div>
 										</div>
 									
 									  </div>		
@@ -102,7 +105,7 @@
 													</tr>
 												</thead>
 												<tbody>
-                                                    {% for res in result %}
+                                                    {% for res in my_students_results %}
 							
 													<tr>
 												
@@ -116,8 +119,8 @@
 																<img class="me-3 rounded" src="{{res.student_id.profile.image.url}}" alt="">
 																<div> -->
 																	<span class="fs-16 mb-0 text-nowrap">
-																	<a class="text-black" href="{% url 'results:second-result-update' res.pk %} ">{{ res.student_detail.student_username}}</span>
-																	<span class="text-primary fs-14">{{ res.student_detail.last_name}}<br> {{ res.student_detail.first_name}} {{ res.student_detail.middle_name}}</span></a>
+																	<a class="text-black" href="{% url 'results:result-update' res.pk %} ">{{ res.student_detail.student_username}}</span>
+																	<span class="text-primary fs-14">{{ res.student_detail.last_name}} <br> {{ res.student_detail.first_name}} {{ res.student_detail.middle_name}}</span></a>
 																</div>
 															</div>
 														</td>
@@ -226,12 +229,12 @@
 </td>
 
 		<td>
-				<a class="text-black" href="{% url 'results:second-result-update' res.pk %}"><span style="color:green;">UPDATE</span></a><br>
-				<a class="text-black" href="{% url 'results:second-result-pdf-view' pk=res.pk %}"><span style="color:red;">VIEW</span></a>
-								
+				<a class="text-black" href="{% url 'results:result-update' res.pk %}"><span style="color:green;">UPDATE</span></a><br>
+				<a class="text-black" href="{% url 'results:result-pdf-view' pk=res.pk %}"><span style="color:red;">VIEW</span></a>
+
 			</td>		
 
-					{% endfor %}
+							{% endfor %}
 				
 						</tr>	
 					</tbody>

@@ -7,6 +7,7 @@ from django.contrib import messages
 from staff.forms import StaffRegisterForm, StaffUpdateForm
 from staff.models import StaffProfile
 from students.models import StudentDetail
+from results.models import ResultSheet
 from curriculum.models import Standard
 #from attendance.models import Attendance
 from django.contrib.auth.models import User
@@ -83,12 +84,14 @@ def stafflist(request):
 @login_required
 def self_student_list(request):
     my_students = StudentDetail.objects.filter(class_teacher__user=request.user).order_by('student_username')
-    
+
     context = {
         'my_students': my_students
+       
     }
 
     return render (request, 'staff/my_students.html', context)
+
 
 
 @login_required

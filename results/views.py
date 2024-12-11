@@ -66,6 +66,18 @@ def printresult(request):
                             '</div>'
                             )
         
+# Teacher seeing his/her students First Term Result
+@login_required
+def self_student_results_firsterm(request):
+    my_students_results = ResultSheet.objects.filter(student_detail__class_teacher__user=request.user).order_by('student_id')
+
+    context = {
+        'my_students_results': my_students_results
+       
+    }
+
+    return render (request, 'results/my_students_1results.html', context)
+
 
 # View Second Term Results-ADMIN
 @login_required
@@ -103,6 +115,19 @@ def printresult2(request):
                             '</div>'
                             )
 
+# Teacher seeing his/her students Second Term Result
+@login_required
+def self_student_results_secondterm(request):
+    my_students_results = ResultSheet2.objects.filter(student_detail__class_teacher__user=request.user).order_by('student_id')
+
+    context = {
+        'my_students_results': my_students_results
+       
+    }
+
+    return render (request, 'results/my_students_2results.html', context)
+ 
+ 
  # View Third Term Results-ADMIN
 @login_required
 def printresult3(request):
@@ -139,6 +164,19 @@ def printresult3(request):
                             '</div>'
                             )
                
+# Teacher seeing his/her students Third Term Result
+@login_required
+def self_student_results_thirdterm(request):
+    my_students_results = ResultSheet3.objects.filter(student_detail__class_teacher__user=request.user).order_by('student_id')
+
+    context = {
+        'my_students_results': my_students_results
+       
+    }
+
+    return render (request, 'results/my_students_3results.html', context)
+
+
 
 @login_required
 def printresultform(request):

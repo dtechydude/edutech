@@ -5,7 +5,7 @@
 
 
 {% block content_body %}
-{% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'admin' or user.profile.user_type == 'teacher' %}
+{% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'admin' %}
 
 		<div class="content-body">
 			<!-- row -->

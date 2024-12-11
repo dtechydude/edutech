@@ -259,7 +259,15 @@
 							
 							<li><a href="{% url 'staff:my-students' %}">My Student List</a></li>
 							
-							<li><a href="{% url 'attendance:index'%}">Take Attendance</a></li>			
+							<li><a href="{% url 'attendance:index'%}">Take Attendance</a></li>	
+							<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+								<span class="nav-text">Results History</span></a>
+								<ul aria-expanded="false">							
+									<li><a href="{% url 'results:my-students-results-first' %}">First Term</a></li>
+									<li><a href="{% url 'results:my-students-results-second' %}">Second Term</a></li>
+									<li><a href="{% url 'results:my-students-results-third' %}">Third Term</a></li>
+								</ul>
+							</li>		
 							
 							{% endif %}
 															
@@ -283,6 +291,7 @@
 						</li>
 						
 							{% endif %}
+							
 						</ul>
 
 					</li>

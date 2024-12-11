@@ -5,7 +5,6 @@ from django.db import models
 from curriculum.models import Standard, Session
 from students.models import StudentDetail
 from staff.models import StaffProfile, Department
-from curriculum.models import Standard, ClassGroup
 
 import math
 from django.core.validators import MinValueValidator, MaxValueValidator
