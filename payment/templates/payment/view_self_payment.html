@@ -71,7 +71,8 @@
 														<th>Payment Name</th>
                                                         <th>Amount Due</th>
 														<th>Payment/Date</th>
-														<th>Debt/Credit</th>
+														<th>Debt</th>
+														<th>Credit</th>
                                                        	<th>Receipt/update</th>
 																									
 													</tr>
@@ -98,9 +99,12 @@
 															<span></span>
                                                         </div>
 														</td>
-														<td>															
-                                                            <span class="text-nowrap" style="font-size: 17px;">N{{ payment.payment_name.amount_due}}</span>
-																														
+														<td>	
+															{% if payment.discount %}
+															<span class="text-nowrap">You Have Discount: <br>N {{ payment.discounted_amount_due}}</span>
+															{% else%}
+                                                            <span class="text-nowrap">N{{ payment.payment_name.amount_due}}</span>
+															{% endif %}														
 														</td>
 														<td>
 															<div>
@@ -111,13 +115,56 @@
 															</div>
 														</td>
 														<td class="text-nowrap">
-															{% if payment.discount > 0 %}
-															
-															<span class="text-nowrap">Discounted: <br>N {{ payment.discounted_balance_pay |cut:"-"}}</span>
+														<!-- Payment with discount DEBIT COLUMN -->
+															{% if payment.discount %}
+															{% if payment.total_amount_paid >= payment.discounted_amount_due %}
+															<span class="text-nowrap" style="color: green;"> You Paid In full <br></span>																																									
+
+															{% elif payment.discounted_amount_due > payment.total_amount_paid  %}
+															<span class="text-nowrap" style="color: red;"> DEBT: <br> {{ payment.discounted_balance_owed |floatformat:2 }}</span>
+																																						
 															{% else %}
-															<span class="text-nowrap" style="font-size: 17px;">N {{ payment.balance_pay |cut:"-"}}</span>
+															<span class="text-nowrap"><br>You have not paid</span>
 															{% endif %}
+															{% endif %}
+
+															<!-- Payment with discount DEBIT COLUMN -->
+															{% if payment.discount == False %}
+															{% if payment.total_amount_paid >= payment.payment_name.amount_due %}
+															<span class="text-nowrap" style="color: green;"> You Paid In full <br></span>																																									
+
+															{% elif payment.payment_name.amount_due > payment.total_amount_paid  %}
+															<span class="text-nowrap" style="color: red;"> DEBT: <br> {{ payment.balance_pay |floatformat:2 }}</span>
+																																						
+															{% else %}
+															<span class="text-nowrap"><br>You have not paid</span>
+															{% endif %}
+															{% endif %}
+															
+																													
 														</td>
+														<td class="text-nowrap">
+															<!-- payment with discount CREDIT COLUMN -->
+															{% if payment.discount %}
+															{% if payment.total_amount_paid > payment.discounted_amount_due%}
+															<span class="text-nowrap" style="color: green;">Your credit: <br> N {{ payment.credit_balance_discounted |floatformat:2}}</span>
+																																																								
+															{% else %}
+															<span class="text-nowrap">You don't have credit</span>
+															{% endif %}
+															{% endif %}
+
+															<!-- payment without discount CREDIT COLUMN -->
+
+															{% if payment.discount == False %}
+															{% if payment.total_amount_paid > payment.payment_name.amount_due %}	
+															<span class="text-nowrap" style="color: green;">Your credit:<br> N {{ payment.credit_balance}}</span>	
+															{% else %}
+															<span class="text-nowrap">You don't have credit</span>
+															{% endif %}
+															{% endif %}
+															
+
                                                       
 														
 														<td>

@@ -74,12 +74,12 @@
 															  <input class="form-check-input" type="checkbox" value="" id="checkAll">
 															</div>
 														</th>
-													
+														<th>NO.</th>
 														<th>STUDENT</th>
                                                         <th>DESCRIPTION</th>                                                        
 														<th>FEE DUE</th>
 														<th>TOTAL PAID</th>
-														<th>DEBT</th>
+														<th>DEBT STATUS</th>
 														<!-- <th>REMARK</th>                                                         -->
 													
 													</tr>
@@ -96,6 +96,12 @@
 															  <input class="form-check-input" type="checkbox" value="">
 															</div>
 														</td>
+														
+														<td>
+															<div>
+																{{ forloop.counter }}
+															</div>
+														</td>	
 														
 														<td>
 													
@@ -120,9 +126,9 @@
                                                             <span><strong> {{t.payment_name.session}} </strong></span>
                                                             </td>
 															<!-- if students paid by themselves -->
-															{% if t.discount > 0 %}
+															{% if t.discount %}
                                                         <td class="text-nowrap">                                                
-                                                            <span class="text-nowrap">Have Discount: {{t.discount}}%<br>N {{ t.payment_name.amount_due }}</span>
+                                                            <span class="text-nowrap">Discount: {{t.discount}}%<br>N {{ t.discounted_amount_due }}</span>
                                                             </td>
 															{% else %}
 															<td class="text-nowrap">                                                
@@ -131,33 +137,46 @@
 															{% endif %}
 
                                                         <td class="text-nowrap">
+															
 															<span class="text-nowrap">N {{ t.total_amount_paid }}</span><br>
+																														
                                                             <span></span>
 														
 														</td>		
 														<td class="text-nowrap">
-															{% if t.payment_name.amount_due > t.total_amount_paid%}
-															<span class="text-nowrap" style="color:red;">N {{ t.balance_pay}}</span><br>
-														{% else %}
-															<span class="text-nowrap" style="color:green;">Has No Debt</span><br>
+															{% if t.discount %}
+															{% if t.total_amount_paid == t.discounted_amount_due %}
+															<span class="text-nowrap" style="color:green;">Paid In Full</span><br>
+															{% elif t.total_amount_paid > t.discounted_amount_due %}
+															<span class="text-nowrap" style="color:green;">Full Payment & CREDIT bal.</span><br>
+															{% elif t.discounted_amount_due > t.total_amount_paid %}
+															<span class="text-nowrap" style="color:red;">{{ t.discounted_balance_owed |floatformat:2 }}</span><br>
+															{% else %}
+															<span class="text-nowrap" style="color:green;">nothing to show</span><br>
 															{% endif %}
+															{% endif %}
+
+															{% if t.discount == False %}
+															{% if t.total_amount_paid == t.payment_name.amount_due  %}
+															<span class="text-nowrap" style="color:green;">paid in full</span><br>
+															{% elif t.total_amount_paid > t.payment_name.amount_due  %}
+															<span class="text-nowrap" style="color:green;">Full Payment & CREDIT bal.</span><br>
+															{% endif %}
+															{% endif %}
+														
+
 														
                                                             <span></span>
 														
 														</td>												
-																					
-																								
-														
-														<td class="text-nowrap">
+																
+													</tr>	
+														{% endfor %}
+																
 															<div>
 																
 															</div>
-																									
-															</td>
-															
-														</tr>	
-														{% endfor %}
-														
+													
 												</tbody>
 											</table>								
 

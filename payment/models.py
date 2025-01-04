@@ -121,6 +121,24 @@ class PaymentDetail(models.Model):
         #return self.discounted_amount_due - self.amount_paid
         return self.discounted_amount_due - self.total_amount_paid
     
+    # for getting total balance to pay if discounted
+    @property
+    def discounted_balance_owed(self):
+        #return self.discounted_amount_due - self.amount_paid
+        return self.discounted_amount_due - (self.amount_paid_a + self.amount_paid_b + self.amount_paid_c )
+    
+    
+    # if student has CREDIT without discount
+    @property
+    def credit_balance(self):
+        #return self.discounted_amount_due - self.amount_paid
+        return self.total_amount_paid - self.payment_name.amount_due
+    
+        # if student has CREDIT and is dicounted
+    @property
+    def credit_balance_discounted(self):        
+        return self.total_amount_paid - self.discounted_amount_due
+    
     @property
     def discounted_amount(self):
         return self.payment_name.amount_due - self.discounted_balance_pay
