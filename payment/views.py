@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from django.db.models import F, Sum, Q
 from payment.forms import PaymentForm, PaymentChartForm, PaymentCatForm,PaymentCreateForm, BankRegisterForm
@@ -28,6 +29,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # for csv
 import csv
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
 
 # Create your views here.
@@ -532,3 +535,34 @@ def search(request):
 
         
     return render(request, 'payment/payment_search.html', {'query': query, 'results': results})
+
+
+# RECEIPT PDF FILE
+
+@login_required
+def receipt_render_pdf_view(request, *args, **kwargs):    
+
+    pk = kwargs.get('pk')
+    
+    my_receipt = get_object_or_404(PaymentDetail, pk=pk)
+    template_path = 'payment/receipt_pdf.html'
+    # template_path = 'results/result_sheet.html'
+    context = {'my_receipt': my_receipt}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    # if you want to download
+    # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    # if you just want to display
+    response['Content-Disposition'] = 'filename="receipt.pdf"'
+
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+    html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response

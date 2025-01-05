@@ -15,7 +15,7 @@ class PaymentChartAdmin(admin.ModelAdmin):
 
 class PaymentDetailAdmin(admin.ModelAdmin):
 
-    list_display=('student_id', 'student_detail', 'payment_name', 'amount_paid_a', 'payment_date_a', 'confirmed_a')
+    list_display=('student_id', 'student_detail', 'payment_name', 'amount_paid_a', 'payment_date_a', 'amount_paid_b', 'payment_date_b', 'amount_paid_c', 'payment_date_c', 'confirmed_a')
     list_filter  = ['student_detail__current_class']
     search_fields = ('student_detail__user__username', 'student_detail__last_name', 'student_detail__first_name')
     raw_id_fields = ['student_detail', 'payment_name', 'student_id']

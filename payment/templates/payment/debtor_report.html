@@ -128,11 +128,11 @@
 															<!-- if students paid by themselves -->
 															{% if t.discount %}
                                                         <td class="text-nowrap">                                                
-                                                            <span class="text-nowrap">Discount: {{t.discount}}%<br>N {{ t.discounted_amount_due }}</span>
+                                                            <span class="text-nowrap">Discount: {{t.discount}}%<br>N {{ t.discounted_amount_due |floatformat:"2g" }}</span>
                                                             </td>
 															{% else %}
 															<td class="text-nowrap">                                                
-																<span class="text-nowrap">N {{ t.payment_name.amount_due }}</span>
+																<span class="text-nowrap">N {{ t.payment_name.amount_due |floatformat:"2g" }}</span>
 																</td>
 															{% endif %}
 

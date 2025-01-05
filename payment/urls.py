@@ -36,4 +36,7 @@ urlpatterns = [
     # Search student detail app
     path('payment-search/', payment_views.payment_search_list, name='payment_search_list'),
     path('search/', payment_views.search, name='search'),
+
+    # render receipt as pdf
+    path('pdf/<pk>/', payment_views.receipt_render_pdf_view, name="receipt-pdf-view"),
 ]
