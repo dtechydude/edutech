@@ -111,13 +111,13 @@ def payment_chart_form(request):
 
 
 
-
+# Not used anymore on the portal
 @login_required
 def paymentlist(request):
     paymentlist = PaymentDetail.objects.all()
     paymentlist_filter = PaymentFilter(request.GET, queryset=paymentlist)
     #balance_pay = PaymentDetail.objects.annotate(balance_pay= F('amount_paid') - F('payment_name__amount_due'))
-    balance_pay = PaymentDetail.objects.annotate(balance_pay= F('payment_name__amount_due') - F('amount_paid_a' + 'amount_paid_b' + 'amount_paid_c'))
+    # balance_pay = PaymentDetail.objects.annotate(balance_pay= F('payment_name__amount_due') - F('amount_paid_a' + 'amount_paid_b' + 'amount_paid_c'))
   
 
     paymentlist = paymentlist_filter.qs
@@ -136,8 +136,8 @@ def paymentlist(request):
         'paymentlist': PaymentDetail.objects.all(),
         'paymentlist_filter': paymentlist_filter,
         'paymentlist' : paymentlist,
-        'balance_pay': balance_pay,
-        'balance_pay' : PaymentDetail.objects.annotate(balance_pay= F('payment_name__amount_due') - F('amount_paid_a' + 'amount_paid_b' + 'amount_paid_c'))
+        # 'balance_pay': balance_pay,
+        # 'balance_pay' : PaymentDetail.objects.annotate(balance_pay= F('payment_name__amount_due') - F('amount_paid_a' + 'amount_paid_b' + 'amount_paid_c'))
          
 
     }

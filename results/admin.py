@@ -1,6 +1,6 @@
 from doctest import Example
 from django.contrib import admin
-
+from import_export.admin import ImportExportModelAdmin
 from results.models import Examination, UploadCertificate, MarkedSheet, Session, ResultSheet, ExamSubject, MotorAbility, ResultImage, ResultSheet3, ExamSubject, MotorAbility3, ResultImage3, MotorAbility2, ResultImage2, ResultSheet2
 
 # Register your models here.
@@ -32,7 +32,7 @@ class ResultImageInline(admin.TabularInline):
     def has_delete_permission(self, request, obj=None):
         return False
 
-class ResultSheetAdmin(admin.ModelAdmin):
+class ResultSheetAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     inlines = [MotorAbilityInline, ResultImageInline] 
     exclude =['remark', 'student_id']
     list_display=('student_detail', 'exam',)

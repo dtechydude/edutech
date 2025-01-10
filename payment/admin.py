@@ -1,4 +1,5 @@
 from django.contrib import admin
+from import_export.admin import ImportExportModelAdmin
 from payment.models import PaymentCategory, PaymentChart, PaymentDetail, BankDetail
 
 # Register your models here.
@@ -13,7 +14,7 @@ class PaymentChartAdmin(admin.ModelAdmin):
     search_fields = ('session', 'term')
     exclude = ('term',)
 
-class PaymentDetailAdmin(admin.ModelAdmin):
+class PaymentDetailAdmin(ImportExportModelAdmin, admin.ModelAdmin):
 
     list_display=('student_id', 'student_detail', 'payment_name', 'amount_paid_a', 'payment_date_a', 'amount_paid_b', 'payment_date_b', 'amount_paid_c', 'payment_date_c', 'confirmed_a')
     list_filter  = ['student_detail__current_class']

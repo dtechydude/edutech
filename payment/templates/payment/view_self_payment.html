@@ -170,14 +170,15 @@
 														<td>
 															<div>
                                                                
-																	{% if payment.confirmed %}
-                                                                    <a href="{% url 'payment:payment_detail' pk=payment.pk  %}"><strong style="color:green;"><u>Get Receipt</u></strong></a>
-                                                                    {% else %}
-                                                                    <a href="{% url 'payment:payment_detail' pk=payment.pk  %}"><span style="color:red;">View Status</span></a>
-																	<span> <a class =" btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'payment:payment_update' pk=payment.pk %}"> Update</a></span>
-																	<a 
-																	class="text-black" href="{% url 'payment:receipt-pdf-view' pk=payment.pk %}"><span style="color:red;">DOWNLOAD</span></a>
+																	{% if payment.confirmed_a or payment.confirmed_b or payment.confirmed_c %}
+                                                                    <!-- <a href="{% url 'payment:payment_detail' pk=payment.pk  %}"><strong style="color:green;"><u>Get Receipt</u></strong></a> -->
+																	<span><a class =" btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'payment:receipt-pdf-view' pk=payment.pk %}">Get Receipt</a></span>
 
+                                                                    {% else %}
+                                                                    <span style="color:red;">No Payment Confirmed</span>
+																	<!-- <span> <a class =" btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'payment:payment_update' pk=payment.pk %}"> Update</a></span> -->
+																	
+																	<!-- <a class="text-black" href="{% url 'payment:receipt-pdf-view' pk=payment.pk %}"><span style="color:red;">DOWNLOAD</span></a> -->
 
                                                                     {% endif %}
 															    </div>																										
